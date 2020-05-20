@@ -27,7 +27,6 @@ using namespace std;
 auto startTime(std::chrono::steady_clock::now());
 int game_time_counter = 1;
 double elapsedTime;
-OpenGLTetris oglt;
 
 
 GLint QUADS  = 2;
@@ -35,8 +34,9 @@ GLint LIGHT = 1;
 GLint ANTI_ALIASING = 1;
 GLint LABEL = 1;
 
-map <string, GLuint> texture_map;
-map <int, GLuint> tetronimo_texture_map;
+map<string, GLuint> texture_map;
+map<int, GLuint> tetromino_texture_map;
+OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 // textures
 // GLuint red_block_texture;
 // GLuint orange_block_texture
@@ -778,274 +778,6 @@ char *helpGeneral[4] = {
     "- Sair do Programa: Tecla 'Esc'"
 };
 
-
-
-class Cube
-{
-    private:
-        double cube[72] = {       
-        // front
-        0.0, 0.0, SIDE,
-        0.0, SIDE, SIDE,
-        SIDE, SIDE, SIDE,
-        SIDE, 0.0, SIDE,
-
-        // back
-        0.0, 0.0, 0,
-        0.0, SIDE, 0,
-        SIDE, SIDE, 0,
-        SIDE, 0.0, 0,
-
-        // side left
-        0.0, SIDE, SIDE,
-        0.0, SIDE, 0,
-        0.0, 0.0, 0,
-        0.0, 0.0, SIDE,
-
-        // side right
-        SIDE, SIDE, SIDE,
-        SIDE, SIDE, 0,
-        SIDE, 0.0, 0,
-        SIDE, 0.0, SIDE,
-
-        // bottom
-        0.0, 0.0, SIDE,
-        0.0, 0.0, 0,
-        SIDE, 0.0, 0,
-        SIDE, 0.0, SIDE,
-        
-        // top
-        0.0, SIDE, SIDE,
-        0.0, SIDE, 0,
-        SIDE, SIDE, 0,
-        SIDE, SIDE, SIDE,
-    };
-
-
-    public:
-    double _x, _y, _z, _len; // apply len later
-    GLint texture_name;
-
-    Cube()
-    {
-        _x = 0;
-        _y = 0;
-        _z = 0;
-    }
-
-    Cube(GLint texture, double x, double y, double z)
-    {
-        texture_name = texture;
-        _x = x;
-        _y = y;
-        _z = z;
-        // _len = length;
-    }
-
-    void set_all(GLint texture, double x, double y, double z)
-    {
-        texture_name = texture;
-        _x = x;
-        _y = y;
-        _z = z;
-        // _len = length;
-    }
-
-    void move_piece(double x, double y, double z)
-    {
-        _x = x;
-        _y = y;
-        _z = z;
-    }
-
-    void resize(double length)
-    {
-        _len = length;
-    }
-
-
-    void enable_texture()
-    {
-        if(QUADS == 2)
-        {
-            glBindTexture(GL_TEXTURE_2D, texture_name);
-            glEnable(GL_TEXTURE_2D);
-        }
-    }
-
-
-    void generate()
-    {
-        glPushMatrix();
-        glTranslatef(_x , _y, _z);
-        enable_texture();
-        for(int i = 0; i < 72; i += 12)
-        {
-            int check = 0;
-            glBegin(GL_QUADS);
-                for(int j = i; j < i + 12; j += 3)
-                {
-                    glTexCoord2f(texture_position[check++], texture_position[check++]); glVertex3f(cube[j], cube[j + 1], cube[j + 2]);
-                }
-            glEnd();
-        }
-        glPopMatrix();
-    }
-    void info()
-    {
-        cout <<"coords: x: "<< _x << " y: " << _y << " z: " << _z << " texture: " << texture_name << "\n";
-    }
-};
-
-class SkyBox
-{
-    double positions [72]=  {
-    // Front face
-    100.0, 100.0, 100.0,
-    -100.0, 100.0, 100.0,
-    -100.0, -100.0, 100.0,
-    100.0, -100.0, 100.0,
-
-    // Back face
-    -100.0, 100.0, -100.0,
-    100.0, 100.0, -100.0,
-    100.0, -100.0, -100.0,
-    -100.0, -100.0, -100.0,
-
-    // Top face
-    100.0, 100.0, -100.0,
-    -100.0, 100.0, -100.0,
-    -100.0, 100.0, 100.0,
-    100.0, 100.0, 100.0,
-
-    // Bottom face
-    -100.0, -100.0, -100.0,
-    100.0, -100.0, -100.0,
-    100.0, -100.0, 100.0,
-    -100.0, -100.0, 100.0,
-
-    // Right face
-    100.0, 100.0, -100.0,
-    100.0, 100.0, 100.0,
-    100.0, -100.0, 100.0,
-    100.0, -100.0, -100.0,
-
-    // Left face
-    -100.0, 100.0, 100.0,
-    -100.0, 100.0, -100.0,
-    -100.0, -100.0, -100.0,
-    -100.0, -100.0, 100.0,
-    };
-
-    double vertexNormals [72] = {
-    // Front
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0,
-
-    // Back
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-
-    // Top
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-
-    // Bottom
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-
-    // Right
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-
-    // Left
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0
-    };
-
-    double textureCoordinates [48] = {
-    // Front
-    (double)1/4, (double)1/3,
-    (double)2/4, (double)1/3,
-    (double)2/4, (double)2/3,
-    (double)1/3, (double)2/3,
-
-    // Back
-    (double)3/4, (double)1/3,
-    (double)1.0, (double)1/3,
-    (double)1.0, (double)2/3,
-    (double)3/4, (double)2/3,
-    // Top
-    (double)1/4, 0.0,
-    (double)2/4, 0.0,
-    (double)2/4, (double)1/3,
-    (double)1/4, (double)1/3,
-    // Bottom
-    (double)1/4, (double)2/3,
-    (double)2/4,(double) 2/3,
-    (double)2/4, (double)1.0,
-    (double)1/4, (double)1.0,
-    // Right
-    0.0, (double)1/3,
-    (double)1/4, (double)1/3,
-    (double)(double)1/4, (double)2/3,
-    0.0, (double)2/3,
-
-    // Left
-    (double)2/4, (double)1/3,
-    (double)3/4, (double)1/3,
-    (double)3/4, (double)2/3,
-    (double)2/4, (double)2/3,
-
-    };
-    public:
-        GLint texture_name;
-    SkyBox(){}
-
-    SkyBox(GLint texture)
-    {
-        texture_name = texture;
-    }
-    void enable_texture()
-    {
-        glBindTexture(GL_TEXTURE_2D, texture_name);
-        glEnable(GL_TEXTURE_2D);
-    }
-    void generate()
-    {
-        glPushMatrix();
-        enable_texture();
-        int check = 0;
-        // glColor3f(1.0, 0, 0);
-        for(int i = 0; i < 72; i += 12)
-        {
-            glBegin(GL_QUADS);
-                for(int j = i; j < i + 12; j += 3)
-                {
-                    // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
-                }
-            glEnd();
-        }
-        glPopMatrix();
-        
-    }
-
-};
-
 class GameBoi
 {
 
@@ -1210,40 +942,42 @@ class GameBoi
 
 void compile_game()
 {
-    double pos_x = -0.02;
-    double pos_y = 0.085;
-    double pos_z = 0.005;
+    // double pos_x = -0.02;
+    // double pos_y = 0.085;
+    // double pos_z = 0.005;
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
-    if(elapsedTime > 1)
-    {
-        oglt.nextState(elapsedTime, startTime);
+    // if(elapsedTime > 1)
+    // {
+    bool game = oglt.nextState(elapsedTime, startTime);
+    if (game) {
         game_time_counter++;
         cout << oglt << "\n\n";
     }
+    // }
 
-    vector<Cube> gl;
-    for(int i = 0; i < oglt.currentPlayfield().getHeight(); i++)
-    {
-        for(int j = 0; j < oglt.currentPlayfield().getWidth(); j++)
-        {
-            // cout << oglt.currentPlayfield().view(i, j) << "\n";
-            if(oglt.currentPlayfield().view(i, j) > 0)
-            {
-                Cube o1(tetronimo_texture_map[oglt.currentPlayfield().view(i, j)], pos_x, pos_y, pos_z);
-                gl.push_back(o1);
-            }
-            pos_x += SIDE;
-        }
-        pos_y -= SIDE;
-        pos_x = -0.02;
-    }
+    // vector<Cube> gl;
+    // for(int i = 0; i < oglt.currentPlayfield().getHeight(); i++)
+    // {
+    //     for(int j = 0; j < oglt.currentPlayfield().getWidth(); j++)
+    //     {
+    //         // cout << oglt.currentPlayfield().view(i, j) << "\n";
+    //         if(oglt.currentPlayfield().view(i, j))
+    //         {
+    //             Cube o1(tetromino_texture_map[oglt.currentPlayfield().view(i, j)], pos_x, pos_y, pos_z);
+    //             gl.push_back(o1);
+    //         }
+    //         pos_x += SIDE;
+    //     }
+    //     pos_y -= SIDE;
+    //     pos_x = -0.02;
+    // }
 
-    for(auto i = gl.begin(); i!= gl.end(); ++i)
-    {
-        (*i).generate();
-    }   
+    // for(auto i = gl.begin(); i!= gl.end(); ++i)
+    // {
+    //     (*i).generate();
+    // }
 
 }
 
@@ -1307,7 +1041,7 @@ void display(void)
     // glLoadIdentity();
     glRotatef(spinX, 1.0, 0.0, 0.0);
     glRotatef(spinY, 0.0, 1.0, 0.0);
-    glScalef(500, 500.0, 500.0);
+    glScalef(500.0, 500.0, 500.0);
     glTranslatef(0.0, 0.0, 0.0);
     // double z = 2.5;
 
@@ -1424,11 +1158,16 @@ void keyboardHandler(unsigned char key, int x, int y) {
             break;
 
         case 'a':
-            allSpinsSpeedUp();
+            // allSpinsSpeedUp();
             break;
 
         case 'z':
-            allSpinsSpeedDown();
+            oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;
+            // allSpinsSpeedDown();
+            break;
+
+        case ' ':
+            oglt.m_currentMove = OpenGLTetris::Move::HARD_DROP;
             break;
 
         case 'r':
@@ -1458,6 +1197,17 @@ void keyboardUpHandler(unsigned char key, int x, int y) {
         case 'k':
             spinningLongPiece = 0;
             break;
+
+        case 'z':
+            oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
+            oglt.m_movementAllowed = true;
+            // allSpinsSpeedDown();
+            break;
+
+        case ' ':
+            oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
+            oglt.m_movementAllowed = true;
+            break;
     }
 }
 
@@ -1466,57 +1216,74 @@ void keyboardSpecialHandler(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1: // front camera
           currentCamera = &cameraFront;
+          display();
           break;
         case GLUT_KEY_F2: // right camera
           currentCamera = &cameraRight;
+          display();
           break;
         case GLUT_KEY_F3: // back camera
           currentCamera = &cameraBack;
+          display();
           break;
 
         case GLUT_KEY_F4: // left camera
           currentCamera = &cameraLeft;
+          display();
           break;
         case GLUT_KEY_F5: // top camera
           currentCamera = &cameraTop;
+          display();
           break;
         case GLUT_KEY_F6: // bottom camera
           currentCamera = &cameraBottom;
+          display();
           break;
         case GLUT_KEY_F7: // bottom camera
           currentCamera = &cameraDiagonal;
+          display();
           break;
 
           // Movement Keys
         case GLUT_KEY_UP:
-            spinningX = -1;
+            // spinningX = -1;
+            oglt.m_currentMove = OpenGLTetris::Move::ROTATE_CLOCK;
             break;
         case GLUT_KEY_DOWN:
-            spinningX = 1;
+            oglt.m_currentMove = OpenGLTetris::Move::DISABLE_SOFT_DROP;
+            // spinningX = 1;
             break;
         case GLUT_KEY_LEFT:
-            spinningY = -1;
+            // spinningY = -1;
+            oglt.m_currentMove = OpenGLTetris::Move::MOVE_LEFT;
             break;
         case GLUT_KEY_RIGHT:
-            spinningY = 1;
+            // spinningY = 1;
+            oglt.m_currentMove = OpenGLTetris::Move::MOVE_RIGHT;
             break;
     }
-    display();
 }
 
 void keyboardSpecialUpHandler(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_UP:
-            spinningX = 0;
+            // spinningX = 0;
+            oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
+            oglt.m_movementAllowed = true;
             break;
         case GLUT_KEY_DOWN:
-            spinningX = 0;
+            // spinningX = 0;
+            // oglt.m_currentMove = OpenGLTetris::Move::DISABLE_SOFT_DROP;
             break;
         case GLUT_KEY_LEFT:
-            spinningY = 0;
+            // spinningY = 0;
+            oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
+            oglt.m_movementAllowed = true;
             break;
         case GLUT_KEY_RIGHT:
-            spinningY = 0;
+            // spinningY = 0;
+            oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
+            oglt.m_movementAllowed = true;
             break;
     }
 }
@@ -1570,6 +1337,20 @@ int main(int argc, char ** argv)
 {
 
     oglt.nextState(elapsedTime, startTime);
+    // cout << oglt.currentPlayfield() << "\n";
+    // while(elapsedTime <= game_time_counter)
+    // {
+    //     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
+    // }
+    // oglt.nextState(elapsedTime, startTime);
+    // game_time_counter++;
+    // while(elapsedTime <= game_time_counter)
+    // {
+    //     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
+    // }
+    // oglt.nextState(elapsedTime, startTime);
+    // cout << oglt.currentPlayfield() << "\n";
+
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
@@ -1588,15 +1369,23 @@ int main(int argc, char ** argv)
     glutSpecialUpFunc(keyboardSpecialUpHandler);
 
     // load textures
-    tetronimo_texture_map.insert(pair<int, GLuint>(1, initTexture("textures/cyan_block.png")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(2, initTexture("textures/yellow_block.png")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(3, initTexture("textures/pink_block.png")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(4, initTexture("textures/green_block.png")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(5, initTexture("textures/red_block.png")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(6, initTexture("textures/blue_block.jpg")));
-    tetronimo_texture_map.insert(pair<int, GLuint>(7, initTexture("textures/orange_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(1, initTexture("textures/cyan_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(2, initTexture("textures/yellow_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(3, initTexture("textures/pink_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(4, initTexture("textures/green_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(5, initTexture("textures/red_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(6, initTexture("textures/blue_block.jpg")));
+    tetromino_texture_map.insert(pair<int, GLuint>(7, initTexture("textures/orange_block.png")));
     texture_map.insert(pair<string, GLuint>("a_btn", initTexture("textures/a_btn.png")));
     texture_map.insert(pair<string, GLuint>("b_btn", initTexture("textures/b_btn.png")));
+    texture_map.insert(pair<string, GLuint>("gb_back", initTexture("textures/back_gb.png")));
+    texture_map.insert(pair<string, GLuint>("gb_side", initTexture("textures/side_gb.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_down", initTexture("textures/gb_front_down.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_side_left", initTexture("textures/gb_front_side_left.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_side_right", initTexture("textures/gb_front_side_right.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_top", initTexture("textures/gb_front_top.png")));
+    texture_map.insert(pair<string, GLuint>("gb_top", initTexture("textures/gb_top.png")));
+    texture_map.insert(pair<string, GLuint>("gb_bot", initTexture("textures/gb_bot.png")));
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow", initTexture("textures/gb_btn_arrow.png")));
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_middle", initTexture("textures/gb_btn_middle.png")));
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_up", initTexture("textures/gb_btn_arrow_up.png")));

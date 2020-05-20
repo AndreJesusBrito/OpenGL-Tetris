@@ -46,10 +46,9 @@ namespace tetris {
         bool movePieceLeft();
         bool movePieceRight();
         bool movePieceDown();
+        void placeWhenDownMovement();
         void rotatePieceClockwise();
         void rotatePieceCounterClockwise();
-        void enableSoftDropPiece();
-        void disableSoftDropPiece();
         void hardDropPiece();
 
         Playfield currentPlayfield() const;
