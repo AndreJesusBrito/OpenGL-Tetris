@@ -52,8 +52,8 @@ bool OpenGLTetris::keystrokes() {
     return false;
 }
 
-void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
-    double pos_x = -0.02;
+void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit) {
+    double pos_x = -0.025;
     double pos_y = 0.085;
     double pos_z = 0.005;
 
@@ -70,7 +70,7 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
             pos_x += m_side;
         }
         pos_y -= m_side;
-        pos_x = -0.02;
+        pos_x = -0.025;
     }
 
     for(auto i = gl.begin(); i!= gl.end(); ++i)
