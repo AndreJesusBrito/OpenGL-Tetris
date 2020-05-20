@@ -1479,13 +1479,36 @@ void init(void)
     // glDisable(GL_LINE_SMOOTH);
     // glDisable(GL_POLYGON_SMOOTH);
     // glDisable(GL_MULTISAMPLE);
+    tetromino_texture_map.insert(pair<int, GLuint>(1, initTexture("textures/cyan_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(2, initTexture("textures/yellow_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(3, initTexture("textures/pink_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(4, initTexture("textures/green_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(5, initTexture("textures/red_block.png")));
+    tetromino_texture_map.insert(pair<int, GLuint>(6, initTexture("textures/blue_block.jpg")));
+    tetromino_texture_map.insert(pair<int, GLuint>(7, initTexture("textures/orange_block.png")));
+    texture_map.insert(pair<string, GLuint>("a_btn", initTexture("textures/a_btn.png")));
+    texture_map.insert(pair<string, GLuint>("b_btn", initTexture("textures/b_btn.png")));
+    texture_map.insert(pair<string, GLuint>("gb_back", initTexture("textures/back_gb.png")));
+    texture_map.insert(pair<string, GLuint>("gb_side", initTexture("textures/side_gb.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_down", initTexture("textures/gb_front_down.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_side_left", initTexture("textures/gb_front_side_left.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_side_right", initTexture("textures/gb_front_side_right.png")));
+    texture_map.insert(pair<string, GLuint>("gb_front_top", initTexture("textures/gb_front_top.png")));
+    texture_map.insert(pair<string, GLuint>("gb_top", initTexture("textures/gb_top.png")));
+    texture_map.insert(pair<string, GLuint>("gb_bot", initTexture("textures/gb_bot.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow", initTexture("textures/gb_btn_arrow.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_middle", initTexture("textures/gb_btn_middle.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_up", initTexture("textures/gb_btn_arrow_up.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_down", initTexture("textures/gb_btn_arrow_down.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_left", initTexture("textures/gb_btn_arrow_left.png")));
+    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_right", initTexture("textures/gb_btn_arrow_right.png")));
+    texture_map.insert(pair<string, GLuint>("gb_texture", initTexture("textures/gameboie.png")));
+    texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
 }
 
 
 int main(int argc, char ** argv)
 {
-
-    oglt.nextState(elapsedTime, startTime);
     // cout << oglt.currentPlayfield() << "\n";
     // while(elapsedTime <= game_time_counter)
     // {
@@ -1517,31 +1540,7 @@ int main(int argc, char ** argv)
     glutSpecialFunc (keyboardSpecialHandler);
     glutSpecialUpFunc(keyboardSpecialUpHandler);
 
-    // load textures
-    tetromino_texture_map.insert(pair<int, GLuint>(1, initTexture("textures/cyan_block.png")));
-    tetromino_texture_map.insert(pair<int, GLuint>(2, initTexture("textures/yellow_block.png")));
-    tetromino_texture_map.insert(pair<int, GLuint>(3, initTexture("textures/pink_block.png")));
-    tetromino_texture_map.insert(pair<int, GLuint>(4, initTexture("textures/green_block.png")));
-    tetromino_texture_map.insert(pair<int, GLuint>(5, initTexture("textures/red_block.png")));
-    tetromino_texture_map.insert(pair<int, GLuint>(6, initTexture("textures/blue_block.jpg")));
-    tetromino_texture_map.insert(pair<int, GLuint>(7, initTexture("textures/orange_block.png")));
-    texture_map.insert(pair<string, GLuint>("a_btn", initTexture("textures/a_btn.png")));
-    texture_map.insert(pair<string, GLuint>("b_btn", initTexture("textures/b_btn.png")));
-    texture_map.insert(pair<string, GLuint>("gb_back", initTexture("textures/back_gb.png")));
-    texture_map.insert(pair<string, GLuint>("gb_side", initTexture("textures/side_gb.png")));
-    texture_map.insert(pair<string, GLuint>("gb_front_down", initTexture("textures/gb_front_down.png")));
-    texture_map.insert(pair<string, GLuint>("gb_front_side_left", initTexture("textures/gb_front_side_left.png")));
-    texture_map.insert(pair<string, GLuint>("gb_front_side_right", initTexture("textures/gb_front_side_right.png")));
-    texture_map.insert(pair<string, GLuint>("gb_front_top", initTexture("textures/gb_front_top.png")));
-    texture_map.insert(pair<string, GLuint>("gb_top", initTexture("textures/gb_top.png")));
-    texture_map.insert(pair<string, GLuint>("gb_bot", initTexture("textures/gb_bot.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow", initTexture("textures/gb_btn_arrow.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_middle", initTexture("textures/gb_btn_middle.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_up", initTexture("textures/gb_btn_arrow_up.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_down", initTexture("textures/gb_btn_arrow_down.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_left", initTexture("textures/gb_btn_arrow_left.png")));
-    texture_map.insert(pair<string, GLuint>("gb_btn_arrow_right", initTexture("textures/gb_btn_arrow_right.png")));
-    texture_map.insert(pair<string, GLuint>("gb_texture", initTexture("textures/gameboie.png")));
-    texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
+    // oglt.nextState(elapsedTime, startTime);
+    
     glutMainLoop();
 }
