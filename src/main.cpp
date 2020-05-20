@@ -778,6 +778,155 @@ char *helpGeneral[4] = {
     "- Sair do Programa: Tecla 'Esc'"
 };
 
+class SkyBox
+{
+    double positions [72]=  {
+    // Front face
+    100.0, 100.0, 100.0,
+    -100.0, 100.0, 100.0,
+    -100.0, -100.0, 100.0,
+    100.0, -100.0, 100.0,
+
+    // Back face
+    -100.0, 100.0, -100.0,
+    100.0, 100.0, -100.0,
+    100.0, -100.0, -100.0,
+    -100.0, -100.0, -100.0,
+
+    // Top face
+    100.0, 100.0, -100.0,
+    -100.0, 100.0, -100.0,
+    -100.0, 100.0, 100.0,
+    100.0, 100.0, 100.0,
+
+    // Bottom face
+    -100.0, -100.0, -100.0,
+    100.0, -100.0, -100.0,
+    100.0, -100.0, 100.0,
+    -100.0, -100.0, 100.0,
+
+    // Right face
+    100.0, 100.0, -100.0,
+    100.0, 100.0, 100.0,
+    100.0, -100.0, 100.0,
+    100.0, -100.0, -100.0,
+
+    // Left face
+    -100.0, 100.0, 100.0,
+    -100.0, 100.0, -100.0,
+    -100.0, -100.0, -100.0,
+    -100.0, -100.0, 100.0,
+    };
+
+    double vertexNormals [72] = {
+    // Front
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+
+    // Back
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+
+    // Top
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+
+    // Bottom
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+
+    // Right
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+
+    // Left
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0
+    };
+
+    double textureCoordinates [48] = {
+    // Front
+    (double)1/4, (double)1/3,
+    (double)2/4, (double)1/3,
+    (double)2/4, (double)2/3,
+    (double)1/3, (double)2/3,
+
+    // Back
+    (double)3/4, (double)1/3,
+    (double)1.0, (double)1/3,
+    (double)1.0, (double)2/3,
+    (double)3/4, (double)2/3,
+    // Top
+    (double)1/4, 0.0,
+    (double)2/4, 0.0,
+    (double)2/4, (double)1/3,
+    (double)1/4, (double)1/3,
+    // Bottom
+    (double)1/4, (double)2/3,
+    (double)2/4,(double) 2/3,
+    (double)2/4, (double)1.0,
+    (double)1/4, (double)1.0,
+    // Right
+    0.0, (double)1/3,
+    (double)1/4, (double)1/3,
+    (double)(double)1/4, (double)2/3,
+    0.0, (double)2/3,
+
+    // Left
+    (double)2/4, (double)1/3,
+    (double)3/4, (double)1/3,
+    (double)3/4, (double)2/3,
+    (double)2/4, (double)2/3,
+
+    };
+    public:
+        GLint texture_name;
+    SkyBox(){}
+
+    SkyBox(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        glBindTexture(GL_TEXTURE_2D, texture_name);
+        glEnable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        glPushMatrix();
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 72; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+        glPopMatrix();
+        
+    }
+
+};
+
 class GameBoi
 {
 
