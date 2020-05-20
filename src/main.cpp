@@ -21,7 +21,7 @@ using namespace std;
 #define PI 3.14
 
 
-#define CAMERA_FAR 1000 // TODO: ajust this
+#define CAMERA_FAR 100500 // TODO: ajust this
 // GLOBALS
 
 auto startTime(std::chrono::steady_clock::now());
@@ -866,8 +866,11 @@ class Cube
 
     void enable_texture()
     {
-        glBindTexture(GL_TEXTURE_2D, texture_name);
-        glEnable(GL_TEXTURE_2D);
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
     }
 
 
@@ -892,6 +895,155 @@ class Cube
     {
         cout <<"coords: x: "<< _x << " y: " << _y << " z: " << _z << " texture: " << texture_name << "\n";
     }
+};
+
+class SkyBox
+{
+    double positions [72]=  {
+    // Front face
+    100.0, 100.0, 100.0,
+    -100.0, 100.0, 100.0,
+    -100.0, -100.0, 100.0,
+    100.0, -100.0, 100.0,
+
+    // Back face
+    -100.0, 100.0, -100.0,
+    100.0, 100.0, -100.0,
+    100.0, -100.0, -100.0,
+    -100.0, -100.0, -100.0,
+
+    // Top face
+    100.0, 100.0, -100.0,
+    -100.0, 100.0, -100.0,
+    -100.0, 100.0, 100.0,
+    100.0, 100.0, 100.0,
+
+    // Bottom face
+    -100.0, -100.0, -100.0,
+    100.0, -100.0, -100.0,
+    100.0, -100.0, 100.0,
+    -100.0, -100.0, 100.0,
+
+    // Right face
+    100.0, 100.0, -100.0,
+    100.0, 100.0, 100.0,
+    100.0, -100.0, 100.0,
+    100.0, -100.0, -100.0,
+
+    // Left face
+    -100.0, 100.0, 100.0,
+    -100.0, 100.0, -100.0,
+    -100.0, -100.0, -100.0,
+    -100.0, -100.0, 100.0,
+    };
+
+    double vertexNormals [72] = {
+    // Front
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+
+    // Back
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+
+    // Top
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+
+    // Bottom
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+
+    // Right
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+
+    // Left
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0
+    };
+
+    double textureCoordinates [48] = {
+    // Front
+    (double)1/4, (double)1/3,
+    (double)2/4, (double)1/3,
+    (double)2/4, (double)2/3,
+    (double)1/3, (double)2/3,
+
+    // Back
+    (double)3/4, (double)1/3,
+    (double)1.0, (double)1/3,
+    (double)1.0, (double)2/3,
+    (double)3/4, (double)2/3,
+    // Top
+    (double)1/4, 0.0,
+    (double)2/4, 0.0,
+    (double)2/4, (double)1/3,
+    (double)1/4, (double)1/3,
+    // Bottom
+    (double)1/4, (double)2/3,
+    (double)2/4,(double) 2/3,
+    (double)2/4, (double)1.0,
+    (double)1/4, (double)1.0,
+    // Right
+    0.0, (double)1/3,
+    (double)1/4, (double)1/3,
+    (double)(double)1/4, (double)2/3,
+    0.0, (double)2/3,
+
+    // Left
+    (double)2/4, (double)1/3,
+    (double)3/4, (double)1/3,
+    (double)3/4, (double)2/3,
+    (double)2/4, (double)2/3,
+
+    };
+    public:
+        GLint texture_name;
+    SkyBox(){}
+
+    SkyBox(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        glBindTexture(GL_TEXTURE_2D, texture_name);
+        glEnable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        glPushMatrix();
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 72; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+        glPopMatrix();
+        
+    }
+
 };
 
 class GameBoi
@@ -1155,7 +1307,7 @@ void display(void)
     // glLoadIdentity();
     glRotatef(spinX, 1.0, 0.0, 0.0);
     glRotatef(spinY, 0.0, 1.0, 0.0);
-    glScalef(500.0, 500.0, 500.0);
+    glScalef(500, 500.0, 500.0);
     glTranslatef(0.0, 0.0, 0.0);
     // double z = 2.5;
 
@@ -1164,8 +1316,13 @@ void display(void)
     
     // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // glColor3f(1.0, 0, 0);
+
+    SkyBox sb(texture_map["skybox"]);
+    sb.generate();
+    
     GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
+
 
     compile_game();
 
@@ -1447,5 +1604,6 @@ int main(int argc, char ** argv)
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_left", initTexture("textures/gb_btn_arrow_left.png")));
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_right", initTexture("textures/gb_btn_arrow_right.png")));
     texture_map.insert(pair<string, GLuint>("gb_texture", initTexture("textures/gameboie.png")));
+    texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
     glutMainLoop();
 }
