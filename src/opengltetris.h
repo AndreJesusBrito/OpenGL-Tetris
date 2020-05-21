@@ -38,7 +38,7 @@ public:
     OpenGLTetris(double side, std::map<int, GLuint> *tetrominoTextureMap);
 
     virtual bool keystrokes() override final;
-    virtual void nextStateExtra(double elapsedTime, bool keyHit) override final;
+    virtual void nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) override final;
 };
 
 #endif

@@ -32,7 +32,7 @@ bool TestTetris::keystrokes() {
     return false;
 }
 
-void TestTetris::nextStateExtra(double elapsedTime, bool keyHit) {
+void TestTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
     if (elapsedTime >= m_stepTime) {
         std::cout << Tetris::currentPlayfield() << '\n';
     }

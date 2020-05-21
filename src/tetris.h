@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
+#include <vector>
+#include <array>
 
 #include "matrix.h"
 #include "piece.h"
@@ -16,6 +18,7 @@ namespace tetris {
     public:
         typedef mycontainers::Matrix<int, 10, 20> Playfield;
         typedef std::pair<int, int> Coords2D;
+        typedef std::pair<int, std::array<int, 10>> ClearedLine;
 
     protected:
         Playfield m_playfield;
@@ -38,7 +41,7 @@ namespace tetris {
 
         void nextPiece();
         virtual bool movePiece(int vrtclDirection, int hrzntlDirection);
-        virtual void clearLines();
+        virtual std::vector<ClearedLine> clearLines();
 
     public:
         Tetris();
@@ -46,17 +49,17 @@ namespace tetris {
         bool movePieceLeft();
         bool movePieceRight();
         bool movePieceDown();
-        void placeWhenDownMovement();
+        std::vector<ClearedLine> placeWhenDownMovement();
         void rotatePieceClockwise();
         void rotatePieceCounterClockwise();
-        void hardDropPiece();
+        std::vector<ClearedLine> hardDropPiece();
 
         Playfield currentPlayfield() const;
         int level();
         void updateStepTime();
 
         virtual bool keystrokes() = 0;
-        virtual void nextStateExtra(double elapsedTime, bool keyHit);
+        virtual void nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines);
         virtual bool nextState(double elapsedTime, std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>& startTime);
         void gameloop();
 

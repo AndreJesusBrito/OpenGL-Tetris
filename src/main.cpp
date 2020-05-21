@@ -1091,42 +1091,13 @@ class GameBoi
 
 void compile_game()
 {
-    // double pos_x = -0.02;
-    // double pos_y = 0.085;
-    // double pos_z = 0.005;
-
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
-    // if(elapsedTime > 1)
-    // {
     bool game = oglt.nextState(elapsedTime, startTime);
     if (game) {
-        game_time_counter++;
+        // game_time_counter++;
         cout << oglt << "\n\n";
     }
-    // }
-
-    // vector<Cube> gl;
-    // for(int i = 0; i < oglt.currentPlayfield().getHeight(); i++)
-    // {
-    //     for(int j = 0; j < oglt.currentPlayfield().getWidth(); j++)
-    //     {
-    //         // cout << oglt.currentPlayfield().view(i, j) << "\n";
-    //         if(oglt.currentPlayfield().view(i, j))
-    //         {
-    //             Cube o1(tetromino_texture_map[oglt.currentPlayfield().view(i, j)], pos_x, pos_y, pos_z);
-    //             gl.push_back(o1);
-    //         }
-    //         pos_x += SIDE;
-    //     }
-    //     pos_y -= SIDE;
-    //     pos_x = -0.02;
-    // }
-
-    // for(auto i = gl.begin(); i!= gl.end(); ++i)
-    // {
-    //     (*i).generate();
-    // }
 
 }
 

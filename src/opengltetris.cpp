@@ -12,6 +12,7 @@ OpenGLTetris::OpenGLTetris(double side, std::map<int, GLuint> *tetrominoTextureM
 }
 
 bool OpenGLTetris::keystrokes() {
+    std::vector<ClearedLine> clearedLines;
     if (m_currentMove > Move::NO_MOVE && m_currentMove < Move::MAX_MOVES && m_movementAllowed) {
         if (m_currentMove == Move::ROTATE_CLOCK) {
             rotatePieceClockwise();
@@ -32,7 +33,7 @@ bool OpenGLTetris::keystrokes() {
         //     disableSoftDropPiece();
         // }
         else if (m_currentMove == Move::HARD_DROP) {
-            hardDropPiece();
+            clearedLines = hardDropPiece();
         }
 
         m_movementAllowed = false;
@@ -42,7 +43,7 @@ bool OpenGLTetris::keystrokes() {
     return false;
 }
 
-void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit) {
+void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
     double pos_x = -0.02;
     double pos_y = 0.085;
     double pos_z = 0.005;
@@ -52,7 +53,6 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit) {
     {
         for(std::size_t j = 0; j < currentPlayfield().getWidth(); j++)
         {
-            // cout << currentPlayfield().view(i, j) << "\n";
             if(currentPlayfield().view(i, j))
             {
                 Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], pos_x, pos_y, pos_z, m_side);
@@ -68,12 +68,4 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit) {
     {
         (*i).generate();
     }
-
-    // if (elapsedTime >= m_stepTimeUsed) {
-    //     std::cout << Tetris::currentPlayfield() << '\n';
-    // }
-    // if (keyHit) {
-    //     std::cout << Tetris::currentPlayfield() << '\n';
-    // }
-    // std::cout << deltaTime << '\n';
 }

@@ -62,7 +62,9 @@ namespace tetris {
         return false;
     }
 
-    void Tetris::clearLines() {
+    std::vector<Tetris::ClearedLine> Tetris::clearLines() {
+        std::vector<ClearedLine> result;
+        ClearedLine line;
         bool clear = true;
         for (std::size_t i = m_piecePosition.first; i < m_playfield.getHeight(); ++i) {
             for (std::size_t j = 0; j < m_playfield.getWidth(); ++j) {
@@ -72,15 +74,21 @@ namespace tetris {
                 }
             }
             if (clear) {
+                line = ClearedLine(i, {});
+                // std::cout << "CLEARED LINES " << line.second.size();
                 for (std::size_t i2 = i; i2 > 0; --i2) {
                     for (std::size_t j2 = 0; j2 < m_playfield.getWidth(); ++j2) {
+                        line.second.at(j2) = m_playfield.at(i2, j2);
                         m_playfield.at(i2, j2) = m_playfield.at(i2-1, j2);
                     }
                 }
                 ++m_linesCleared;
+                result.push_back(line);
             }
             clear = true;
         }
+
+        return result;
     }
 
     bool Tetris::movePieceLeft() {
@@ -95,12 +103,14 @@ namespace tetris {
         return movePiece(1, 0);
     }
 
-    void Tetris::placeWhenDownMovement() {
+    std::vector<Tetris::ClearedLine> Tetris::placeWhenDownMovement() {
+        std::vector<ClearedLine> result;
         if (!movePieceDown()) {
             placePieceInField(m_currentPiece, m_piecePosition);
-            clearLines();
+            result = clearLines();
             nextPiece();
         }
+        return result;
     }
 
     void Tetris::rotatePieceClockwise() {
@@ -115,14 +125,15 @@ namespace tetris {
         } while (!canPieceBePlaced(m_currentPiece, m_piecePosition));
     }
 
-    void Tetris::hardDropPiece() {
+    std::vector<Tetris::ClearedLine> Tetris::hardDropPiece() {
         bool prolong;
         do {
             prolong = movePieceDown();
         } while (prolong);
         placePieceInField(m_currentPiece, m_piecePosition);
-        clearLines();
+        std::vector<ClearedLine> result = clearLines();
         nextPiece();
+        return result;
     }
 
     Tetris::Playfield Tetris::currentPlayfield() const {
@@ -158,13 +169,14 @@ namespace tetris {
 
     // void Tetris::keystrokes() {}
 
-    void Tetris::nextStateExtra(double elapsedTime, bool keyHit) {}
+    void Tetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {}
 
     bool Tetris::nextState(double elapsedTime, std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>& startTime) {
         bool keyHit = false;
+        std::vector<ClearedLine> clearedLines;
         if (canPieceBePlaced(m_currentPiece, m_piecePosition)) {
             if (elapsedTime >= m_stepTime) {
-                placeWhenDownMovement();
+                clearedLines = placeWhenDownMovement();
                 startTime = std::chrono::steady_clock::now();
             }
             keyHit = keystrokes();
@@ -174,7 +186,7 @@ namespace tetris {
         else {
             return false;
         }
-        nextStateExtra(elapsedTime, keyHit);
+        nextStateExtra(elapsedTime, keyHit, clearedLines);
         return true;
     }
 
