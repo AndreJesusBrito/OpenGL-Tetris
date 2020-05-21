@@ -4,9 +4,12 @@
 
 #include "SOIL.h"
 
+#ifndef CUBE_H
+#define CUBE_H
+
 class Cube
 {
-    private:
+    protected:
         std::vector<double> cube;
         double texture_position[12] = {
                                 0.0, 0.0,
@@ -139,11 +142,7 @@ class Cube
         glEnable(GL_TEXTURE_2D);
     }
 
-
-    void generate()
-    {
-        glPushMatrix();
-        glTranslatef(_x , _y, _z);
+    void draw() {
         enable_texture();
         for(int i = 0; i < 72; i += 12)
         {
@@ -151,11 +150,19 @@ class Cube
             glBegin(GL_QUADS);
                 for(int j = i; j < i + 12; j += 3)
                 {
-                    glTexCoord2f(texture_position[check], texture_position[check+1]); glVertex3f(cube[j], cube[j + 1], cube[j + 2]);
+                    glTexCoord2f(texture_position[check], texture_position[check+1]);
+                    // glVertex3f(cube[j], cube[j + 1], cube[j + 2]);
                     check += 2;
                 }
             glEnd();
         }
+    }
+
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x , _y, _z);
+        this->draw();
         glPopMatrix();
     }
     void info()
@@ -163,3 +170,5 @@ class Cube
         std::cout <<"coords: x: "<< _x << " y: " << _y << " z: " << _z << " texture: " << texture_name << "\n";
     }
 };
+
+#endif

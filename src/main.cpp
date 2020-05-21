@@ -7,6 +7,8 @@
 #include "tetris.h"
 #include "testtetris.h"
 #include "opengltetris.h"
+#include "DynamicPiece.h"
+
 #include <GL/glut.h>  // GLUT, includes glu.h and gl.h
 #include <GL/glext.h> // Needed for GL_MULTISAMPLE
 #include <stdio.h>
@@ -40,6 +42,22 @@ OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 // textures
 // GLuint red_block_texture;
 // GLuint orange_block_texture
+
+
+
+
+//---------------------
+//  FALLING PIECES
+
+double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000;
+
+
+DynamicPiece *fallingPieces[3];
+int fallingPiecesCount = 0;
+
+//------------------
+
+
 
 double btn_arrow_point_map [] = {
   // front middle
@@ -1168,18 +1186,29 @@ void display(void)
 
     SkyBox sb(texture_map["skybox"]);
     sb.generate();
-    
+
     GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
+
+
+    // falling pieces
+    int currentTime = glutGet(GLUT_ELAPSED_TIME);
+    int deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
+    for (int i = 0; i < fallingPiecesCount; i++) {
+        DynamicPiece *piece = fallingPieces[i];
+        piece->generate();
+    }
 
 
     compile_game();
 
     // Cube o1(texture_map["red_block"], 0, -0.01, 0.00);
     // o1.generate();
-    
+
     // gl.clear();
-    
+
 
 
 
@@ -1266,9 +1295,22 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningLongPiece = -1;
             break;
 
-        case 'a':
+        case 'a': {
+            DynamicPiece newPiece = DynamicPiece (
+                -0.065 + 0.01*(fallingPiecesCount-1), 0.0, 0.013,    // pos
+                0.0, 0.0, 0.0,            // velocity
+                0.0, 0.0, 0.0,            // acceleration
+                0.0, 0.0, 0.0,            // rotation
+                0.0, 0.0, 0.0,            // rotation speed
+                0.0, 0.0, 0.0             // rotation acceleration
+            );
+
+            fallingPieces[fallingPiecesCount++] = &newPiece;
+
+            newPiece.generate();
             // allSpinsSpeedUp();
             break;
+        }
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;
