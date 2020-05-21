@@ -906,7 +906,6 @@ class SkyBox
     }
     void generate()
     {
-        glPushMatrix();
         enable_texture();
         int check = 0;
         // glColor3f(1.0, 0, 0);
@@ -921,8 +920,6 @@ class SkyBox
                 }
             glEnd();
         }
-        glPopMatrix();
-        
     }
 
 };
@@ -959,10 +956,12 @@ class GameBoi
 
     void generate()
     {
+        glPushMatrix();
         draw_console();
         draw_btn_arrow();
         draw_btn_circle(texture_map["a_btn"], _a_x, _a_y, _a_b_z);
         draw_btn_circle(texture_map["b_btn"], _b_x, _b_y, _a_b_z);
+        glPopMatrix();
     }
 
     void change_texture(GLint texture_name)
@@ -974,8 +973,6 @@ class GameBoi
     private:
         void draw_console()
         {
-            glPushMatrix();
-             
             int n = sizeof(gameboy_point_map) / sizeof(gameboy_point_map)[0];
             int texture_pos = 0;
             
@@ -991,8 +988,7 @@ class GameBoi
                     }
                 glEnd();
                 texture_pos++;
-            }  
-            glPopMatrix();
+            }
         }
 
         void draw_btn_arrow()
@@ -1156,7 +1152,6 @@ void display(void)
     glCullFace(GL_FRONT);
     glEnable(GL_CULL_FACE); */
 
-    glPushMatrix();
 /*    glTranslatef(-10.0,-10.0,0.0);  */
     // glLoadIdentity();
     glRotatef(spinX, 1.0, 0.0, 0.0);
@@ -1167,7 +1162,7 @@ void display(void)
 
     // load class tetris or w/e
 
-    
+
     // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // glColor3f(1.0, 0, 0);
 
@@ -1184,15 +1179,9 @@ void display(void)
     // o1.generate();
     
     // gl.clear();
-    glPushMatrix();
     
-    glTranslatef(27.5, 35.0, 0.0);
-    glRotatef(spinLongPiece, 0.0, 0.0, 1.0);
-    glTranslatef(-27.5, -35.0, 0.0);
 
-    glPopMatrix();
 
-    glPopMatrix();
 
     glutSwapBuffers();
 }
