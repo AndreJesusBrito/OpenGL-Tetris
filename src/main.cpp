@@ -1,12 +1,16 @@
 #include <iostream>
 #include <unistd.h>
 #include <chrono>
+#include <set>
+
 
 #include "matrix.h"
 #include "piece.h"
 #include "tetris.h"
 #include "testtetris.h"
 #include "opengltetris.h"
+#include "DynamicPiece.h"
+
 #include <GL/glut.h>  // GLUT, includes glu.h and gl.h
 #include <GL/glext.h> // Needed for GL_MULTISAMPLE
 #include <stdio.h>
@@ -40,6 +44,23 @@ OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 // textures
 // GLuint red_block_texture;
 // GLuint orange_block_texture
+
+
+
+
+//---------------------
+//  FALLING PIECES
+
+double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+
+extern std::vector<DynamicPiece> fallingPieces;
+
+extern std::mt19937 mersenne;
+extern std::uniform_real_distribution randomMagnitude; // TEMP
+
+//------------------
+
+
 
 double btn_arrow_point_map [] = {
   // front middle
@@ -906,7 +927,6 @@ class SkyBox
     }
     void generate()
     {
-        glPushMatrix();
         enable_texture();
         int check = 0;
         // glColor3f(1.0, 0, 0);
@@ -921,8 +941,6 @@ class SkyBox
                 }
             glEnd();
         }
-        glPopMatrix();
-        
     }
 
 };
@@ -959,10 +977,12 @@ class GameBoi
 
     void generate()
     {
+        glPushMatrix();
         draw_console();
         draw_btn_arrow();
         draw_btn_circle(texture_map["a_btn"], _a_x, _a_y, _a_b_z);
         draw_btn_circle(texture_map["b_btn"], _b_x, _b_y, _a_b_z);
+        glPopMatrix();
     }
 
     void change_texture(GLint texture_name)
@@ -974,8 +994,6 @@ class GameBoi
     private:
         void draw_console()
         {
-            glPushMatrix();
-             
             int n = sizeof(gameboy_point_map) / sizeof(gameboy_point_map)[0];
             int texture_pos = 0;
             
@@ -991,8 +1009,7 @@ class GameBoi
                     }
                 glEnd();
                 texture_pos++;
-            }  
-            glPopMatrix();
+            }
         }
 
         void draw_btn_arrow()
@@ -1156,7 +1173,6 @@ void display(void)
     glCullFace(GL_FRONT);
     glEnable(GL_CULL_FACE); */
 
-    glPushMatrix();
 /*    glTranslatef(-10.0,-10.0,0.0);  */
     // glLoadIdentity();
     glRotatef(spinX, 1.0, 0.0, 0.0);
@@ -1167,28 +1183,43 @@ void display(void)
 
     // load class tetris or w/e
 
-    
+
     // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // glColor3f(1.0, 0, 0);
 
     SkyBox sb(texture_map["skybox"]);
     sb.generate();
-    
+
     GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
 
+    // falling pieces
+    double currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+    double deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
+
     compile_game();
 
-    glPushMatrix();
-    
-    glTranslatef(27.5, 35.0, 0.0);
-    glRotatef(spinLongPiece, 0.0, 0.0, 1.0);
-    glTranslatef(-27.5, -35.0, 0.0);
 
-    glPopMatrix();
+    for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
+        if ((*it).m_lifetime >= 5.0) {
+            fallingPieces.erase(it);
+            continue;
+        }
+        (*it).updatePhysics(deltaTime);
 
-    glPopMatrix();
+        if ((*it).m_lifetime >= 3.0 && ((int) round(100*(*it).m_lifetime)) % 10 >= 5) {
+            ++it;
+            continue;
+        }
+
+        (*it).generate();
+
+        ++it;
+    }
+
 
     glutSwapBuffers();
 }
@@ -1269,13 +1300,44 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningLongPiece = 1;
             break;
 
-        case 'k':
+        case 'k': 
             spinningLongPiece = -1;
             break;
 
-        case 'a':
+        case 'a': {
+            for (int i = 0; i < 3; i += 1) {
+                fallingPieces.push_back(
+                    DynamicPiece(
+                        // texture
+                        0,
+
+                        // pos
+                        -0.065 + 0.01*(i), 0.0, 0.013,
+
+                        // velocity
+                        (randomMagnitude(mersenne) - .5) * 0.05,
+                        randomMagnitude(mersenne) * 0.05,
+                        randomMagnitude(mersenne) * 0.05,
+
+                        // acceleration
+                        0.0, -0.5, 0.0,
+
+                        // rotation
+                        0.0, 0.0, 0.0,
+
+                        // rotation speed
+                        (randomMagnitude(mersenne) - .5)*573,
+                        randomMagnitude(mersenne)*573,
+                        randomMagnitude(mersenne)*573,
+
+                        // rotation acceleration
+                        0.0, 0.0, 0.0
+                    )
+                );
+            }
             // allSpinsSpeedUp();
             break;
+        }
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;

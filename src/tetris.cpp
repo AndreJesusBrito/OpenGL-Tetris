@@ -75,10 +75,10 @@ namespace tetris {
             }
             if (clear) {
                 line = ClearedLine(i, {});
-                // std::cout << "CLEARED LINES " << line.second.size();
                 for (std::size_t i2 = i; i2 > 0; --i2) {
                     for (std::size_t j2 = 0; j2 < m_playfield.getWidth(); ++j2) {
-                        line.second.at(j2) = m_playfield.at(i2, j2);
+                        if (i2 == i)
+                            line.second.at(j2) = m_playfield.at(i2, j2);
                         m_playfield.at(i2, j2) = m_playfield.at(i2-1, j2);
                     }
                 }
