@@ -1,7 +1,7 @@
 #define EPSILON 1.0E-10
 
 // TODO get value from OpenGlTetris
-#define CUBE_SIZE 0.01
+#define CUBE_SIZE 0.005
 
 #include "DynamicPiece.h"
 

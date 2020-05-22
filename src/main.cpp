@@ -24,9 +24,6 @@ using namespace std;
 #define SIZE 0.01
 #define PI 3.14
 
-std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
-std::uniform_real_distribution randomMagnitude{0.0, 1.0};
-
 
 #define CAMERA_FAR 100500 // TODO: ajust this
 // GLOBALS
@@ -56,9 +53,10 @@ OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 
 double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000.0;
 
+extern std::vector<DynamicPiece> fallingPieces;
 
-// DynamicPiece fallingPieces[3];
-std::vector<DynamicPiece> fallingPieces{};
+extern std::mt19937 mersenne;
+extern std::uniform_real_distribution randomMagnitude; // TEMP
 
 //------------------
 
@@ -1208,12 +1206,6 @@ void display(void)
     // o1.generate();
 
     // gl.clear();
-
-    // for (int i = 0; i < fallingPieces.size(); i++) {
-    //     DynamicPiece piece = fallingPieces[i];
-    //     piece.updatePhysics(deltaTime);
-    //     piece.generate();
-    // }
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
         if ((*it).m_lifetime >= 5.0) {
