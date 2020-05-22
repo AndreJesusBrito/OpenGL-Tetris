@@ -1,6 +1,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <chrono>
+#include <set>
+
 
 #include "matrix.h"
 #include "piece.h"
@@ -21,6 +23,9 @@ using namespace std;
 #define SIDE 0.005
 #define SIZE 0.01
 #define PI 3.14
+
+std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
+std::uniform_real_distribution randomMagnitude{0.0, 1.0};
 
 
 #define CAMERA_FAR 100500 // TODO: ajust this
@@ -49,11 +54,11 @@ OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 //---------------------
 //  FALLING PIECES
 
-double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000;
+double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000.0;
 
 
-DynamicPiece *fallingPieces[3];
-int fallingPiecesCount = 0;
+// DynamicPiece fallingPieces[3];
+std::vector<DynamicPiece> fallingPieces{};
 
 //------------------
 
@@ -1192,15 +1197,9 @@ void display(void)
 
 
     // falling pieces
-    int currentTime = glutGet(GLUT_ELAPSED_TIME);
-    int deltaTime = currentTime - lastTime;
+    double currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+    double deltaTime = currentTime - lastTime;
     lastTime = currentTime;
-
-    for (int i = 0; i < fallingPiecesCount; i++) {
-        DynamicPiece *piece = fallingPieces[i];
-        piece->updatePhysics(deltaTime);
-        piece->generate();
-    }
 
 
     compile_game();
@@ -1210,7 +1209,28 @@ void display(void)
 
     // gl.clear();
 
+    // for (int i = 0; i < fallingPieces.size(); i++) {
+    //     DynamicPiece piece = fallingPieces[i];
+    //     piece.updatePhysics(deltaTime);
+    //     piece.generate();
+    // }
 
+    for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
+        if ((*it).m_lifetime >= 5.0) {
+            fallingPieces.erase(it);
+            continue;
+        }
+        (*it).updatePhysics(deltaTime);
+
+        if ((*it).m_lifetime >= 3.0 && ((int) round(100*(*it).m_lifetime)) % 10 >= 5) {
+            ++it;
+            continue;
+        }
+
+        (*it).generate();
+
+        ++it;
+    }
 
 
     glutSwapBuffers();
@@ -1292,22 +1312,41 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningLongPiece = 1;
             break;
 
-        case 'k':
+        case 'k': 
             spinningLongPiece = -1;
             break;
 
         case 'a': {
-            DynamicPiece newPiece = DynamicPiece (
-                -0.065 + 0.01*(fallingPiecesCount-1), 0.0, 0.013,    // pos
-                0.0, 0.0, 0.0,            // velocity
-                0.0, 0.0, 0.0,            // acceleration
-                0.0, 0.0, 0.0,            // rotation
-                0.0, 0.0, 0.0,            // rotation speed
-                0.0, 0.0, 0.0             // rotation acceleration
-            );
+            for (int i = 0; i < 3; i += 1) {
+                fallingPieces.push_back(
+                    DynamicPiece(
+                        // texture
+                        0,
 
-            fallingPieces[fallingPiecesCount++] = &newPiece;
+                        // pos
+                        -0.065 + 0.01*(i), 0.0, 0.013,
 
+                        // velocity
+                        (randomMagnitude(mersenne) - .5) * 0.05,
+                        randomMagnitude(mersenne) * 0.05,
+                        randomMagnitude(mersenne) * 0.05,
+
+                        // acceleration
+                        0.0, -0.5, 0.0,
+
+                        // rotation
+                        0.0, 0.0, 0.0,
+
+                        // rotation speed
+                        (randomMagnitude(mersenne) - .5)*573,
+                        randomMagnitude(mersenne)*573,
+                        randomMagnitude(mersenne)*573,
+
+                        // rotation acceleration
+                        0.0, 0.0, 0.0
+                    )
+                );
+            }
             // allSpinsSpeedUp();
             break;
         }

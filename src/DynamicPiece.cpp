@@ -8,40 +8,40 @@
 
 double cubeCoords[] = {
   // front
-  0.0, 0.0, CUBE_SIZE,
-  0.0, CUBE_SIZE, CUBE_SIZE,
-  CUBE_SIZE, CUBE_SIZE, CUBE_SIZE,
-  CUBE_SIZE, 0.0, CUBE_SIZE,
+  -CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2,
+  -CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+  CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+  CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2,
 
   // back
-  0.0, 0.0, 0,
-  0.0, CUBE_SIZE, 0,
-  CUBE_SIZE, CUBE_SIZE, 0,
-  CUBE_SIZE, 0.0, 0,
+  -CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
+  -CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+  CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+  CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
 
-  // 1.0 left
-  0.0, CUBE_SIZE, CUBE_SIZE,
-  0.0, CUBE_SIZE, 0,
-  0.0, 0.0, 0,
-  0.0, 0.0, CUBE_SIZE,
+  // left
+  -CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
+  -CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+  -CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+  -CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2,
 
-  // 1.0 right
-  CUBE_SIZE, CUBE_SIZE, CUBE_SIZE,
-  CUBE_SIZE, CUBE_SIZE, 0,
-  CUBE_SIZE, 0.0, 0,
-  CUBE_SIZE, 0.0, CUBE_SIZE,
-
-  // bottom
-  0.0, 0.0, CUBE_SIZE,
-  0.0, 0.0, 0,
-  CUBE_SIZE, 0.0, 0,
-  CUBE_SIZE, 0.0, CUBE_SIZE,
+  // right
+  CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
+  CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+  CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+  CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2,
 
   // top
-  0.0, CUBE_SIZE, CUBE_SIZE,
-  0.0, CUBE_SIZE, 0,
-  CUBE_SIZE, CUBE_SIZE, 0,
-  CUBE_SIZE, CUBE_SIZE, CUBE_SIZE,
+  -CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+  -CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+   CUBE_SIZE/2, CUBE_SIZE/2, -CUBE_SIZE/2,
+   CUBE_SIZE/2, CUBE_SIZE/2, CUBE_SIZE/2,
+
+  // bottom
+  -CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2,
+  -CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
+   CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
+   CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2
 };
 
 double cubeTextureCoords[12] = {
@@ -51,124 +51,115 @@ double cubeTextureCoords[12] = {
   0.0, 1.0,
 };
 
+DynamicPiece::DynamicPiece() {}
 
-DynamicPiece::DynamicPiece(double x, double y, double z,
+DynamicPiece::DynamicPiece(GLint texture_name,
+                           double x, double y, double z,
                            double vx, double vy, double vz,
                            double ax, double ay, double az,
                            double r1, double r2, double r3,
                            double vr1, double vr2, double vr3,
                            double ar1, double ar2, double ar3)
-  // x{x},
-  // y{y},
-  // z{z}
 {
-  this->m_lifetime = 0;
+  m_texture_name = texture_name;
+  m_lifetime = 0;
 
-  this->m_pos[0] = x;
-  this->m_pos[1] = y;
-  this->m_pos[2] = z;
+  m_pos[0] = x;
+  m_pos[1] = y;
+  m_pos[2] = z;
 
-  std::cout << "debug construct draw xyz " << this->m_pos[0] << " " << this->m_pos[1] << " " << this->m_pos[2] << '\n';
+  m_vel[0] = vx;
+  m_vel[1] = vy;
+  m_vel[2] = vz;
 
-
-  // this->m_vel[0] = vx;
-  // this->m_vel[1] = vy;
-  // this->m_vel[2] = vz;
-
-  // this->m_accel[0] = ax;
-  // this->m_accel[1] = ay;
-  // this->m_accel[2] = az;
+  m_accel[0] = ax;
+  m_accel[1] = ay;
+  m_accel[2] = az;
 
 
-  // this->m_rot[0] = r1;
-  // this->m_rot[1] = r2;
-  // this->m_rot[2] = r3;
+  m_rot[0] = r1;
+  m_rot[1] = r2;
+  m_rot[2] = r3;
 
-  // this->m_rotVel[0] = vr1;
-  // this->m_rotVel[1] = vr2;
-  // this->m_rotVel[2] = vr3;
+  m_rotVel[0] = vr1;
+  m_rotVel[1] = vr2;
+  m_rotVel[2] = vr3;
 
-  // this->m_rotAccel[0] = ar1;
-  // this->m_rotAccel[1] = ar2;
-  // this->m_rotAccel[2] = ar3;
+  m_rotAccel[0] = ar1;
+  m_rotAccel[1] = ar2;
+  m_rotAccel[2] = ar3;
 }
 
 DynamicPiece::~DynamicPiece() {}
 
 void DynamicPiece::updatePhysics(double deltaTime) {
-  this->m_lifetime += deltaTime;
+  m_lifetime += deltaTime;
 
-  // if (this->pos[1] > -0.49) {
-    // this->vel[0] += this->accel[0] * deltaTime;
-    // this->vel[1] += this->accel[1] * deltaTime;
-    // this->vel[2] += this->accel[2] * deltaTime;
+  if (m_pos[1] > -0.49) {
+    m_vel[0] += m_accel[0] * deltaTime;
+    m_vel[1] += m_accel[1] * deltaTime;
+    m_vel[2] += m_accel[2] * deltaTime;
 
-    // this->pos[0] += this->vel[0] * deltaTime;
-    // this->pos[1] += this->vel[1] * deltaTime;
-    // this->pos[2] += this->vel[2] * deltaTime;
+    m_pos[0] += m_vel[0] * deltaTime;
+    m_pos[1] += m_vel[1] * deltaTime;
+    m_pos[2] += m_vel[2] * deltaTime;
 
-    // this->rotVel[0] += this->rotAccel[0] * deltaTime;
-    // this->rotVel[1] += this->rotAccel[1] * deltaTime;
-    // this->rotVel[2] += this->rotAccel[2] * deltaTime;
+    m_rotVel[0] += m_rotAccel[0] * deltaTime;
+    m_rotVel[1] += m_rotAccel[1] * deltaTime;
+    m_rotVel[2] += m_rotAccel[2] * deltaTime;
 
-    // this->rot[0] += this->rotVel[0] * deltaTime;
-    // this->rot[1] += this->rotVel[1] * deltaTime;
-    // this->rot[2] += this->rotVel[2] * deltaTime;
-  // }
-  // else {
-  //   this->vel[0] = this->vel[0] / 3;
-  //   this->vel[1] = -this->vel[1] / 7;
-  //   this->vel[2] = this->vel[2] / 3;
+    m_rot[0] += m_rotVel[0] * deltaTime;
+    m_rot[1] += m_rotVel[1] * deltaTime;
+    m_rot[2] += m_rotVel[2] * deltaTime;
+  }
+  else {
+    m_vel[0] = m_vel[0] / 3;
+    m_vel[1] = -m_vel[1] / 7;
+    m_vel[2] = m_vel[2] / 3;
 
-  //   this->rotVel[0] = this->rotVel[0] * this->vel[0]*2;
-  //   this->rotVel[1] = this->rotVel[1] * this->vel[1]*2;
-  //   this->rotVel[2] = this->rotVel[2] * this->vel[2]*2;
+    m_rotVel[0] = m_rotVel[0] * m_vel[0]*2;
+    m_rotVel[1] = m_rotVel[1] * m_vel[1]*2;
+    m_rotVel[2] = m_rotVel[2] * m_vel[2]*2;
 
-  //   this->pos[1] = -0.49 + EPSILON;
-  // }
+    m_pos[1] = -0.49 + EPSILON;
+  }
 }
 
 void DynamicPiece::generate() {
   glPushMatrix();
 
-  std::cout << "debug draw xyz " << m_pos[0] << " " << m_pos[1] << " " << m_pos[2] << '\n';
 
-  glTranslatef(
-    (float) m_pos[0], (float) m_pos[1], (float) m_pos[2]
-  );
-  // mat4.rotate(
-  //     pieceTransformations,
-  //     pieceTransformations,
-  //     this->rot[0],
-  //     [1.0, 0.0, 0.0]
-  // )
-  // mat4.rotate(
-  //     pieceTransformations,
-  //     pieceTransformations,
-  //     this->rot[1],
-  //     [0.0, 1.0, 0.0]
-  // )
-  // mat4.rotate(
-  //     pieceTransformations,
-  //     pieceTransformations,
-  //     this->rot[2],
-  //     [0.0, 0.0, 1.0]
-  // )
-  glBindTexture(GL_TEXTURE_2D, 0);
+  glPushMatrix();
+  glLoadIdentity();
+  {
+    glTranslatef(
+      m_pos[0], m_pos[1], m_pos[2]
+    );
+    glRotatef(m_rot[0], 1.0, 0.0, 0.0);
+    glRotatef(m_rot[1], 0.0, 1.0, 0.0);
+    glRotatef(m_rot[2], 0.0, 0.0, 1.0);
+  }
+  GLdouble piece_tranformations[16];
+  glGetDoublev(GL_MODELVIEW_MATRIX, piece_tranformations);
+  glPopMatrix();
+  glMultMatrixd(piece_tranformations);
+
+
+
+  glBindTexture(GL_TEXTURE_2D, m_texture_name);
   glEnable(GL_TEXTURE_2D);
   for(int i = 0; i < 72; i += 12)
   {
     int check = 0;
     glBegin(GL_QUADS);
-        for(int j = i; j < i + 12; j += 3)
-        {
-            glTexCoord2f(cubeTextureCoords[check], cubeTextureCoords[check+1]);
-            glVertex3f(cubeCoords[j], cubeCoords[j + 1], cubeCoords[j + 2]);
-            check += 2;
-        }
+      for(int j = i; j < i + 12; j += 3)
+      {
+          glTexCoord2f(cubeTextureCoords[check], cubeTextureCoords[check+1]);
+          glVertex3f(cubeCoords[j], cubeCoords[j + 1], cubeCoords[j + 2]);
+          check += 2;
+      }
     glEnd();
   }
-
 
   glPopMatrix();
 }
