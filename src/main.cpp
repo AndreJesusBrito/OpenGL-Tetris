@@ -1198,6 +1198,7 @@ void display(void)
 
     for (int i = 0; i < fallingPiecesCount; i++) {
         DynamicPiece *piece = fallingPieces[i];
+        piece->updatePhysics(deltaTime);
         piece->generate();
     }
 
@@ -1307,7 +1308,6 @@ void keyboardHandler(unsigned char key, int x, int y) {
 
             fallingPieces[fallingPiecesCount++] = &newPiece;
 
-            newPiece.generate();
             // allSpinsSpeedUp();
             break;
         }

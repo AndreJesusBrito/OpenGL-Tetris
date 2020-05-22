@@ -3,18 +3,18 @@
 #ifndef DYNAMIC_PIECE_H
 #define DYNAMIC_PIECE_H
 
-class DynamicPiece: public Cube
+class DynamicPiece
 {
 public:
-  double lifetime;
+  double m_lifetime;
 
-  double pos[3];
-  double vel[3];
-  double accel[3];
+  double m_pos[3];
+  double m_vel[3];
+  double m_accel[3];
 
-  double rot[3];
-  double rotVel[3];
-  double rotAccel[3];
+  double m_rot[3];
+  double m_rotVel[3];
+  double m_rotAccel[3];
   DynamicPiece(double x, double y, double z,
                double vx, double vy, double vz,
                double ax, double ay, double az,

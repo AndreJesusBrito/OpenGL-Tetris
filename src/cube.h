@@ -29,7 +29,7 @@ class Cube
         _y = 0;
         _z = 0;
 
-        cube = {       
+        cube = {
             // front
             0.0, 0.0, 1.0,
             0.0, 1.0, 1.0,
@@ -151,7 +151,7 @@ class Cube
                 for(int j = i; j < i + 12; j += 3)
                 {
                     glTexCoord2f(texture_position[check], texture_position[check+1]);
-                    // glVertex3f(cube[j], cube[j + 1], cube[j + 2]);
+                    glVertex3f(this->cube[j], this->cube[j + 1], this->cube[j + 2]);
                     check += 2;
                 }
             glEnd();
