@@ -24,7 +24,6 @@ using namespace std;
 #define SIZE 0.01
 #define PI 3.14
 
-
 #define CAMERA_FAR 100500 // TODO: ajust this
 // GLOBALS
 
@@ -39,6 +38,7 @@ GLint ANTI_ALIASING = 1;
 GLint LABEL = 1;
 
 map<string, GLuint> texture_map;
+map<int, std::array<double, 3>> color_map;
 map<int, GLuint> tetromino_texture_map;
 OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 // textures
@@ -922,8 +922,13 @@ class SkyBox
     }
     void enable_texture()
     {
-        glBindTexture(GL_TEXTURE_2D, texture_name);
-        glEnable(GL_TEXTURE_2D);
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
     }
     void generate()
     {
@@ -980,15 +985,36 @@ class GameBoi
         glPushMatrix();
         draw_console();
         draw_btn_arrow();
+        glColor3f(0.0, 1, 0);
         draw_btn_circle(texture_map["a_btn"], _a_x, _a_y, _a_b_z);
+        glColor3f(1.0, 0, 0);
         draw_btn_circle(texture_map["b_btn"], _b_x, _b_y, _a_b_z);
         glPopMatrix();
     }
 
     void change_texture(GLint texture_name)
     {
-        glBindTexture(GL_TEXTURE_2D, texture_name);
-        glEnable(GL_TEXTURE_2D);
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+        {
+            glDisable(GL_TEXTURE_2D);
+        }
+        
+    }
+    
+    void game_end_screen()
+    {
+        glColor3f(0.5, 0.5, 0.5);
+        glBegin(GL_QUADS);
+            glVertex3d(-0.045, -0.01, 0.009);
+            glVertex3d(0.045, -0.01, 0.009);
+            glVertex3d(0.045, 0.11, 0.009);
+            glVertex3d(-0.045, 0.11, 0.009);
+        glEnd();  
     }
 
     private:
@@ -1000,6 +1026,7 @@ class GameBoi
             // generate gameboi body
             int check = 0;
             change_texture(texture_map["gb_texture"]);
+            glColor3f(0.5, 0, 0.5);
             for(int i = 0; i < n; i += 12)
             {
                 glBegin(GL_QUADS);
@@ -1010,12 +1037,15 @@ class GameBoi
                 glEnd();
                 texture_pos++;
             }
+
         }
 
         void draw_btn_arrow()
         {
             glPushMatrix();
             glTranslatef(_arrow_x, _arrow_y, _arrow_z);
+        
+            glColor3f(0.5, 0.5, 0.5);
 
             int texture_pos = 0;
             // generate arrow
@@ -1108,12 +1138,25 @@ class GameBoi
 
 void compile_game()
 {
+    SkyBox sb(texture_map["skybox"]);
+    sb.generate();
+
+    GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
+    gb.generate();
+
+
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
+
 
     bool game = oglt.nextState(elapsedTime, startTime);
     if (game) {
         // game_time_counter++;
         cout << oglt << "\n\n";
+    }
+    else
+    {
+        gb.game_end_screen();
+        
     }
 
 }
@@ -1186,12 +1229,6 @@ void display(void)
 
     // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // glColor3f(1.0, 0, 0);
-
-    SkyBox sb(texture_map["skybox"]);
-    sb.generate();
-
-    GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
-    gb.generate();
 
 
     // falling pieces
@@ -1362,7 +1399,12 @@ void keyboardHandler(unsigned char key, int x, int y) {
         case 27:             // ESCAPE key
             exit(0);
             break;
-
+        
+        case 'n':
+            OpenGLTetris new_game{SIDE, &tetromino_texture_map};
+            oglt = new_game;
+            display();
+            break;
     }
 }
 
@@ -1525,6 +1567,13 @@ void init(void)
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_right", initTexture("textures/gb_btn_arrow_right.png")));
     texture_map.insert(pair<string, GLuint>("gb_texture", initTexture("textures/gameboie.png")));
     texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
+    color_map.insert(pair<int, std::array<double, 3>>(1, {0.0, 1.0, 1.0}));
+    color_map.insert(pair<int, std::array<double, 3>>(2, {1.0, 1.0, 0.0}));
+    color_map.insert(pair<int, std::array<double, 3>>(3, {0.5, 0.0, 0.5}));
+    color_map.insert(pair<int, std::array<double, 3>>(4, {0.0, 1.0, 0.0}));
+    color_map.insert(pair<int, std::array<double, 3>>(5, {1.0, 0.0, 0.0}));
+    color_map.insert(pair<int, std::array<double, 3>>(6, {0.0, 0.0, 1.0}));
+    color_map.insert(pair<int, std::array<double, 3>>(7, {1.0, 0.65, 0.0}));
 }
 
 
@@ -1562,6 +1611,6 @@ int main(int argc, char ** argv)
     glutSpecialUpFunc(keyboardSpecialUpHandler);
 
     // oglt.nextState(elapsedTime, startTime);
-    
+       
     glutMainLoop();
 }

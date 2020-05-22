@@ -138,8 +138,9 @@ class Cube
 
     void enable_texture()
     {
+        glColor3f(1.0, 1.0, 1.0);
         glBindTexture(GL_TEXTURE_2D, texture_name);
-        glEnable(GL_TEXTURE_2D);
+        // glEnable(GL_TEXTURE_2D);
     }
 
     void draw() {

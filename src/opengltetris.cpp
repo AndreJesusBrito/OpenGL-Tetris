@@ -55,7 +55,7 @@ bool OpenGLTetris::keystrokes() {
 void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
     double pos_x = -0.025;
     double pos_y = 0.085;
-    double pos_z = 0.005;
+    double pos_z = 0.00085;
 
     std::vector<Cube> gl;
     for(std::size_t i = 0; i < currentPlayfield().getHeight(); i++)
