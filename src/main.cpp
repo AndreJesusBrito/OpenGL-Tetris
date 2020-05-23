@@ -1603,40 +1603,9 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningLongPiece = -1;
             break;
 
-        case 'a': {
-            for (int i = 0; i < 3; i += 1) {
-                fallingPieces.push_back(
-                    DynamicPiece(
-                        // texture
-                        0,
-
-                        // pos
-                        -0.065 + 0.01*(i), 0.0, 0.013,
-
-                        // velocity
-                        (randomMagnitude(mersenne) - .5) * 0.05,
-                        randomMagnitude(mersenne) * 0.05,
-                        randomMagnitude(mersenne) * 0.05,
-
-                        // acceleration
-                        0.0, -0.5, 0.0,
-
-                        // rotation
-                        0.0, 0.0, 0.0,
-
-                        // rotation speed
-                        (randomMagnitude(mersenne) - .5)*573,
-                        randomMagnitude(mersenne)*573,
-                        randomMagnitude(mersenne)*573,
-
-                        // rotation acceleration
-                        0.0, 0.0, 0.0
-                    )
-                );
-            }
+        case 'a':
             // allSpinsSpeedUp();
             break;
-        }
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;
