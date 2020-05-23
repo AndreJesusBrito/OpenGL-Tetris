@@ -64,13 +64,31 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
         {
             if(currentPlayfield().view(i, j))
             {
-                Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], pos_x, pos_y, pos_z, m_side);
+                Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], 
+                    pos_x + m_side*j, 
+                    pos_y - m_side*i, 
+                    pos_z, 
+                    m_side);
+
                 gl.push_back(o1);
             }
-            pos_x += m_side;
         }
-        pos_y -= m_side;
-        pos_x = -0.025;
+    }
+
+    Coords2D ghostPos = ghostPiecePosition();
+
+    for(std::size_t i = 0; i < m_currentPiece.currentFormation().getHeight(); ++i) {
+        for(std::size_t j = 0; j < m_currentPiece.currentFormation().getWidth(); ++j) {
+            if(m_currentPiece.currentFormation().view(i, j)) {
+                Cube o2((*m_tetrominoTextureMap)[m_currentPiece.currentFormation().view(i, j)], 
+                    pos_x + m_side*(j+ghostPos.second), 
+                    pos_y - m_side*(i+ghostPos.first), 
+                    pos_z, 
+                    m_side);
+
+                gl.push_back(o2);
+            }
+        }
     }
 
     for(auto i = gl.begin(); i!= gl.end(); ++i)
