@@ -768,17 +768,14 @@ void resetAllSpins(void) {
     resetSpinLongPiece();
 }
 
-char *helpObjects[10] = {
+char *helpObjects[7] = {
     "Objeto:",
-    "- Inclinar para baixo: Seta 'Para Cima'",
-    "- Inclinar para cima: Seta 'Para Baixo'",
-    "- Rodar para a direita: Seta 'Para a Direita'",
-    "- Rodar para a esquerda: Seta 'Para a Esquerda'",
-    "- Rodar tetramino 4x1 para a esquerda: Tecla 'J'",
-    "- Rodar tetramino 4x1 para a direita: Tecla 'K'",
+    "- Inclinar para baixo: Tecla J",
+    "- Inclinar para cima: Tecla U",
+    "- Rodar para a direita: Tecla K",
+    "- Rodar para a esquerda: Tecla J",
     "- Aumentar a velocidade: Tecla 'A'",
     "- Diminuir a velocidade: Tecla 'Z'",
-    "- Redefinir rotacao: Tecla 'R'"
 };
 
 char *helpViews[10] = {
@@ -791,14 +788,20 @@ char *helpViews[10] = {
     "- Camera 4: Tecla 'F4'",
     "- Camera 5: Tecla 'F5'",
     "- Camera 6: Tecla 'F6'",
-    "- Camera 7: Tecla 'F7'"
+    "- Camera 7: Tecla 'F7'",
 };
 
-char *helpGeneral[4] = {
+char *helpGeneral[10] = {
     "Geral:",
     "- Esconder/Mostrar Labels: Tecla 'L'",
     "- Ver 'menu': Botão direito do rato",
-    "- Sair do Programa: Tecla 'Esc'"
+    "- Sair do Programa: Tecla 'Esc'",
+    "- Novo jogo: Tecla N",
+    "- Pausar jogo: Tecla P",
+    "- Virar Peça: Tecla 'Seta para Cima'",
+    "- Mover a Peça para a Esquerda: Tecla 'Seta para a Esquerda'",
+    "- Mover a Peça para a Direita: Tecla 'Seta para a Direita'",
+    "- Hard Drop: Tecla Espaco",
 };
 
 class SkyBox
@@ -1447,10 +1450,10 @@ void display(void)
         glDisable(GL_TEXTURE_2D);
     
         glColor3f(0.96, 0.86, 0.58);
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 10; ++i)
             draw_text(helpGeneral[i], -1.85, 1.80+i*(-0.08), -3.0);
-        for (int i = 4; i < 14; ++i)
-            draw_text(helpObjects[i-4], -1.85, 1.75+i*(-0.08), -3.0);
+        for (int i = 4; i < 10; ++i)
+            draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
 
@@ -1595,21 +1598,13 @@ void keyboardHandler(unsigned char key, int x, int y) {
             display();
             break;
 
-        case 'j':
-            spinningLongPiece = 1;
-            break;
-
-        case 'k': 
-            spinningLongPiece = -1;
-            break;
-
         case 'a':
-            // allSpinsSpeedUp();
+            allSpinsSpeedUp();
             break;
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;
-            // allSpinsSpeedDown();
+            allSpinsSpeedDown();
             break;
 
         case ' ':
@@ -1636,25 +1631,35 @@ void keyboardHandler(unsigned char key, int x, int y) {
             display();
             break;
         
+
+        case 'u':
+            spinningX = -1;
+            break;
+        
+        case 'j':
+            spinningX = 1;
+            break;
+            
+        case 'h':
+            spinningY = -1;
+            break;
+        
+        case 'k':
+            spinningY = 1;
+            break;
+        
+        
         case 'n':
             OpenGLTetris new_game{SIDE, &tetromino_texture_map};
             oglt = new_game;
             display();
             break;
-        
  
     }
 }
 
 void keyboardUpHandler(unsigned char key, int x, int y) {
     switch (key) {
-        case 'j':
-            spinningLongPiece = 0;
-            break;
-
-        case 'k':
-            spinningLongPiece = 0;
-            break;
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
@@ -1666,6 +1671,23 @@ void keyboardUpHandler(unsigned char key, int x, int y) {
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
             oglt.m_movementAllowed = true;
             break;
+        
+        case 'u':
+            spinningX = 0;
+            break;
+
+        case 'j':
+            spinningX = 0;
+            break;
+
+        case 'h':
+            spinningY = 0;
+            break;
+
+        case 'k':
+            spinningY = 0;
+            break;
+
     }
 }
 
@@ -1701,10 +1723,12 @@ void keyboardSpecialHandler(int key, int x, int y) {
           currentCamera = &cameraDiagonal;
           display();
           break;
+    
+       
+
 
           // Movement Keys
         case GLUT_KEY_UP:
-            // spinningX = -1;
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_CLOCK;
             break;
         case GLUT_KEY_DOWN:
