@@ -458,7 +458,7 @@ Camera cameraDiagonal = {
 
 Camera *currentCamera = &cameraFront;
 
-GLuint initTexture(char *imgFilename) {
+GLuint initTexture(const char *imgFilename) {
     GLuint texture = 0;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -491,7 +491,7 @@ void activate_texture(GLint texture_name)
         glDisable(GL_TEXTURE_2D);
 }
 
-void draw_text(char *string, GLfloat x, GLfloat y, GLfloat z) {
+void draw_text(const char *string, GLfloat x, GLfloat y, GLfloat z) {
     glPushMatrix();
 
     glRasterPos3f(x, y, z);
@@ -504,8 +504,8 @@ void draw_text(char *string, GLfloat x, GLfloat y, GLfloat z) {
 
 void draw_button_b(double z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
     float angle, radian, x, y, xcos, ysin, tx, ty;
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
@@ -530,9 +530,10 @@ void draw_button_b(double z)
 
 void draw_button_a_sides(int z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
-    float angle, radian, x, y, xcos, ysin, tx, ty;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
+    float angle, radian, x, y, xcos, ysin;
+    // float tx, ty;
     glColor3f(0.0, 1.0, 0.0);
     for (angle=0.0; angle<360.0; angle+=0.5)
     {
@@ -540,8 +541,8 @@ void draw_button_a_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 45;
         y = (float)ysin * 5  + -15;
@@ -552,8 +553,8 @@ void draw_button_a_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 45;
         y = (float)ysin * 5  + -15;
@@ -569,9 +570,10 @@ void draw_button_a_sides(int z)
 
 void draw_button_b_sides(int z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
-    float angle, radian, x, y, xcos, ysin, tx, ty;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
+    float angle, radian, x, y, xcos, ysin;
+    // float tx, ty;
     glColor3f(1.0, 0, 0.0);
     for (angle=0.0; angle<360.0; angle+=0.5)
     {
@@ -579,8 +581,8 @@ void draw_button_b_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 35;
         y = (float)ysin * 5  + -25;
@@ -591,8 +593,8 @@ void draw_button_b_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 35;
         y = (float)ysin * 5  + -25;
@@ -671,7 +673,8 @@ void turn_shadow(int op)
 
 void Menu()
 {
-    int menu, submenu1, submenu2, submenu3, submenu4;
+    // int menu;
+    int submenu1, submenu2, submenu3, submenu4;
     submenu1 = glutCreateMenu(vis_objeto);
     glutAddMenuEntry("Arames", 0);
     glutAddMenuEntry("Solido", 1);
@@ -689,7 +692,8 @@ void Menu()
     glutAddMenuEntry("On", 1);
     glutAddMenuEntry("Off", 0);
 
-    menu = glutCreateMenu(main_menu);
+    // menu = glutCreateMenu(main_menu);
+    glutCreateMenu(main_menu);
     glutAddSubMenu("Objeto", submenu1);
     glutAddSubMenu("Iluminacao", submenu2);
     glutAddSubMenu("Anti-Aliasing", submenu3);
@@ -768,7 +772,7 @@ void resetAllSpins(void) {
     resetSpinLongPiece();
 }
 
-char *helpObjects[7] = {
+const char *helpObjects[9] = {
     "Objeto:",
     "- Inclinar para baixo: Tecla J",
     "- Inclinar para cima: Tecla U",
@@ -780,7 +784,7 @@ char *helpObjects[7] = {
     "- Voltar à posição inicial: Tecla 'R'",
 };
 
-char *helpViews[10] = {
+const char *helpViews[10] = {
     "Vistas:",
     "- Zoom In: Tecla '+' (Numpad)",
     "- Zoom Out: Tecla '-' (Numpad)",
@@ -793,7 +797,7 @@ char *helpViews[10] = {
     "- Camera 7: Tecla 'F7'",
 };
 
-char *helpGeneral[10] = {
+const char *helpGeneral[10] = {
     "Geral:",
     "- Esconder/Mostrar Labels: Tecla 'L'",
     "- Ver 'menu': Botão direito do rato",
@@ -949,7 +953,8 @@ class SkyBox
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
 
-                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
                 }
             glEnd();
         }
@@ -1062,7 +1067,8 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
-                        glTexCoord2f(gameboy_texture_map[check++],gameboy_texture_map[check++]);glVertex3f(gameboy_point_map[j], gameboy_point_map[j + 1], gameboy_point_map[j + 2]);
+                        glTexCoord2f(gameboy_texture_map[check],gameboy_texture_map[check+1]);glVertex3f(gameboy_point_map[j], gameboy_point_map[j + 1], gameboy_point_map[j + 2]);
+                        check += 2;
                     }
                 glEnd();
                 texture_pos++;
@@ -1093,8 +1099,9 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
-                        glTexCoord2f(texture_position[check++],texture_position[check++]);
+                        glTexCoord2f(texture_position[check],texture_position[check+1]);
                         glVertex3f(btn_arrow_point_map[j], btn_arrow_point_map[j + 1], btn_arrow_point_map[j + 2]);
+                        check += 2;
                     }
                 glEnd();
                 texture_pos++;
@@ -1108,8 +1115,8 @@ class GameBoi
         {
             glPushMatrix();
             glTranslatef(btn_x, btn_y, btn_z);
-            int num_vertex = 100;
-            const GLfloat delta_angle = 2.0*PI/num_vertex;
+            // int num_vertex = 100;
+            // const GLfloat delta_angle = 2.0*PI/num_vertex;
             float angle, radian, x, y, xcos, ysin, tx, ty;
             change_texture(texture_name);
             glBegin(GL_POLYGON);
@@ -1136,17 +1143,18 @@ class GameBoi
 
         void draw_btn_circle_side()
         {
-            int num_vertex = 100;
-            const GLfloat delta_angle = 2.0*PI/num_vertex;
-            float angle, radian, x, y, xcos, ysin, tx, ty;
+            // int num_vertex = 100;
+            // const GLfloat delta_angle = 2.0*PI/num_vertex;
+            float angle, radian, x, y, xcos, ysin;
+            // float tx, ty;
             for (angle=0.0; angle<360.0; angle+=0.5)
             {
                 glBegin(GL_QUADS);
                 radian = angle * (PI/180.0f);
                 xcos = (float)cos(radian);
                 ysin = (float)sin(radian);
-                tx = xcos * 0.5 + 0.5;
-                ty = ysin * 0.5 + 0.5;
+                // tx = xcos * 0.5 + 0.5;
+                // ty = ysin * 0.5 + 0.5;
 
                 x = (float)xcos * _r;
                 y = (float)ysin * _r;
@@ -1157,8 +1165,8 @@ class GameBoi
                 radian = angle * (PI/180.0f);
                 xcos = (float)cos(radian);
                 ysin = (float)sin(radian);
-                tx = xcos * 0.5 + 0.5;
-                ty = ysin * 0.5 + 0.5;
+                // tx = xcos * 0.5 + 0.5;
+                // ty = ysin * 0.5 + 0.5;
 
                 x = (float)xcos * _r;
                 y = (float)ysin * _r;
