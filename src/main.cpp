@@ -479,6 +479,27 @@ GLuint initTexture(const char *imgFilename) {
     return texture;
 }
 
+GLuint initTextureRepeat(char *imgFilename) {
+    GLuint texture = 0;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    // set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    // load and generate the texture
+    int width, height;
+    unsigned char *data = SOIL_load_image(imgFilename, &width, &height, 0, SOIL_LOAD_RGBA);
+    if (data)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    SOIL_free_image_data(data);
+    return texture;
+}
+
 
 void activate_texture(GLint texture_name)
 {
@@ -962,6 +983,466 @@ class SkyBox
 
 };
 
+
+class Background_ground
+{
+    double positions[12]=  {
+      -6.94, -0.01 -0.5, 7.12,
+      30.47, -0.01 -0.5, 7.12,
+      30.47, -0.01 -0.5, -23,
+      -6.94, -0.01 -0.5, -23,
+    };
+
+    double vertexNormals [12] = {
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+    };
+
+    double textureCoordinates [8] = {
+      -0.5, 0.0,
+      4.5, 0.0,
+      4.5, 5.0,
+      -0.5, 5.0,
+    };
+    public:
+        GLint texture_name;
+    Background_ground(){}
+
+    Background_ground(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 12; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]);glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_house_walls
+{
+    double positions [48]=  {
+      // big wall
+      -3.80, 3.50 -0.5, -12.76,
+      -3.80, 0.14 -0.5, -12.76,
+      12.94, 0.14 -0.5, -12.76,
+      12.94, 3.50 -0.5, -12.76,
+
+      // small wall
+      12.84, 2.69 -0.5, -12.76,
+      12.84, 0.14 -0.5, -12.76,
+      22.86, 0.14 -0.5, -12.76,
+      22.86, 2.69 -0.5, -12.76,
+
+      // upper right part
+      10.56, 4.10 -0.5, -13.45,
+      7.19, 4.10 -0.5, -13.45,
+      7.19, 5.03 -0.5, -13.45,
+      10.56, 5.03 -0.5, -13.45,
+
+      // upper left part
+      18.05, 2.79 -0.5, -12.60,
+      14.69, 2.79 -0.5, -12.60,
+      14.69, 3.71 -0.5, -12.60,
+      18.05, 3.71 -0.5, -12.60,
+    };
+
+    double vertexNormals [48] = {
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+    };
+
+    double textureCoordinates [32] = {
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+    };
+    public:
+        GLint texture_name;
+    Background_house_walls(){}
+
+    Background_house_walls(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 48; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_roof
+{
+    double positions [84]=  {
+      // roof
+      -4.60, 6.53 -0.5, -17.66,
+      13.44, 6.53 -0.5, -17.66,
+      13.44, 3.20 -0.5, -11.88,
+      -4.60, 3.20 -0.5, -11.88,
+
+
+      // roof
+      6.43, 4.72 -0.5, -12.95,
+      6.73, 4.72 -0.5, -17.36,
+      8.88, 6.14 -0.5, -17.36,
+      8.88, 6.35 -0.5, -12.95,
+
+      // roof
+      11.02, 4.72 -0.5, -12.95,
+      11.02, 4.72 -0.5, -17.36,
+      8.88, 6.35 -0.5, -17.36,
+      8.88, 6.35 -0.5, -12.95,
+
+
+      // roof
+      11.94, 2.33 -0.5, -11.44,
+      11.94, 5.04 -0.5, -18.30,
+      20.36, 5.04 -0.5, -18.30,
+      20.36, 2.33 -0.5, -11.44,
+
+      // roof
+      20.36, 4.23 -0.5, -16.26,
+      20.36, 2.33 -0.5, -11.44,
+      23.36, 2.33 -0.5, -11.44,
+      23.36, 4.23 -0.5, -16.26,
+
+      // roof
+      18.82, 3.40 -0.5, -12.10,
+      18.82, 3.40 -0.5, -18.28,
+      16.37, 5.04 -0.5, -18.28,
+      16.37, 5.04 -0.5, -12.10,
+
+
+      // roof
+      13.92, 3.40 -0.5, -12.10,
+      13.92, 3.40 -0.5, -18.28,
+      16.37, 5.04 -0.5, -18.28,
+      16.37, 5.04 -0.5, -12.10,
+    };
+
+    double vertexNormals [84] = {
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+    };
+
+    double textureCoordinates [56] = {
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+    };
+    public:
+        GLint texture_name;
+    Background_roof(){}
+
+    Background_roof(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 84; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_wood_walls
+{
+    double positions [60]=  {
+      //0 
+      -6.94, -0.51, 7.12,
+      -6.94, 1.34, 7.12,
+      -6.94, 1.34, -20.0,
+      -6.94, -0.51, -20.0,
+
+      // 1 
+      -6.94, -0.51, 7.12,
+      -6.94, 1.34, 7.12,
+      22.88, 1.34, 7.12,
+      22.88, -0.51, 7.12,
+
+
+
+      // 2
+      22.88, -0.51, 7.12,
+      22.88, 1.34, 7.12,
+      22.88, 1.34, -0.78,
+      22.88, -0.51, -0.78,
+
+
+      // 3
+      22.88, -0.51, -0.78,
+      22.88, 1.34, -0.78,
+      12.99, 1.34, -0.78,
+      12.99, -0.51, -0.78,
+
+
+      // 4
+      12.99, -0.51, -0.78,
+      12.99, 1.34, -0.78,
+      12.99, 1.34, -12.75,
+      12.99, -0.51, -12.75,
+    };
+
+    double vertexNormals [60] = {
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+    };
+
+    double textureCoordinates [48] = {
+      45.2, 2.19,
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+
+      45.2, 2.19,
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+
+      45.2, 2.19,
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+
+      16.5, 2.19,
+      0, 2.19,
+      0.0, 0.0,
+      16.5, 0.0,
+
+      16, 2.19,
+      0, 2.19,
+      0.0, 0.0,
+      16, 0.0,
+
+      19.95, 2.91,
+      0, 2.91,
+      0.0, 0.0,
+      19.95, 0.0,
+
+    };
+    public:
+        GLint texture_name;
+    Background_wood_walls(){}
+
+    Background_wood_walls(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 60; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                }
+            glEnd();
+        }
+    }
+
+};
+
 class GameBoi
 {
 
@@ -1406,13 +1887,27 @@ void compile_game()
     SkyBox sb(texture_map["skybox"]);
     sb.generate();
 
+    Background_ground background_ground(texture_map["background_ground"]);
+    background_ground.generate();
+
+    Background_house_walls background_house_walls(texture_map["white"]);
+    background_house_walls.generate();
+
+    // Background_house_walls_triangle background_house_walls_triangle(texture_map["white"]);
+    // background_house_walls_triangle.generate();
+
+    Background_roof background_roof(texture_map["roof_tile"]);
+    background_roof.generate();
+
+    Background_wood_walls background_wood_walls(texture_map["wood_wall_texture"]);
+    background_wood_walls.generate();
+
     GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
 
-    
 
     if(STATE)
     {
@@ -1841,6 +2336,10 @@ void init(void)
     texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
     texture_map.insert(pair<string, GLuint>("game_over", initTexture("textures/game_over.png")));
     texture_map.insert(pair<string, GLuint>("pause_screen", initTexture("textures/pause_screen.png")));
+    texture_map.insert(pair<string, GLuint>("background_ground", initTextureRepeat("textures/dirt.png")));
+    texture_map.insert(pair<string, GLuint>("white", initTextureRepeat("textures/white.png")));
+    texture_map.insert(pair<string, GLuint>("roof_tile", initTextureRepeat("textures/roof_tile.png")));
+    texture_map.insert(pair<string, GLuint>("wood_wall_texture", initTextureRepeat("textures/wood_wall_texture.png")));
     color_map.insert(pair<int, std::array<double, 3>>(1, {0.0, 1.0, 1.0}));
     color_map.insert(pair<int, std::array<double, 3>>(2, {1.0, 1.0, 0.0}));
     color_map.insert(pair<int, std::array<double, 3>>(3, {0.5, 0.0, 0.5}));
