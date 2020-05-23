@@ -37,6 +37,8 @@ GLint LIGHT = 1;
 GLint ANTI_ALIASING = 1;
 GLint LABEL = 1;
 
+int STATE = 1;
+
 map<string, GLuint> texture_map;
 map<int, std::array<double, 3>> color_map;
 map<int, GLuint> tetromino_texture_map;
@@ -1009,10 +1011,34 @@ class GameBoi
     void game_end_screen()
     {
         glColor3f(0.5, 0.5, 0.5);
+        change_texture(texture_map["game_over"]);
         glBegin(GL_QUADS);
+            glTexCoord2d(0.0, 0.0);
             glVertex3d(-0.045, -0.01, 0.009);
+            glTexCoord2d(1.0, 0.0);
             glVertex3d(0.045, -0.01, 0.009);
+            glTexCoord2d(1.0, 1.0);
+            glTexCoord2d(1.0, 1.0);
             glVertex3d(0.045, 0.11, 0.009);
+            glTexCoord2d(0.0, 1.0);
+            glVertex3d(-0.045, 0.11, 0.009);
+        glEnd();  
+    }
+
+
+   void game_pause_screen()
+    {
+         glColor3f(0.5, 0.5, 0.5);
+        change_texture(texture_map["pause_screen"]);
+        glBegin(GL_QUADS);
+            glTexCoord2d(0.0, 0.0);
+            glVertex3d(-0.045, -0.01, 0.009);
+            glTexCoord2d(1.0, 0.0);
+            glVertex3d(0.045, -0.01, 0.009);
+            glTexCoord2d(1.0, 1.0);
+            glTexCoord2d(1.0, 1.0);
+            glVertex3d(0.045, 0.11, 0.009);
+            glTexCoord2d(0.0, 1.0);
             glVertex3d(-0.045, 0.11, 0.009);
         glEnd();  
     }
@@ -1037,7 +1063,13 @@ class GameBoi
                 glEnd();
                 texture_pos++;
             }
-
+            glColor3f(0.5, 0.5, 0.5);
+            glBegin(GL_QUADS);
+                glVertex3d(-0.025, -0.01, -0.0010);
+                glVertex3d(0.025, -0.01, -0.0010);
+                glVertex3d(0.025, 0.095, -0.0010);
+                glVertex3d(-0.025, 0.095, -0.0010);
+            glEnd();  
         }
 
         void draw_btn_arrow()
@@ -1144,20 +1176,29 @@ void compile_game()
     GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
-
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
+    // cout >> oglt.viewNextPiece(0).getShapeName() >> '\n'; 
 
-    bool game = oglt.nextState(elapsedTime, startTime);
-    if (game) {
-        // game_time_counter++;
-        cout << oglt << "\n\n";
+
+    if(STATE)
+    {
+        bool game = oglt.nextState(elapsedTime, startTime);
+        if (game) {
+            // game_time_counter++;
+            cout << oglt << "\n\n";
+        }
+        else
+        {
+            gb.game_end_screen();
+            
+        }
     }
     else
     {
-        gb.game_end_screen();
-        
+        gb.game_pause_screen();
     }
+    
 
 }
 
@@ -1399,12 +1440,19 @@ void keyboardHandler(unsigned char key, int x, int y) {
         case 27:             // ESCAPE key
             exit(0);
             break;
+
+        case 'p':
+            STATE = STATE == 1 ? 0 : 1;
+            display();
+            break;
         
         case 'n':
             OpenGLTetris new_game{SIDE, &tetromino_texture_map};
             oglt = new_game;
             display();
             break;
+        
+ 
     }
 }
 
@@ -1567,6 +1615,8 @@ void init(void)
     texture_map.insert(pair<string, GLuint>("gb_btn_arrow_right", initTexture("textures/gb_btn_arrow_right.png")));
     texture_map.insert(pair<string, GLuint>("gb_texture", initTexture("textures/gameboie.png")));
     texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
+    texture_map.insert(pair<string, GLuint>("game_over", initTexture("textures/game_over.png")));
+    texture_map.insert(pair<string, GLuint>("pause_screen", initTexture("textures/pause_screen.png")));
     color_map.insert(pair<int, std::array<double, 3>>(1, {0.0, 1.0, 1.0}));
     color_map.insert(pair<int, std::array<double, 3>>(2, {1.0, 1.0, 0.0}));
     color_map.insert(pair<int, std::array<double, 3>>(3, {0.5, 0.0, 0.5}));
