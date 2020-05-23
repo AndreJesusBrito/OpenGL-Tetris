@@ -95,6 +95,15 @@ namespace tetris {
         return m_pieceBuffer.at(i);
     }
 
+    const Tetris::Coords2D Tetris::ghostPiecePosition() const {
+        Coords2D result{m_piecePosition};
+        while(canPieceBePlaced(m_currentPiece, result)) {
+            ++result.first;
+        }
+        --result.first;
+        return result;
+    }
+
     bool Tetris::movePieceLeft() {
         return movePiece(0, -1);
     }

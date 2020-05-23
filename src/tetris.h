@@ -47,6 +47,7 @@ namespace tetris {
         Tetris();
 
         const Piece& viewNextPiece(int i) const;
+        const Coords2D ghostPiecePosition() const;
         bool movePieceLeft();
         bool movePieceRight();
         bool movePieceDown();
