@@ -200,7 +200,7 @@ namespace tetris {
     //     return currentFormation().view(row, col);
     // }
 
-    Piece::ShapeName Piece::getShapeName() {
+    Piece::ShapeName Piece::getShapeName() const {
         return m_shapeName;
     }
 

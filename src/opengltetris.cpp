@@ -77,6 +77,8 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
 
     Coords2D ghostPos = ghostPiecePosition();
 
+    std::vector<Cube> ghost;
+
     for(std::size_t i = 0; i < m_currentPiece.currentFormation().getHeight(); ++i) {
         for(std::size_t j = 0; j < m_currentPiece.currentFormation().getWidth(); ++j) {
             if(m_currentPiece.currentFormation().view(i, j)) {
@@ -86,7 +88,7 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
                     pos_z, 
                     m_side);
 
-                gl.push_back(o2);
+                ghost.push_back(o2);
             }
         }
     }
@@ -94,6 +96,11 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
     for(auto i = gl.begin(); i!= gl.end(); ++i)
     {
         (*i).generate();
+    }
+
+    for(auto i = ghost.begin(); i!= ghost.end(); ++i)
+    {
+        (*i).generate_ghost();
     }
 
 

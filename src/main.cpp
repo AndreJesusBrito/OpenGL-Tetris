@@ -1004,8 +1004,7 @@ class GameBoi
         else
         {
             glDisable(GL_TEXTURE_2D);
-        }
-        
+        }    
     }
     
     void game_end_screen()
@@ -1168,6 +1167,227 @@ class GameBoi
         }
 };
 
+
+class Square
+{
+    public:
+        double _x, _y, _z;
+    Square(){};
+    Square(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class LongBoi
+{
+    public:
+        double _x, _y, _z;
+    LongBoi(){};
+    LongBoi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class L_Boi
+{
+    public:
+        double _x, _y, _z;
+    L_Boi(){};
+    L_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class J_Boi
+{
+    public:
+        double _x, _y, _z;
+    J_Boi(){};
+    J_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class Z_Boi
+{
+    public:
+        double _x, _y, _z;
+    Z_Boi(){};
+    Z_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class S_Boi
+{
+    public:
+        double _x, _y, _z;
+    S_Boi(){};
+    S_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class T_Boi
+{
+    public:
+        double _x, _y, _z;
+    T_Boi(){};
+    T_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+
+void get_next_piece()
+{
+    int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
+
+    switch (next_p)
+    {
+        case 1:
+        {
+            LongBoi lp(.035, 0.085, 0.0085);
+            lp.generate();
+            break; 
+        }
+        case 2:
+        {
+            Square sp(.035, 0.085, 0.0085);
+            sp.generate();
+            break;
+        }
+        case 3:
+        {
+            T_Boi tp(.035, 0.085, 0.0085);
+            tp.generate();
+            break; 
+        }
+        case 4:
+        {
+            S_Boi sp(.035, 0.085, 0.0085);
+            sp.generate();
+            break;
+        }
+        case 5:
+        {
+            Z_Boi zp(.035, 0.085, 0.0085);
+            zp.generate();
+            break;
+        }
+        case 6:
+        {
+            J_Boi jp(.035, 0.085, 0.0085);
+            jp.generate();
+            break;
+        }
+        case 7:
+        {
+            L_Boi lp(.035, 0.085, 0.0085);
+            lp.generate();
+            break;
+        }
+    }
+
+}
+
+
+
 void compile_game()
 {
     SkyBox sb(texture_map["skybox"]);
@@ -1178,13 +1398,14 @@ void compile_game()
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
-    // cout >> oglt.viewNextPiece(0).getShapeName() >> '\n'; 
 
+    
 
     if(STATE)
     {
         bool game = oglt.nextState(elapsedTime, startTime);
         if (game) {
+            get_next_piece();
             // game_time_counter++;
             cout << oglt << "\n\n";
         }

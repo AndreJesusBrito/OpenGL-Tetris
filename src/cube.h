@@ -21,7 +21,7 @@ class Cube
 
     public:
     double _x, _y, _z, _len; // apply len later
-    GLint texture_name;
+    GLuint texture_name;
 
     Cube()
     {
@@ -68,7 +68,7 @@ class Cube
         };
     }
 
-    Cube(GLint texture, double x, double y, double z, double side)
+    Cube(GLuint texture, double x, double y, double z, double side)
     {
         texture_name = texture;
         _x = x;
@@ -114,7 +114,7 @@ class Cube
         };
     }
 
-    void set_all(GLint texture, double x, double y, double z)
+    void set_all(GLuint texture, double x, double y, double z)
     {
         texture_name = texture;
         _x = x;
@@ -162,10 +162,23 @@ class Cube
     void generate()
     {
         glPushMatrix();
-        glTranslatef(_x , _y, _z);
+        glTranslatef(_x , _y, _z);   
         this->draw();
         glPopMatrix();
     }
+
+    void generate_ghost()
+    {
+        glPolygonMode(GL_FRONT, GL_LINE);
+        glPolygonMode(GL_BACK, GL_LINE);
+        glPushMatrix();
+        glTranslatef(_x , _y, _z);   
+        this->draw();
+        glPopMatrix();
+        glPolygonMode(GL_FRONT, GL_FILL);
+        glPolygonMode(GL_BACK, GL_FILL);
+    }
+
     void info()
     {
         std::cout <<"coords: x: "<< _x << " y: " << _y << " z: " << _z << " texture: " << texture_name << "\n";
