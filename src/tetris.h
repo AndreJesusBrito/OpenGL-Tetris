@@ -1,7 +1,7 @@
 #ifndef TETRIS_H
 #define TETRIS_H
 
-#include <queue>
+#include <deque>
 #include <utility>
 #include <iostream>
 #include <cmath>
@@ -23,7 +23,7 @@ namespace tetris {
     protected:
         Playfield m_playfield;
         int m_linesCleared = 0;
-        std::queue<Piece> m_pieceBuffer;
+        std::deque<Piece> m_pieceBuffer;
         Piece m_currentPiece;
 
         // m_piecePosition is a pair of row and col indexes that point to where the
@@ -46,6 +46,7 @@ namespace tetris {
     public:
         Tetris();
 
+        const Piece& viewNextPiece(int i) const;
         bool movePieceLeft();
         bool movePieceRight();
         bool movePieceDown();
