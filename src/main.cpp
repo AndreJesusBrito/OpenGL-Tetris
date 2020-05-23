@@ -776,6 +776,8 @@ char *helpObjects[7] = {
     "- Rodar para a esquerda: Tecla J",
     "- Aumentar a velocidade: Tecla 'A'",
     "- Diminuir a velocidade: Tecla 'Z'",
+    "- Esconder/Mostrar Labels: Tecla 'L'",
+    "- Voltar à posição inicial: Tecla 'R'",
 };
 
 char *helpViews[10] = {
@@ -798,10 +800,10 @@ char *helpGeneral[10] = {
     "- Sair do Programa: Tecla 'Esc'",
     "- Novo jogo: Tecla N",
     "- Pausar jogo: Tecla P",
-    "- Virar Peça: Tecla 'Seta para Cima'",
-    "- Mover a Peça para a Esquerda: Tecla 'Seta para a Esquerda'",
-    "- Mover a Peça para a Direita: Tecla 'Seta para a Direita'",
-    "- Hard Drop: Tecla Espaco",
+    "- Virar Peca: Tecla 'Seta para Cima'",
+    "- Mover a Peca para a Esquerda: Tecla 'Seta para a Esquerda'",
+    "- Mover a Peca para a Direita: Tecla 'Seta para a Direita'",
+    "- Mover a Peca instaneamente para Baixo: Tecla Espaco",
 };
 
 class SkyBox
