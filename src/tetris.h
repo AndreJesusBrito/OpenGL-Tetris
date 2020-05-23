@@ -32,6 +32,7 @@ namespace tetris {
         Coords2D m_piecePosition{0, 3};
 
         // time in seconds
+        double m_stepTimeRef = 1.0;
         double m_stepTime = 1.0;
 
         bool canPieceBePlaced(const Piece& piece, const Coords2D& position) const;
@@ -55,6 +56,8 @@ namespace tetris {
         void rotatePieceClockwise();
         void rotatePieceCounterClockwise();
         std::vector<ClearedLine> hardDropPiece();
+        void enableSoftDropPiece();
+        void disableSoftDropPiece();
 
         Playfield currentPlayfield() const;
         int level();

@@ -26,17 +26,20 @@ public:
 
         MAX_MOVES
     };
+    
+private:
+    bool m_movementAllowed = true;
 
 public:
     Move m_currentMove = Move::NO_MOVE;
     double m_side;
     std::map<int, GLuint> *m_tetrominoTextureMap;
 
-    bool m_movementAllowed = true;
 
     OpenGLTetris();
     OpenGLTetris(double side, std::map<int, GLuint> *tetrominoTextureMap);
     void addFallingPieces(std::vector<tetris::Tetris::ClearedLine> clearLines);
+    void allowMovement();
 
     virtual bool keystrokes() override final;
     virtual void nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) override final;
