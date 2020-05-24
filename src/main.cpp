@@ -1824,7 +1824,7 @@ class T_Boi
         glTranslatef(_x, _y, _z);
             Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
             Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0 - SIDE, SIDE);
+            Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
             Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
             o1.generate(); o2.generate(); o3.generate(); o4.generate();
         glPopMatrix();
