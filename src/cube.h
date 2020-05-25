@@ -1,11 +1,12 @@
+#ifndef CUBE_H
+#define CUBE_H
+
 #include <iostream>
 #include <vector>
 #include <GL/glut.h>
 
 #include "SOIL.h"
 
-#ifndef CUBE_H
-#define CUBE_H
 
 class Cube
 {
