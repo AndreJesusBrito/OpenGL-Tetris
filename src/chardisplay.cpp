@@ -178,9 +178,13 @@ void CharDisplay::draw() {
             if (m_pixelMatrix.view(i, j)) {
                 glBegin(GL_QUADS);
                     glVertex3f(j*m_side, (m_pixelMatrix.getHeight()-i)*m_side, 0.0);
+                    glNormal3f(0.0, 0.0, 1.0);
                     glVertex3f(j*m_side+m_side, (m_pixelMatrix.getHeight()-i)*m_side, 0.0);
+                    glNormal3f(0.0, 0.0, 1.0);
                     glVertex3f(j*m_side+m_side, (m_pixelMatrix.getHeight()-i)*m_side+m_side, 0.0);
+                    glNormal3f(0.0, 0.0, 1.0);
                     glVertex3f(j*m_side, (m_pixelMatrix.getHeight()-i)*m_side+m_side, 0.0);
+                    glNormal3f(0.0, 0.0, 1.0);
                 glEnd();
             }
         }
