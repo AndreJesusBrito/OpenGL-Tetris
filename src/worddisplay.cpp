@@ -27,18 +27,20 @@ void WordDisplay::generate()
 {
     std::vector<CharDisplay> display_word;
     int i = 0;
+    auto [c_x, c_y, c_z] = m_color;
     for(char& c: m_word)
     {
-        CharDisplay c1(c, m_side, {i * 4 * m_side, 0, 0}, {1.0, 1.0, 1.0});
+        CharDisplay c1(c, m_side, {i * 4.0 * m_side, 0.0, 0.0}, {c_x, c_y, c_z});
         display_word.push_back(c1);
         i++;
     }
     auto [x, y, z] = m_pos;
-    auto [c_x, c_y, c_z] = m_color;
-    glColor3f(c_x, c_y, c_z);
+    // glColor3f(c_x, c_y, c_z);
+    glDisable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(x, y, z);
     for(CharDisplay cd : display_word)
         cd.generate();   
     glPopMatrix();
+    glEnable(GL_TEXTURE_2D);
 }
