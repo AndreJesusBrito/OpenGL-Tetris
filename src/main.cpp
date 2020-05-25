@@ -2,7 +2,14 @@
 #include <unistd.h>
 #include <chrono>
 #include <set>
+#include <bits/stdc++.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
+#include <GL/glut.h>  // GLUT, includes glu.h and gl.h
+#include <GL/glext.h> // Needed for GL_MULTISAMPLE
+#include "SOIL.h"
 
 #include "matrix.h"
 #include "piece.h"
@@ -11,14 +18,7 @@
 #include "opengltetris.h"
 #include "DynamicPiece.h"
 
-#include <GL/glut.h>  // GLUT, includes glu.h and gl.h
-#include <GL/glext.h> // Needed for GL_MULTISAMPLE
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "SOIL.h"
 
-#include <bits/stdc++.h>
 using namespace std;
 #define SIDE 0.005
 #define SIZE 0.01
