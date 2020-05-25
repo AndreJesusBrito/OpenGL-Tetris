@@ -1508,6 +1508,8 @@ class GameBoi
     
     void game_end_screen()
     {
+        glTranslatef(_x, _y, _z);
+
         glColor3f(0.5, 0.5, 0.5);
         change_texture(texture_map["game_over"]);
         glBegin(GL_QUADS);
@@ -1526,7 +1528,9 @@ class GameBoi
 
    void game_pause_screen()
     {
-         glColor3f(0.5, 0.5, 0.5);
+        glTranslatef(_x, _y, _z);
+
+        glColor3f(0.5, 0.5, 0.5);
         change_texture(texture_map["pause_screen"]);
         glBegin(GL_QUADS);
             glTexCoord2d(0.0, 0.0);
@@ -1602,6 +1606,7 @@ class GameBoi
 
         void draw_btn_circle(GLint texture_name, double btn_x, double btn_y, double btn_z)
         {
+            
             glPushMatrix();
             glTranslatef(btn_x, btn_y, btn_z);
             // int num_vertex = 100;
