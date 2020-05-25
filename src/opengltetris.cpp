@@ -63,9 +63,7 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
     double pos_z = 0.00085;
 
     
-    WordDisplay cd("L", 0.0012, {0, 0, 0}, {0, 0, 0});
-    // cd.move(pos_x, pos_y, pos_z);
-    // cd.changeColor(1.0, 1.0, 1.0);
+    WordDisplay cd("LINES " + std::to_string(m_linesCleared), 0.0012, {-0.02, -0.2, 0.0085}, {1, 1, 1});
     cd.generate();
 
     std::vector<Cube> gl;

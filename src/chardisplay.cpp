@@ -136,6 +136,13 @@ CharDisplay::CharDisplay(char ch, double side, TripleDouble pos, TripleDouble co
                               0, 0, 1,
                               1, 1, 0 };
             break;
+        case ' ': 
+            m_pixelMatrix = { 0, 0, 0,
+                              0, 0, 0,
+                              0, 0, 0,
+                              0, 0, 0,
+                              0, 0, 0 };
+            break;
         default:
             throw std::invalid_argument("ch");
     }
