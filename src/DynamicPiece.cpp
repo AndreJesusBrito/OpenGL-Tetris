@@ -93,8 +93,8 @@ DynamicPiece::DynamicPiece(GLint texture_name,
 DynamicPiece::~DynamicPiece() {}
 
 void DynamicPiece::updatePhysics(double deltaTime) {
+  deltaTime /= 4;
   m_lifetime += deltaTime;
-
   if (m_pos[1] > -0.49) {
     m_vel[0] += m_accel[0] * deltaTime;
     m_vel[1] += m_accel[1] * deltaTime;
@@ -113,9 +113,9 @@ void DynamicPiece::updatePhysics(double deltaTime) {
     m_rot[2] += m_rotVel[2] * deltaTime;
   }
   else {
-    m_vel[0] = m_vel[0] / 3;
-    m_vel[1] = -m_vel[1] / 7;
-    m_vel[2] = m_vel[2] / 3;
+    m_vel[0] = m_vel[0] / 2;
+    m_vel[1] = -m_vel[1] / 2;
+    m_vel[2] = m_vel[2] / 2;
 
     m_rotVel[0] = m_rotVel[0] * m_vel[0]*2;
     m_rotVel[1] = m_rotVel[1] * m_vel[1]*2;

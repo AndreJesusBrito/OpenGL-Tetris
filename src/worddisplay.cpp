@@ -29,13 +29,13 @@ void WordDisplay::generate()
     int i = 0;
     for(char& c: m_word)
     {
-        CharDisplay c1(c, m_side, {i * 4 * m_side, 0, 0}, {1.0, 1.0, 1.0});
+        CharDisplay c1(c, m_side, {i * 4 * m_side, 0, 0}, {10.0, 10.0, 10.0});
         display_word.push_back(c1);
         i++;
     }
     auto [x, y, z] = m_pos;
-    auto [c_x, c_y, c_z] = m_color;
-    glColor3f(c_x, c_y, c_z);
+    // auto [c_x, c_y, c_z] = m_color;
+    // glColor3f(c_x, c_y, c_z);
     glPushMatrix();
     glTranslatef(x, y, z);
     for(CharDisplay cd : display_word)
