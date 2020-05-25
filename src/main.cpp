@@ -877,16 +877,19 @@ void resetAllSpins(void) {
     resetSpinLongPiece();
 }
 
-const char *helpObjects[9] = {
+const char *helpObjects[12] = {
     "Objeto:",
     "- Inclinar para baixo: Tecla 'J'",
     "- Inclinar para cima: Tecla 'U'",
+    "- Rodar para a esquerda: Tecla 'H'",
     "- Rodar para a direita: Tecla 'K'",
-    "- Rodar para a esquerda: Tecla 'J'",
     "- Aumentar a velocidade: Tecla 'A'",
     "- Diminuir a velocidade: Tecla 'S'",
+    "- Aumentar a velocidade da queda dos blocos: Tecla 'V'",
+    "- Diminuir a velocidade da queda dos blocos: Tecla 'B'",
     "- Esconder/Mostrar Labels: Tecla 'L'",
     "- Voltar à posição inicial: Tecla 'R'",
+    "- Ver 'menu': Botão direito do rato",
 };
 
 const char *helpViews[10] = {
@@ -904,14 +907,14 @@ const char *helpViews[10] = {
 
 const char *helpGeneral[10] = {
     "Geral:",
-    "- Esconder/Mostrar Labels: Tecla 'L'",
-    "- Ver 'menu': Botão direito do rato",
-    "- Sair do Programa: Tecla 'Esc'",
+    "- Sair do Programa: Tecla 'ESC'",
     "- Novo jogo: Tecla 'N'",
     "- Pausar jogo: Tecla 'P'",
-    "- Virar Peca: Tecla 'Seta para Cima'",
+    "- Rodar Peca para a Esquerda: Tecla 'Z'",
+    "- Rodar Peca para a Direita: Tecla 'Seta para Cima'",
     "- Mover a Peca para a Esquerda: Tecla 'Seta para a Esquerda'",
     "- Mover a Peca para a Direita: Tecla 'Seta para a Direita'",
+    "- Mover a Peca para a Baixo: Tecla 'Seta para Baixo'",
     "- Mover a Peca instaneamente para Baixo: Tecla 'Espaco'",
 };
 
