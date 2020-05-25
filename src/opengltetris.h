@@ -11,6 +11,7 @@
 #include "cube.h"
 #include "DynamicPiece.h"
 #include "chardisplay.h"
+#include "worddisplay.h"
 
 
 class OpenGLTetris: public tetris::Tetris {

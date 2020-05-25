@@ -62,6 +62,12 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
     double pos_y = 0.085 - 0.3;
     double pos_z = 0.00085;
 
+    
+    WordDisplay cd("L", 0.0012, {0, 0, 0}, {0, 0, 0});
+    // cd.move(pos_x, pos_y, pos_z);
+    // cd.changeColor(1.0, 1.0, 1.0);
+    cd.generate();
+
     std::vector<Cube> gl;
     for(std::size_t i = 0; i < currentPlayfield().getHeight(); i++)
     {
@@ -108,8 +114,6 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
         (*i).generate_ghost();
     }
 
-    CharDisplay cd('1', 0.012);
-    cd.generate();
     addFallingPieces(clearedLines);
 }
 

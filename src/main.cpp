@@ -1058,7 +1058,8 @@ class SkyBox
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
 
-                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); 
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
