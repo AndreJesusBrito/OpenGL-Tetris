@@ -468,7 +468,7 @@ void changeCameraZoom(Camera *camera, float increment) {
 
 
 
-float originPoint[3] = {0,-150,0};
+float originPoint[3] = {0,0,0};
 
 Camera cameraFront = {
   {0.0, 0.0, 400.0},
