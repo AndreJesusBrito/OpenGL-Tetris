@@ -2191,13 +2191,13 @@ void keyboardUpHandler(unsigned char key, int x, int y) {
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
-            oglt.m_movementAllowed = true;
+            oglt.allowMovement();
             // allSpinsSpeedDown();
             break;
 
         case ' ':
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
-            oglt.m_movementAllowed = true;
+            oglt.allowMovement();
             break;
         
         case 'u':
@@ -2260,7 +2260,7 @@ void keyboardSpecialHandler(int key, int x, int y) {
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_CLOCK;
             break;
         case GLUT_KEY_DOWN:
-            oglt.m_currentMove = OpenGLTetris::Move::DISABLE_SOFT_DROP;
+            oglt.m_currentMove = OpenGLTetris::Move::ENABLE_SOFT_DROP;
             // spinningX = 1;
             break;
         case GLUT_KEY_LEFT:
@@ -2279,21 +2279,22 @@ void keyboardSpecialUpHandler(int key, int x, int y) {
         case GLUT_KEY_UP:
             // spinningX = 0;
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
-            oglt.m_movementAllowed = true;
+            oglt.allowMovement();
             break;
         case GLUT_KEY_DOWN:
             // spinningX = 0;
-            // oglt.m_currentMove = OpenGLTetris::Move::DISABLE_SOFT_DROP;
+            oglt.m_currentMove = OpenGLTetris::Move::DISABLE_SOFT_DROP;
+            oglt.allowMovement();
             break;
         case GLUT_KEY_LEFT:
             // spinningY = 0;
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
-            oglt.m_movementAllowed = true;
+            oglt.allowMovement();
             break;
         case GLUT_KEY_RIGHT:
             // spinningY = 0;
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
-            oglt.m_movementAllowed = true;
+            oglt.allowMovement();
             break;
     }
 }

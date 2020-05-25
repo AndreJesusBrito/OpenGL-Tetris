@@ -149,6 +149,14 @@ namespace tetris {
         return result;
     }
 
+    void Tetris::enableSoftDropPiece() {
+        m_stepTime = m_stepTimeRef/10.0;
+    }
+
+    void Tetris::disableSoftDropPiece() {
+        m_stepTime = m_stepTimeRef;
+    }
+
     Tetris::Playfield Tetris::currentPlayfield() const {
         Playfield result{};
 
@@ -177,7 +185,7 @@ namespace tetris {
     }
 
     void Tetris::updateStepTime() {
-        m_stepTime = pow(0.8 - ((level() - 1)*0.007), level() - 1);
+        m_stepTimeRef = pow(0.8 - ((level() - 1)*0.007), level() - 1);
     }
 
     // void Tetris::keystrokes() {}

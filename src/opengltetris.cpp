@@ -1,5 +1,5 @@
 #include "opengltetris.h"
-#include "DynamicPiece.h"
+
 
 // random generator
 std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
@@ -23,29 +23,34 @@ bool OpenGLTetris::keystrokes() {
     if (m_currentMove > Move::NO_MOVE && m_currentMove < Move::MAX_MOVES && m_movementAllowed) {
         if (m_currentMove == Move::ROTATE_CLOCK) {
             rotatePieceClockwise();
+            m_movementAllowed = false;
         }
         else if (m_currentMove == Move::ROTATE_COUNTER_CLOCK) {
             rotatePieceCounterClockwise();
+            m_movementAllowed = false;
         }
         else if (m_currentMove == Move::MOVE_LEFT) {
             movePieceLeft();
+            m_movementAllowed = false;
         }
         else if (m_currentMove == Move::MOVE_RIGHT) {
             movePieceRight();
+            m_movementAllowed = false;
         }
-        // else if (m_currentMove == Move::ENABLE_SOFT_DROP) {
-        //     enableSoftDropPiece();
-        // }
-        // else if (m_currentMove == Move::DISABLE_SOFT_DROP) {
-        //     disableSoftDropPiece();
-        // }
+        else if (m_currentMove == Move::ENABLE_SOFT_DROP) {
+            enableSoftDropPiece();
+        }
+        else if (m_currentMove == Move::DISABLE_SOFT_DROP) {
+            disableSoftDropPiece();
+        }
         else if (m_currentMove == Move::HARD_DROP) {
             clearedLines = hardDropPiece();
 
             addFallingPieces(clearedLines);
+            m_movementAllowed = false;
         }
 
-        m_movementAllowed = false;
+        // m_movementAllowed = false;
 
         return true;
     }
@@ -155,4 +160,9 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
                     0.0, 0.0, 0.0));
         }
     }
+
+}
+
+void OpenGLTetris::allowMovement() {
+    m_movementAllowed = true;
 }
