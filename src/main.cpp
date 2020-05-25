@@ -1458,12 +1458,12 @@ class GameBoi
         };
 
     public:
-        double _arrow_x, _arrow_y, _arrow_z, _a_x, _a_y, _b_x, _b_y, _a_b_z, _r, _h ;
+        double _x, _y ,_z,_arrow_x, _arrow_y, _arrow_z, _a_x, _a_y, _b_x, _b_y, _a_b_z, _r, _h ;
 
 
     GameBoi(){}
 
-    GameBoi(double arrow_x, double arrow_y, double arrow_z, double a_x, double a_y, double b_x, double b_y, double a_b_z, double radius, double height)
+    GameBoi(double x, double y, double z, double arrow_x, double arrow_y, double arrow_z, double a_x, double a_y, double b_x, double b_y, double a_b_z, double radius, double height)
     {
         _arrow_x = arrow_x;
         _arrow_y = arrow_y;
@@ -1475,11 +1475,15 @@ class GameBoi
         _a_b_z = a_b_z;
         _r = radius;
         _h = height;
+        _x = x;
+        _y = y;
+        _z = z;
     }
 
     void generate()
     {
         glPushMatrix();
+        glTranslatef(_x, _y, _z);
         draw_console();
         draw_btn_arrow();
         glColor3f(0.0, 1, 0);
@@ -1835,53 +1839,55 @@ class T_Boi
 void get_next_piece()
 {
     int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
+    double pos_x = 0.035;
+    double pos_y = 0.085-0.3;
+    double pos_z = 0.0085;
 
     switch (next_p)
     {
         case 1:
         {
-            LongBoi lp(.035, 0.085, 0.0085);
+            LongBoi lp(pos_x, pos_y, pos_z);
             lp.generate();
             break; 
         }
         case 2:
         {
-            Square sp(.035, 0.085, 0.0085);
+            Square sp(pos_x, pos_y, pos_z);
             sp.generate();
             break;
         }
         case 3:
         {
-            T_Boi tp(.035, 0.085, 0.0085);
+            T_Boi tp(pos_x, pos_y, pos_z);
             tp.generate();
             break; 
         }
         case 4:
         {
-            S_Boi sp(.035, 0.085, 0.0085);
+            S_Boi sp(pos_x, pos_y, pos_z);
             sp.generate();
             break;
         }
         case 5:
         {
-            Z_Boi zp(.035, 0.085, 0.0085);
+            Z_Boi zp(pos_x, pos_y, pos_z);
             zp.generate();
             break;
         }
         case 6:
         {
-            J_Boi jp(.035, 0.085, 0.0085);
+            J_Boi jp(pos_x, pos_y, pos_z);
             jp.generate();
             break;
         }
         case 7:
         {
-            L_Boi lp(.035, 0.085, 0.0085);
+            L_Boi lp(pos_x, pos_y, pos_z);
             lp.generate();
             break;
         }
     }
-
 }
 
 
@@ -1906,7 +1912,7 @@ void compile_game()
     Background_wood_walls background_wood_walls(texture_map["wood_wall_texture"]);
     background_wood_walls.generate();
 
-    GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
+    GameBoi gb(0.0, -0.3, -0.0, -0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();

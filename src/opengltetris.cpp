@@ -54,7 +54,7 @@ bool OpenGLTetris::keystrokes() {
 
 void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
     double pos_x = -0.025;
-    double pos_y = 0.085;
+    double pos_y = 0.085 - 0.3;
     double pos_z = 0.00085;
 
     std::vector<Cube> gl;
@@ -125,7 +125,7 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
 
                     // pos
                     -0.02 + 0.01 * (i),
-                    0.085 - 0.005 * linePos,
+                    0.085 - 0.3 - 0.005 * linePos,
                     0.0125,
 
                     // velocity
