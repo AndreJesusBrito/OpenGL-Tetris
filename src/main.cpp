@@ -17,6 +17,7 @@
 #include "testtetris.h"
 #include "opengltetris.h"
 #include "DynamicPiece.h"
+#include "chardisplay.h"
 
 
 using namespace std;
@@ -2047,7 +2048,6 @@ void display(void)
         ++it;
     }
 
-
     glutSwapBuffers();
 }
 
@@ -2059,7 +2059,7 @@ void reshape(int w, int h)
     glLoadIdentity();
     // glOrtho(-50.0, 50.0, -50.0, 50.0, -1000.0, 1000.0);
 
-    gluPerspective(65, 1, 1, CAMERA_FAR);
+    gluPerspective(65, w/h, 1, CAMERA_FAR);
 }
 
 void mouseHandler(int button, int state, int x, int y)

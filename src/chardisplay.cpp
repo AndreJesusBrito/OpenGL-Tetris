@@ -170,10 +170,10 @@ void CharDisplay::draw() {
         for (std::size_t j = 0; j < m_pixelMatrix.getWidth(); ++j) {
             if (m_pixelMatrix.view(i, j)) {
                 glBegin(GL_QUADS);
-                    glVertex3f(0.0, 0.0, 0.0);
-                    glVertex3f(0.0 + m_side, 0.0, 0.0);
-                    glVertex3f(0.0 + m_side, 0.0 + m_side, 0.0);
-                    glVertex3f(0.0, 0.0 + m_side, 0.0);
+                    glVertex3f(j*m_side, (m_pixelMatrix.getHeight()-i)*m_side, 0.0);
+                    glVertex3f(j*m_side+m_side, (m_pixelMatrix.getHeight()-i)*m_side, 0.0);
+                    glVertex3f(j*m_side+m_side, (m_pixelMatrix.getHeight()-i)*m_side+m_side, 0.0);
+                    glVertex3f(j*m_side, (m_pixelMatrix.getHeight()-i)*m_side+m_side, 0.0);
                 glEnd();
             }
         }
