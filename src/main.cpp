@@ -2311,31 +2311,38 @@ void keyboardSpecialHandler(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1: // front camera
           currentCamera = &cameraFront;
+          resetAllSpins();
           display();
           break;
         case GLUT_KEY_F2: // right camera
           currentCamera = &cameraRight;
+          resetAllSpins();
           display();
           break;
         case GLUT_KEY_F3: // back camera
           currentCamera = &cameraBack;
+          resetAllSpins();
           display();
           break;
 
         case GLUT_KEY_F4: // left camera
           currentCamera = &cameraLeft;
+          resetAllSpins();
           display();
           break;
         case GLUT_KEY_F5: // top camera
           currentCamera = &cameraTop;
+          resetAllSpins();
           display();
           break;
         case GLUT_KEY_F6: // bottom camera
           currentCamera = &cameraBottom;
+          resetAllSpins();
           display();
           break;
         case GLUT_KEY_F7: // bottom camera
           currentCamera = &cameraDiagonal;
+          resetAllSpins();
           display();
           break;
     
