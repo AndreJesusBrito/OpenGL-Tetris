@@ -1,27 +1,37 @@
 #ifndef CHARDISPLAY_H
 #define CHARDISPLAY_H
 
+#include <tuple>
+#include <stdexcept>
+
 #include "GL/glut.h"
 
 #include "matrix.h"
 
 
 class CharDisplay {
-private:
-    typedef TripleDouble std::tuple<double, double, double>;
+public:
+    typedef std::tuple<double, double, double> TripleDouble;
 
-    mycontainers::matrix<bool, 3, 5> m_pixelMatrix;
+private:
+
+    mycontainers::Matrix<bool, 3, 5> m_pixelMatrix;
+    double m_side;
+
     TripleDouble m_pos{0.0, 0.0, 0.0};
     TripleDouble m_color{0.0, 0.0, 0.0};
 
-    double m_pixelSideLength;
-
 public:
     CharDisplay() = delete;
-    CharDisplay(char ch, double pixelSideLength);
-    CharDisplay(char ch, TripleDouble pos, TripleDouble color, double pixelSideLength);
+    CharDisplay(char ch, double side, TripleDouble pos, TripleDouble color);
+    CharDisplay(char ch, double side);
 
-    void move(x, y, z);
+    void changeColor(TripleDouble color);
+    void changeColor(double red, double green, double blue);
+
+    void move(TripleDouble pos);
+    void move(double x, double y, double z);
+
     void draw();
     void generate();
 };

@@ -13,10 +13,10 @@ OBJDIR=obj
 BINDIR=bin
 LIBDIR=lib
 
-_DEPS=matrix.h piece.h tetris.h testtetris.h opengltetris.h cube.h DynamicPiece.h
+_DEPS=matrix.h piece.h tetris.h opengltetris.h cube.h DynamicPiece.h chardisplay.h
 DEPS=$(patsubst %,$(SRCDIR)/%,$(_DEPS))
 
-_OBJ=main.o piece.o tetris.o testtetris.o opengltetris.o DynamicPiece.o
+_OBJ=main.o piece.o tetris.o opengltetris.o DynamicPiece.o chardisplay.o
 OBJ=$(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 _OBJ_UNITTEST=matrix_unittests.o
