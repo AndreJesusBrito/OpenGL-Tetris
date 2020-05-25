@@ -14,9 +14,12 @@ private:
     TripleDouble m_pos{0.0, 0.0, 0.0};
     TripleDouble m_color{0.0, 0.0, 0.0};
 
+    double m_pixelSideLength;
+
 public:
-    CharDisplay(char ch);
-    CharDisplay(char ch, TripleDouble pos, TripleDouble color);
+    CharDisplay() = delete;
+    CharDisplay(char ch, double pixelSideLength);
+    CharDisplay(char ch, TripleDouble pos, TripleDouble color, double pixelSideLength);
 
     void move(x, y, z);
     void draw();
