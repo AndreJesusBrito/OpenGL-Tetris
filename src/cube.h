@@ -12,6 +12,7 @@ class Cube
 {
     protected:
         std::vector<double> cube;
+        std::vector<double> normals;
         double texture_position[12] = {
                                 0.0, 0.0,
                                 1.0, 0.0, 
@@ -67,6 +68,44 @@ class Cube
             1.0, 1.0, 0,
             1.0, 1.0, 1.0,
         };
+
+        normals = {
+            // front
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+
+            // back
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+
+            // side left
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+
+            // side right
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+
+            // bottom
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+
+            // top
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+        };
     }
 
     Cube(GLuint texture, double x, double y, double z, double side)
@@ -113,6 +152,44 @@ class Cube
             side, side, 0,
             side, side, side,
         };
+
+        normals = {
+            // front
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+
+            // back
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, -1.0,
+
+            // side left
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+            -1.0, 0.0, 0.0,
+
+            // side right
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+
+            // bottom
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+
+            // top
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+        };
     }
 
     void set_all(GLuint texture, double x, double y, double z)
@@ -154,6 +231,7 @@ class Cube
                 {
                     glTexCoord2f(texture_position[check], texture_position[check+1]);
                     glVertex3f(this->cube[j], this->cube[j + 1], this->cube[j + 2]);
+                    glNormal3f(this->normals[j], this->normals[j + 1], this->normals[j +2]);
                     check += 2;
                 }
             glEnd();
