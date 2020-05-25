@@ -154,7 +154,7 @@ namespace tetris {
     }
 
     void Tetris::disableSoftDropPiece() {
-        m_stepTime = m_stepTimeRef*10.0;
+        m_stepTime = m_stepTimeRef;
     }
 
     Tetris::Playfield Tetris::currentPlayfield() const {
