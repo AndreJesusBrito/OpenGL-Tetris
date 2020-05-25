@@ -58,7 +58,7 @@ namespace tetris {
         void rotateCounterClockwise();
         const PieceShape& currentFormation() const;
         // const int& currentFormationElement(std::size_t row, std::size_t col) const;
-        ShapeName getShapeName();
+        ShapeName getShapeName() const;
 
         friend std::ostream& operator<<(std::ostream &out, const Piece &piece);
     };

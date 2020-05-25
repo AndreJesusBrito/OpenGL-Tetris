@@ -458,7 +458,7 @@ Camera cameraDiagonal = {
 
 Camera *currentCamera = &cameraFront;
 
-GLuint initTexture(char *imgFilename) {
+GLuint initTexture(const char *imgFilename) {
     GLuint texture = 0;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -466,6 +466,27 @@ GLuint initTexture(char *imgFilename) {
     // set the texture wrapping/filtering options (on the currently bound texture object)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    // load and generate the texture
+    int width, height;
+    unsigned char *data = SOIL_load_image(imgFilename, &width, &height, 0, SOIL_LOAD_RGBA);
+    if (data)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    SOIL_free_image_data(data);
+    return texture;
+}
+
+GLuint initTextureRepeat(const char *imgFilename) {
+    GLuint texture = 0;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    // set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -491,7 +512,7 @@ void activate_texture(GLint texture_name)
         glDisable(GL_TEXTURE_2D);
 }
 
-void draw_text(char *string, GLfloat x, GLfloat y, GLfloat z) {
+void draw_text(const char *string, GLfloat x, GLfloat y, GLfloat z) {
     glPushMatrix();
 
     glRasterPos3f(x, y, z);
@@ -504,8 +525,8 @@ void draw_text(char *string, GLfloat x, GLfloat y, GLfloat z) {
 
 void draw_button_b(double z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
     float angle, radian, x, y, xcos, ysin, tx, ty;
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
@@ -530,9 +551,10 @@ void draw_button_b(double z)
 
 void draw_button_a_sides(int z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
-    float angle, radian, x, y, xcos, ysin, tx, ty;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
+    float angle, radian, x, y, xcos, ysin;
+    // float tx, ty;
     glColor3f(0.0, 1.0, 0.0);
     for (angle=0.0; angle<360.0; angle+=0.5)
     {
@@ -540,8 +562,8 @@ void draw_button_a_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 45;
         y = (float)ysin * 5  + -15;
@@ -552,8 +574,8 @@ void draw_button_a_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 45;
         y = (float)ysin * 5  + -15;
@@ -569,9 +591,10 @@ void draw_button_a_sides(int z)
 
 void draw_button_b_sides(int z)
 {
-    int num_vertex = 100;
-    const GLfloat delta_angle = 2.0*PI/num_vertex;
-    float angle, radian, x, y, xcos, ysin, tx, ty;
+    // int num_vertex = 100;
+    // const GLfloat delta_angle = 2.0*PI/num_vertex;
+    float angle, radian, x, y, xcos, ysin;
+    // float tx, ty;
     glColor3f(1.0, 0, 0.0);
     for (angle=0.0; angle<360.0; angle+=0.5)
     {
@@ -579,8 +602,8 @@ void draw_button_b_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 35;
         y = (float)ysin * 5  + -25;
@@ -591,8 +614,8 @@ void draw_button_b_sides(int z)
         radian = angle * (PI/180.0f);
         xcos = (float)cos(radian);
         ysin = (float)sin(radian);
-        tx = xcos * 0.5 + 0.5;
-        ty = ysin * 0.5 + 0.5;
+        // tx = xcos * 0.5 + 0.5;
+        // ty = ysin * 0.5 + 0.5;
 
         x = (float)xcos * 5  + 35;
         y = (float)ysin * 5  + -25;
@@ -671,7 +694,8 @@ void turn_shadow(int op)
 
 void Menu()
 {
-    int menu, submenu1, submenu2, submenu3, submenu4;
+    // int menu;
+    int submenu1, submenu2, submenu3, submenu4;
     submenu1 = glutCreateMenu(vis_objeto);
     glutAddMenuEntry("Arames", 0);
     glutAddMenuEntry("Solido", 1);
@@ -689,7 +713,8 @@ void Menu()
     glutAddMenuEntry("On", 1);
     glutAddMenuEntry("Off", 0);
 
-    menu = glutCreateMenu(main_menu);
+    // menu = glutCreateMenu(main_menu);
+    glutCreateMenu(main_menu);
     glutAddSubMenu("Objeto", submenu1);
     glutAddSubMenu("Iluminacao", submenu2);
     glutAddSubMenu("Anti-Aliasing", submenu3);
@@ -768,20 +793,19 @@ void resetAllSpins(void) {
     resetSpinLongPiece();
 }
 
-char *helpObjects[10] = {
+const char *helpObjects[9] = {
     "Objeto:",
-    "- Inclinar para baixo: Seta 'Para Cima'",
-    "- Inclinar para cima: Seta 'Para Baixo'",
-    "- Rodar para a direita: Seta 'Para a Direita'",
-    "- Rodar para a esquerda: Seta 'Para a Esquerda'",
-    "- Rodar tetramino 4x1 para a esquerda: Tecla 'J'",
-    "- Rodar tetramino 4x1 para a direita: Tecla 'K'",
+    "- Inclinar para baixo: Tecla 'J'",
+    "- Inclinar para cima: Tecla 'U'",
+    "- Rodar para a direita: Tecla 'K'",
+    "- Rodar para a esquerda: Tecla 'J'",
     "- Aumentar a velocidade: Tecla 'A'",
-    "- Diminuir a velocidade: Tecla 'Z'",
-    "- Redefinir rotacao: Tecla 'R'"
+    "- Diminuir a velocidade: Tecla 'S'",
+    "- Esconder/Mostrar Labels: Tecla 'L'",
+    "- Voltar à posição inicial: Tecla 'R'",
 };
 
-char *helpViews[10] = {
+const char *helpViews[10] = {
     "Vistas:",
     "- Zoom In: Tecla '+' (Numpad)",
     "- Zoom Out: Tecla '-' (Numpad)",
@@ -791,14 +815,20 @@ char *helpViews[10] = {
     "- Camera 4: Tecla 'F4'",
     "- Camera 5: Tecla 'F5'",
     "- Camera 6: Tecla 'F6'",
-    "- Camera 7: Tecla 'F7'"
+    "- Camera 7: Tecla 'F7'",
 };
 
-char *helpGeneral[4] = {
+const char *helpGeneral[10] = {
     "Geral:",
     "- Esconder/Mostrar Labels: Tecla 'L'",
     "- Ver 'menu': Botão direito do rato",
-    "- Sair do Programa: Tecla 'Esc'"
+    "- Sair do Programa: Tecla 'Esc'",
+    "- Novo jogo: Tecla 'N'",
+    "- Pausar jogo: Tecla 'P'",
+    "- Virar Peca: Tecla 'Seta para Cima'",
+    "- Mover a Peca para a Esquerda: Tecla 'Seta para a Esquerda'",
+    "- Mover a Peca para a Direita: Tecla 'Seta para a Direita'",
+    "- Mover a Peca instaneamente para Baixo: Tecla 'Espaco'",
 };
 
 class SkyBox
@@ -876,7 +906,7 @@ class SkyBox
     1.0, 0.0, 0.0,
     1.0, 0.0, 0.0,
     1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0
+    1.0, 0.0, 0.0,
     };
 
     double textureCoordinates [48] = {
@@ -944,7 +974,472 @@ class SkyBox
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
 
-                    glTexCoord2f(textureCoordinates[check++], textureCoordinates[check++]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
+                }
+            glEnd();
+        }
+    }
+
+};
+
+
+class Background_ground
+{
+    double positions[12]=  {
+      -6.94, -0.01 -0.5, 7.12,
+      30.47, -0.01 -0.5, 7.12,
+      30.47, -0.01 -0.5, -23,
+      -6.94, -0.01 -0.5, -23,
+    };
+
+    double vertexNormals [12] = {
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 1.0, 0.0,
+    };
+
+    double textureCoordinates [8] = {
+      -0.5, 0.0,
+      4.5, 0.0,
+      4.5, 5.0,
+      -0.5, 5.0,
+    };
+    public:
+        GLint texture_name;
+    Background_ground(){}
+
+    Background_ground(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 12; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]);glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_house_walls
+{
+    double positions [48]=  {
+      // big wall
+      -3.80, 3.50 -0.5, -12.76,
+      -3.80, 0.14 -0.5, -12.76,
+      12.94, 0.14 -0.5, -12.76,
+      12.94, 3.50 -0.5, -12.76,
+
+      // small wall
+      12.84, 2.69 -0.5, -12.76,
+      12.84, 0.14 -0.5, -12.76,
+      22.86, 0.14 -0.5, -12.76,
+      22.86, 2.69 -0.5, -12.76,
+
+      // upper right part
+      10.56, 4.10 -0.5, -13.45,
+      7.19, 4.10 -0.5, -13.45,
+      7.19, 5.03 -0.5, -13.45,
+      10.56, 5.03 -0.5, -13.45,
+
+      // upper left part
+      18.05, 2.79 -0.5, -12.60,
+      14.69, 2.79 -0.5, -12.60,
+      14.69, 3.71 -0.5, -12.60,
+      18.05, 3.71 -0.5, -12.60,
+    };
+
+    double vertexNormals [48] = {
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+    };
+
+    double textureCoordinates [32] = {
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
+    };
+    public:
+        GLint texture_name;
+    Background_house_walls(){}
+
+    Background_house_walls(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 48; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_roof
+{
+    double positions [84]=  {
+      // roof
+      -4.60, 6.53 -0.5, -17.66,
+      13.44, 6.53 -0.5, -17.66,
+      13.44, 3.20 -0.5, -11.88,
+      -4.60, 3.20 -0.5, -11.88,
+
+
+      // roof
+      6.43, 4.72 -0.5, -12.95,
+      6.73, 4.72 -0.5, -17.36,
+      8.88, 6.14 -0.5, -17.36,
+      8.88, 6.35 -0.5, -12.95,
+
+      // roof
+      11.02, 4.72 -0.5, -12.95,
+      11.02, 4.72 -0.5, -17.36,
+      8.88, 6.35 -0.5, -17.36,
+      8.88, 6.35 -0.5, -12.95,
+
+
+      // roof
+      11.94, 2.33 -0.5, -11.44,
+      11.94, 5.04 -0.5, -18.30,
+      20.36, 5.04 -0.5, -18.30,
+      20.36, 2.33 -0.5, -11.44,
+
+      // roof
+      20.36, 4.23 -0.5, -16.26,
+      20.36, 2.33 -0.5, -11.44,
+      23.36, 2.33 -0.5, -11.44,
+      23.36, 4.23 -0.5, -16.26,
+
+      // roof
+      18.82, 3.40 -0.5, -12.10,
+      18.82, 3.40 -0.5, -18.28,
+      16.37, 5.04 -0.5, -18.28,
+      16.37, 5.04 -0.5, -12.10,
+
+
+      // roof
+      13.92, 3.40 -0.5, -12.10,
+      13.92, 3.40 -0.5, -18.28,
+      16.37, 5.04 -0.5, -18.28,
+      16.37, 5.04 -0.5, -12.10,
+    };
+
+    double vertexNormals [84] = {
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+      0.0, 0.5, 0.5,
+
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+      -0.5, 0.5, 0.0,
+
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+      0.5, 0.5, 0.0,
+    };
+
+    double textureCoordinates [56] = {
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+
+      0.0 -0.5, 5.0,
+      0.0 -0.5, 0.0,
+      5.0 -0.5, 0.0,
+      5.0 -0.5, 5.0,
+    };
+    public:
+        GLint texture_name;
+    Background_roof(){}
+
+    Background_roof(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 84; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
+                }
+            glEnd();
+        }
+    }
+
+};
+
+class Background_wood_walls
+{
+    double positions [60]=  {
+      //0 
+      -6.94, -0.51, 7.12,
+      -6.94, 1.34, 7.12,
+      -6.94, 1.34, -20.0,
+      -6.94, -0.51, -20.0,
+
+      // 1 
+      -6.94, -0.51, 7.12,
+      -6.94, 1.34, 7.12,
+      22.88, 1.34, 7.12,
+      22.88, -0.51, 7.12,
+
+
+
+      // 2
+      22.88, -0.51, 7.12,
+      22.88, 1.34, 7.12,
+      22.88, 1.34, -0.78,
+      22.88, -0.51, -0.78,
+
+
+      // 3
+      22.88, -0.51, -0.78,
+      22.88, 1.34, -0.78,
+      12.99, 1.34, -0.78,
+      12.99, -0.51, -0.78,
+
+
+      // 4
+      12.99, -0.51, -0.78,
+      12.99, 1.34, -0.78,
+      12.99, 1.34, -12.75,
+      12.99, -0.51, -12.75,
+    };
+
+    double vertexNormals [60] = {
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+      1.0, 0.0, 0.0,
+
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+      0.0, 0.0, -1.0,
+
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+      0.0, 0.0, 1.0,
+
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+      -1.0, 0.0, 0.0,
+    };
+
+    double textureCoordinates [48] = {
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+      45.2, 2.19,
+
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+      45.2, 2.19,
+
+      0, 2.19,
+      0.0, 0.0,
+      45.2, 0.0,
+      45.2, 2.19,
+
+      0, 2.19,
+      0.0, 0.0,
+      16.5, 0.0,
+      16.5, 2.19,
+
+      0, 2.19,
+      0.0, 0.0,
+      16, 0.0,
+      16, 2.19,
+
+      0, 2.91,
+      0.0, 0.0,
+      19.95, 0.0,
+      19.95, 2.91,
+
+    };
+    public:
+        GLint texture_name;
+    Background_wood_walls(){}
+
+    Background_wood_walls(GLint texture)
+    {
+        texture_name = texture;
+    }
+    void enable_texture()
+    {
+        if(QUADS == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, texture_name);
+            glEnable(GL_TEXTURE_2D);
+        }
+        else
+            glDisable(GL_TEXTURE_2D);
+    }
+    void generate()
+    {
+        enable_texture();
+        int check = 0;
+        // glColor3f(1.0, 0, 0);
+        for(int i = 0; i < 60; i += 12)
+        {
+            glBegin(GL_QUADS);
+                for(int j = i; j < i + 12; j += 3)
+                {
+                    // cout << positions[j] << " "<< positions[j + i] << "\n";
+
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    check += 2;
                 }
             glEnd();
         }
@@ -963,12 +1458,12 @@ class GameBoi
         };
 
     public:
-        double _arrow_x, _arrow_y, _arrow_z, _a_x, _a_y, _b_x, _b_y, _a_b_z, _r, _h ;
+        double _x, _y ,_z,_arrow_x, _arrow_y, _arrow_z, _a_x, _a_y, _b_x, _b_y, _a_b_z, _r, _h ;
 
 
     GameBoi(){}
 
-    GameBoi(double arrow_x, double arrow_y, double arrow_z, double a_x, double a_y, double b_x, double b_y, double a_b_z, double radius, double height)
+    GameBoi(double x, double y, double z, double arrow_x, double arrow_y, double arrow_z, double a_x, double a_y, double b_x, double b_y, double a_b_z, double radius, double height)
     {
         _arrow_x = arrow_x;
         _arrow_y = arrow_y;
@@ -980,11 +1475,15 @@ class GameBoi
         _a_b_z = a_b_z;
         _r = radius;
         _h = height;
+        _x = x;
+        _y = y;
+        _z = z;
     }
 
     void generate()
     {
         glPushMatrix();
+        glTranslatef(_x, _y, _z);
         draw_console();
         draw_btn_arrow();
         glColor3f(0.0, 1, 0);
@@ -1004,8 +1503,7 @@ class GameBoi
         else
         {
             glDisable(GL_TEXTURE_2D);
-        }
-        
+        }    
     }
     
     void game_end_screen()
@@ -1058,7 +1556,8 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
-                        glTexCoord2f(gameboy_texture_map[check++],gameboy_texture_map[check++]);glVertex3f(gameboy_point_map[j], gameboy_point_map[j + 1], gameboy_point_map[j + 2]);
+                        glTexCoord2f(gameboy_texture_map[check+1],gameboy_texture_map[check]);glVertex3f(gameboy_point_map[j], gameboy_point_map[j + 1], gameboy_point_map[j + 2]);
+                        check += 2;
                     }
                 glEnd();
                 texture_pos++;
@@ -1089,8 +1588,9 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
-                        glTexCoord2f(texture_position[check++],texture_position[check++]);
+                        glTexCoord2f(texture_position[check+1],texture_position[check]);
                         glVertex3f(btn_arrow_point_map[j], btn_arrow_point_map[j + 1], btn_arrow_point_map[j + 2]);
+                        check += 2;
                     }
                 glEnd();
                 texture_pos++;
@@ -1104,8 +1604,8 @@ class GameBoi
         {
             glPushMatrix();
             glTranslatef(btn_x, btn_y, btn_z);
-            int num_vertex = 100;
-            const GLfloat delta_angle = 2.0*PI/num_vertex;
+            // int num_vertex = 100;
+            // const GLfloat delta_angle = 2.0*PI/num_vertex;
             float angle, radian, x, y, xcos, ysin, tx, ty;
             change_texture(texture_name);
             glBegin(GL_POLYGON);
@@ -1132,17 +1632,18 @@ class GameBoi
 
         void draw_btn_circle_side()
         {
-            int num_vertex = 100;
-            const GLfloat delta_angle = 2.0*PI/num_vertex;
-            float angle, radian, x, y, xcos, ysin, tx, ty;
+            // int num_vertex = 100;
+            // const GLfloat delta_angle = 2.0*PI/num_vertex;
+            float angle, radian, x, y, xcos, ysin;
+            // float tx, ty;
             for (angle=0.0; angle<360.0; angle+=0.5)
             {
                 glBegin(GL_QUADS);
                 radian = angle * (PI/180.0f);
                 xcos = (float)cos(radian);
                 ysin = (float)sin(radian);
-                tx = xcos * 0.5 + 0.5;
-                ty = ysin * 0.5 + 0.5;
+                // tx = xcos * 0.5 + 0.5;
+                // ty = ysin * 0.5 + 0.5;
 
                 x = (float)xcos * _r;
                 y = (float)ysin * _r;
@@ -1153,8 +1654,8 @@ class GameBoi
                 radian = angle * (PI/180.0f);
                 xcos = (float)cos(radian);
                 ysin = (float)sin(radian);
-                tx = xcos * 0.5 + 0.5;
-                ty = ysin * 0.5 + 0.5;
+                // tx = xcos * 0.5 + 0.5;
+                // ty = ysin * 0.5 + 0.5;
 
                 x = (float)xcos * _r;
                 y = (float)ysin * _r;
@@ -1168,25 +1669,268 @@ class GameBoi
         }
 };
 
+
+class Square
+{
+    public:
+        double _x, _y, _z;
+    Square(){};
+    Square(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class LongBoi
+{
+    public:
+        double _x, _y, _z;
+    LongBoi(){};
+    LongBoi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class L_Boi
+{
+    public:
+        double _x, _y, _z;
+    L_Boi(){};
+    L_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class J_Boi
+{
+    public:
+        double _x, _y, _z;
+    J_Boi(){};
+    J_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+class Z_Boi
+{
+    public:
+        double _x, _y, _z;
+    Z_Boi(){};
+    Z_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class S_Boi
+{
+    public:
+        double _x, _y, _z;
+    S_Boi(){};
+    S_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+class T_Boi
+{
+    public:
+        double _x, _y, _z;
+    T_Boi(){};
+    T_Boi(double x, double y, double z)
+    {
+        _x = x;
+        _y = y;
+        _z = z;
+    }
+    void generate()
+    {
+        glPushMatrix();
+        glTranslatef(_x, _y, _z);
+            Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+            Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
+            Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
+            Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
+            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+        glPopMatrix();
+    } 
+};
+
+
+void get_next_piece()
+{
+    int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
+    double pos_x = 0.035;
+    double pos_y = 0.085-0.3;
+    double pos_z = 0.0085;
+
+    switch (next_p)
+    {
+        case 1:
+        {
+            LongBoi lp(pos_x, pos_y, pos_z);
+            lp.generate();
+            break; 
+        }
+        case 2:
+        {
+            Square sp(pos_x, pos_y, pos_z);
+            sp.generate();
+            break;
+        }
+        case 3:
+        {
+            T_Boi tp(pos_x, pos_y, pos_z);
+            tp.generate();
+            break; 
+        }
+        case 4:
+        {
+            S_Boi sp(pos_x, pos_y, pos_z);
+            sp.generate();
+            break;
+        }
+        case 5:
+        {
+            Z_Boi zp(pos_x, pos_y, pos_z);
+            zp.generate();
+            break;
+        }
+        case 6:
+        {
+            J_Boi jp(pos_x, pos_y, pos_z);
+            jp.generate();
+            break;
+        }
+        case 7:
+        {
+            L_Boi lp(pos_x, pos_y, pos_z);
+            lp.generate();
+            break;
+        }
+    }
+}
+
+
+
 void compile_game()
 {
     SkyBox sb(texture_map["skybox"]);
     sb.generate();
 
-    GameBoi gb(-0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
+    Background_ground background_ground(texture_map["background_ground"]);
+    background_ground.generate();
+
+    Background_house_walls background_house_walls(texture_map["white"]);
+    background_house_walls.generate();
+
+    // Background_house_walls_triangle background_house_walls_triangle(texture_map["white"]);
+    // background_house_walls_triangle.generate();
+
+    Background_roof background_roof(texture_map["roof_tile"]);
+    background_roof.generate();
+
+    Background_wood_walls background_wood_walls(texture_map["wood_wall_texture"]);
+    background_wood_walls.generate();
+
+    GameBoi gb(0.0, -0.3, -0.0, -0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
 
-    // cout >> oglt.viewNextPiece(0).getShapeName() >> '\n'; 
 
 
     if(STATE)
     {
         bool game = oglt.nextState(elapsedTime, startTime);
         if (game) {
+            if(!QUADS)
+            {
+                glPolygonMode(GL_FRONT, GL_LINE);
+                glPolygonMode(GL_BACK, GL_LINE);
+            }
+            get_next_piece();
             // game_time_counter++;
-            cout << oglt << "\n\n";
+            // cout << oglt << "\n\n";
         }
         else
         {
@@ -1226,10 +1970,10 @@ void display(void)
         glDisable(GL_TEXTURE_2D);
     
         glColor3f(0.96, 0.86, 0.58);
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 10; ++i)
             draw_text(helpGeneral[i], -1.85, 1.80+i*(-0.08), -3.0);
-        for (int i = 4; i < 14; ++i)
-            draw_text(helpObjects[i-4], -1.85, 1.75+i*(-0.08), -3.0);
+        for (int i = 4; i < 10; ++i)
+            draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
 
@@ -1374,52 +2118,16 @@ void keyboardHandler(unsigned char key, int x, int y) {
             display();
             break;
 
-        case 'j':
-            spinningLongPiece = 1;
+        case 'a':
+            allSpinsSpeedUp();
             break;
 
-        case 'k': 
-            spinningLongPiece = -1;
+        case 's':
+            allSpinsSpeedDown();
             break;
-
-        case 'a': {
-            for (int i = 0; i < 3; i += 1) {
-                fallingPieces.push_back(
-                    DynamicPiece(
-                        // texture
-                        0,
-
-                        // pos
-                        -0.065 + 0.01*(i), 0.0, 0.013,
-
-                        // velocity
-                        (randomMagnitude(mersenne) - .5) * 0.05,
-                        randomMagnitude(mersenne) * 0.05,
-                        randomMagnitude(mersenne) * 0.05,
-
-                        // acceleration
-                        0.0, -0.5, 0.0,
-
-                        // rotation
-                        0.0, 0.0, 0.0,
-
-                        // rotation speed
-                        (randomMagnitude(mersenne) - .5)*573,
-                        randomMagnitude(mersenne)*573,
-                        randomMagnitude(mersenne)*573,
-
-                        // rotation acceleration
-                        0.0, 0.0, 0.0
-                    )
-                );
-            }
-            // allSpinsSpeedUp();
-            break;
-        }
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_COUNTER_CLOCK;
-            // allSpinsSpeedDown();
             break;
 
         case ' ':
@@ -1446,25 +2154,35 @@ void keyboardHandler(unsigned char key, int x, int y) {
             display();
             break;
         
+
+        case 'u':
+            spinningX = -1;
+            break;
+        
+        case 'j':
+            spinningX = 1;
+            break;
+            
+        case 'h':
+            spinningY = -1;
+            break;
+        
+        case 'k':
+            spinningY = 1;
+            break;
+        
+        
         case 'n':
             OpenGLTetris new_game{SIDE, &tetromino_texture_map};
             oglt = new_game;
             display();
             break;
-        
  
     }
 }
 
 void keyboardUpHandler(unsigned char key, int x, int y) {
     switch (key) {
-        case 'j':
-            spinningLongPiece = 0;
-            break;
-
-        case 'k':
-            spinningLongPiece = 0;
-            break;
 
         case 'z':
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
@@ -1476,6 +2194,23 @@ void keyboardUpHandler(unsigned char key, int x, int y) {
             oglt.m_currentMove = OpenGLTetris::Move::NO_MOVE;
             oglt.allowMovement();
             break;
+        
+        case 'u':
+            spinningX = 0;
+            break;
+
+        case 'j':
+            spinningX = 0;
+            break;
+
+        case 'h':
+            spinningY = 0;
+            break;
+
+        case 'k':
+            spinningY = 0;
+            break;
+
     }
 }
 
@@ -1511,10 +2246,12 @@ void keyboardSpecialHandler(int key, int x, int y) {
           currentCamera = &cameraDiagonal;
           display();
           break;
+    
+       
+
 
           // Movement Keys
         case GLUT_KEY_UP:
-            // spinningX = -1;
             oglt.m_currentMove = OpenGLTetris::Move::ROTATE_CLOCK;
             break;
         case GLUT_KEY_DOWN:
@@ -1618,6 +2355,10 @@ void init(void)
     texture_map.insert(pair<string, GLuint>("skybox", initTexture("textures/skybox.png")));
     texture_map.insert(pair<string, GLuint>("game_over", initTexture("textures/game_over.png")));
     texture_map.insert(pair<string, GLuint>("pause_screen", initTexture("textures/pause_screen.png")));
+    texture_map.insert(pair<string, GLuint>("background_ground", initTextureRepeat("textures/dirt.png")));
+    texture_map.insert(pair<string, GLuint>("white", initTextureRepeat("textures/white.png")));
+    texture_map.insert(pair<string, GLuint>("roof_tile", initTextureRepeat("textures/roof_tile.png")));
+    texture_map.insert(pair<string, GLuint>("wood_wall_texture", initTextureRepeat("textures/wood_wall_texture.png")));
     color_map.insert(pair<int, std::array<double, 3>>(1, {0.0, 1.0, 1.0}));
     color_map.insert(pair<int, std::array<double, 3>>(2, {1.0, 1.0, 0.0}));
     color_map.insert(pair<int, std::array<double, 3>>(3, {0.5, 0.0, 0.5}));

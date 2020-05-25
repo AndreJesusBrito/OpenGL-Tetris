@@ -59,7 +59,7 @@ bool OpenGLTetris::keystrokes() {
 
 void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<ClearedLine> clearedLines) {
     double pos_x = -0.025;
-    double pos_y = 0.085;
+    double pos_y = 0.085 - 0.3;
     double pos_z = 0.00085;
 
     std::vector<Cube> gl;
@@ -82,6 +82,8 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
 
     Coords2D ghostPos = ghostPiecePosition();
 
+    std::vector<Cube> ghost;
+
     for(std::size_t i = 0; i < m_currentPiece.currentFormation().getHeight(); ++i) {
         for(std::size_t j = 0; j < m_currentPiece.currentFormation().getWidth(); ++j) {
             if(m_currentPiece.currentFormation().view(i, j)) {
@@ -91,7 +93,7 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
                     pos_z, 
                     m_side);
 
-                gl.push_back(o2);
+                ghost.push_back(o2);
             }
         }
     }
@@ -99,6 +101,11 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
     for(auto i = gl.begin(); i!= gl.end(); ++i)
     {
         (*i).generate();
+    }
+
+    for(auto i = ghost.begin(); i!= ghost.end(); ++i)
+    {
+        (*i).generate_ghost();
     }
 
 
@@ -123,7 +130,7 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
 
                     // pos
                     -0.02 + 0.01 * (i),
-                    0.085 - 0.005 * linePos,
+                    0.085 - 0.3 - 0.005 * linePos,
                     0.0125,
 
                     // velocity
