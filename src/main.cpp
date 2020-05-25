@@ -1933,7 +1933,7 @@ void get_next_piece()
 {
     int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
     double pos_x = 0.035;
-    double pos_y = 0.085-0.3;
+    double pos_y = 0.085;
     double pos_z = 0.0085;
 
     switch (next_p)
@@ -2005,7 +2005,7 @@ void compile_game()
     Background_wood_walls background_wood_walls(texture_map["wood_wall_texture"]);
     background_wood_walls.generate();
 
-    GameBoi gb(0.0, -0.3, -0.0, -0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
+    GameBoi gb(0.0, 0.0, -0.0, -0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
 
     elapsedTime = std::chrono::duration<double>(std::chrono::steady_clock::now() - startTime).count();
