@@ -1051,9 +1051,10 @@ class SkyBox
     }
     void generate()
     {
+        glPushMatrix();
         enable_texture();
         int check = 0;
-        // glColor3f(1.0, 0, 0);
+        glRotatef(180.0, 0.0, 1.0, 0.0);
         for(int i = 0; i < 72; i += 12)
         {
             glBegin(GL_QUADS);
@@ -1067,6 +1068,7 @@ class SkyBox
                 }
             glEnd();
         }
+        glPopMatrix();
     }
 
 };
