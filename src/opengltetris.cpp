@@ -108,7 +108,8 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
         (*i).generate_ghost();
     }
 
-
+    CharDisplay cd('1', 0.012);
+    cd.generate();
     addFallingPieces(clearedLines);
 }
 

@@ -10,6 +10,7 @@
 #include "tetris.h"
 #include "cube.h"
 #include "DynamicPiece.h"
+#include "chardisplay.h"
 
 
 class OpenGLTetris: public tetris::Tetris {
