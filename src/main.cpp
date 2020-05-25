@@ -1917,6 +1917,11 @@ void compile_game()
     {
         bool game = oglt.nextState(elapsedTime, startTime);
         if (game) {
+            if(!QUADS)
+            {
+                glPolygonMode(GL_FRONT, GL_LINE);
+                glPolygonMode(GL_BACK, GL_LINE);
+            }
             get_next_piece();
             // game_time_counter++;
             // cout << oglt << "\n\n";
