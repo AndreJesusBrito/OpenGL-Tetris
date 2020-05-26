@@ -5,6 +5,7 @@
 
 #include "DynamicPiece.h"
 
+#define GROUND_LEVEL -0.2
 
 double cubeCoords[] = {
   // front
@@ -133,7 +134,7 @@ DynamicPiece::~DynamicPiece() {}
 void DynamicPiece::updatePhysics(double deltaTime) {
   deltaTime /= 4;
   m_lifetime += deltaTime;
-  if (m_pos[1] > -0.49) {
+  if (m_pos[1] > GROUND_LEVEL) {
     m_vel[0] += m_accel[0] * deltaTime;
     m_vel[1] += m_accel[1] * deltaTime;
     m_vel[2] += m_accel[2] * deltaTime;
@@ -152,14 +153,14 @@ void DynamicPiece::updatePhysics(double deltaTime) {
   }
   else {
     m_vel[0] = m_vel[0] / 2;
-    m_vel[1] = -m_vel[1] / 2;
+    m_vel[1] = -m_vel[1] / 8;
     m_vel[2] = m_vel[2] / 2;
 
     m_rotVel[0] = m_rotVel[0] * m_vel[0]*2;
     m_rotVel[1] = m_rotVel[1] * m_vel[1]*2;
     m_rotVel[2] = m_rotVel[2] * m_vel[2]*2;
 
-    m_pos[1] = -0.49 + EPSILON;
+    m_pos[1] = GROUND_LEVEL + EPSILON;
   }
 }
 
