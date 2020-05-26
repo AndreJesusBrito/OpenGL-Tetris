@@ -44,6 +44,44 @@ double cubeCoords[] = {
    CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2
 };
 
+double cubeNormals[] = {
+  // front
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+  // back
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+
+  // left
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+
+  // right
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+
+  // top
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+
+  // bottom
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+};
+
 double cubeTextureCoords[12] = {
   0.0, 0.0,
   1.0, 0.0,
@@ -155,6 +193,7 @@ void DynamicPiece::generate() {
       for(int j = i; j < i + 12; j += 3)
       {
           glTexCoord2f(cubeTextureCoords[check], cubeTextureCoords[check+1]);
+          glNormal3f(cubeNormals[j], cubeNormals[j + 1], cubeNormals[j + 2]);
           glVertex3f(cubeCoords[j], cubeCoords[j + 1], cubeCoords[j + 2]);
           check += 2;
       }
