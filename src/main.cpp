@@ -1993,6 +1993,7 @@ void get_next_piece()
 
 void compile_game()
 {
+    
     glPushMatrix();
     glTranslatef(0.0, 0.3, 0.0);
     SkyBox sb(texture_map["skybox"]);
@@ -2036,6 +2037,10 @@ void compile_game()
         }
         else
         {
+            WordDisplay cd("LINES " + std::to_string(oglt.getNumLinesCleared()), 0.001, {0.0, 0.045, 0.0095}, {1, 1, 1});
+            WordDisplay lv("LEVEL " + std::to_string(oglt.level()), 0.001, {-0.035, 0.045, 0.0095}, {1, 1, 1});
+            cd.generate();
+            lv.generate();
             gb.game_end_screen();
             
         }
