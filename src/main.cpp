@@ -2442,26 +2442,38 @@ void keyboardSpecialUpHandler(int key, int x, int y) {
     }
 }
 
-void init(void)
+void init()
 {
     // Light settings
     GLfloat luzAmbiente[4]={0.2, 0.2, 0.2, 1.0};  // color (0.2, 0.2, 0.2)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
 
     // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
-    // GLfloat posicaoLuz[4]={0.0, 1.0, 5.0 , 1.0};
-    // glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    GLfloat posicaoLuz[4]={currentCamera->viewPos[0], 
+                           currentCamera->viewPos[1], 
+                           currentCamera->viewPos[2], 
+                           1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
     // // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
     
-    // GLfloat luzEspecular[4]={1.0, 0.0, 0.0, 0.0};// "brilho"
-    // glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+    // GLfloat cutoffLuz = 30.0;
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 30.0);
+
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.001);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.000001);
+
+
+    GLfloat luzEspecular[4]={0.9, 0.9, 0.9, 1.0};// "brilho"
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+
 
     // Capacidade de brilho do material
-    // GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
-    // GLint especMaterial = 120;
+    GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
+    GLint especMaterial = 60;
 
-    // glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
-    // glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
+    glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
+    glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
     
     // glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
     
@@ -2475,7 +2487,7 @@ void init(void)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
