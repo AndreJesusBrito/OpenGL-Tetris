@@ -2128,14 +2128,14 @@ void display(void)
     lastTime = currentTime;
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
-        if ((*it).m_lifetime >= 5.0)
+        if ((*it).m_lifetime >= 10.0)
         {
             fallingPieces.erase(it);
             continue;
         }
         (*it).updatePhysics(deltaTime);
 
-        if ((*it).m_lifetime >= 3.0 && ((int)round(100 * (*it).m_lifetime)) % 10 >= 5)
+        if ((*it).m_lifetime >= 8.0 && ((int)round(100 * (*it).m_lifetime)) % 10 >= 5)
         {
             ++it;
             continue;
