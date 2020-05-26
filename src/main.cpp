@@ -1062,9 +1062,9 @@ class SkyBox
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
                     glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); 
-                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1126,8 +1126,9 @@ class Background_ground
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]);glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]);
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1236,8 +1237,9 @@ class Background_house_walls
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]);     
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1392,8 +1394,9 @@ class Background_roof
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]);   
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1528,8 +1531,9 @@ class Background_wood_walls
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); 
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -2057,10 +2061,7 @@ void display(void)
 {
     if(QUADS == 2)
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glMatrixMode(GL_MODELVIEW);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     if (QUADS) {
         glPolygonMode(GL_FRONT, GL_FILL);
         glPolygonMode(GL_BACK, GL_FILL);
@@ -2070,6 +2071,8 @@ void display(void)
         glPolygonMode(GL_BACK, GL_LINE);
     }
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
     if (LABEL) {
@@ -2117,15 +2120,36 @@ void display(void)
 
     // load class tetris or w/e
 
-
-    // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
-    // glColor3f(1.0, 0, 0);
-
-
     // falling pieces
     double currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
     double deltaTime = (currentTime - lastTime) * animationSpeed;
     lastTime = currentTime;
+
+
+    compile_game();
+
+    // GLfloat luzAmbiente[4]={0.2, 0.2, 0.2, 1.0};  // color (0.2, 0.2, 0.2)
+    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
+
+    // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
+    // GLfloat posicaoLuz[4]={0.0, 90.0, 90.0 , 1.0};
+    // glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+
+    
+  
+    // // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
+    // // glColor3f(1.0, 0, 0);
+    GLfloat lightColor1[] = {0.5, 0.2, 0.2, 1.0}; //Color (0.5, 0.2, 0.2)
+    GLfloat lightPos1[] = {-90.0, 90.0, 90.0, 0.0};
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+    // GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+    // glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+    // glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    // glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
+
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
         if ((*it).m_lifetime >= 5.0)
@@ -2421,32 +2445,41 @@ void keyboardSpecialUpHandler(int key, int x, int y) {
 void init(void)
 {
     // Light settings
-    GLfloat luzAmbiente[4]={0.25,0.25,0.25,1.0};  // color (0.2, 0.2, 0.2)
-    GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
-    GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
-    GLfloat posicaoLuz[4]={22.5, 30.0, -50.0, 1.0};
-
-    // Capacidade de brilho do material
-    GLfloat especularidade[4]={1.0,1.0,1.0,1.0};
-    GLint especMaterial = 60;
-
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glShadeModel (GL_SMOOTH);
-
-    glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
-    glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
+    GLfloat luzAmbiente[4]={0.2, 0.2, 0.2, 1.0};  // color (0.2, 0.2, 0.2)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
+    // GLfloat posicaoLuz[4]={-90.0, 90.0, 90.0 , 1.0};
+    // glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    
+    // GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    // Capacidade de brilho do material
+    //GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
+    //GLint especMaterial = 120;
 
+    //glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
+    //glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
+    
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    
+
+    // // Set attenuation
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_NORMALIZE);
+    glShadeModel(GL_SMOOTH);
 
     //Set blending
     glEnable(GL_BLEND);
@@ -2515,17 +2548,17 @@ int main(int argc, char ** argv)
     glutInitWindowSize(900, 900);
     glutInitWindowPosition(100, 100);
     glutCreateWindow(argv[0]);
-    init();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutIdleFunc(spinAllAxes);
 
+    init();
+
+    glutDisplayFunc(display);
+    glutIdleFunc(spinAllAxes);
     glutMouseFunc(mouseHandler);
     glutKeyboardFunc(keyboardHandler);
     glutKeyboardUpFunc(keyboardUpHandler);
     glutSpecialFunc (keyboardSpecialHandler);
     glutSpecialUpFunc(keyboardSpecialUpHandler);
-
+    glutReshapeFunc(reshape);
     // oglt.nextState(elapsedTime, startTime);
        
     glutMainLoop();

@@ -192,6 +192,7 @@ void DynamicPiece::generate() {
     glBegin(GL_QUADS);
       for(int j = i; j < i + 12; j += 3)
       {
+          glNormal3f(cubeNormals[j], cubeNormals[j + 1], cubeNormals[j + 2]);
           glTexCoord2f(cubeTextureCoords[check], cubeTextureCoords[check+1]);
           glNormal3f(cubeNormals[j], cubeNormals[j + 1], cubeNormals[j + 2]);
           glVertex3f(cubeCoords[j], cubeCoords[j + 1], cubeCoords[j + 2]);
