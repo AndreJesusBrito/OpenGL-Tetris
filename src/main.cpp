@@ -885,16 +885,16 @@ const char *helpObjects[12] = {
     "- Rodar para a direita: Tecla 'K'",
     "- Aumentar a velocidade: Tecla 'A'",
     "- Diminuir a velocidade: Tecla 'S'",
-    "- Aumentar a velocidade da queda dos blocos: Tecla 'V'",
-    "- Diminuir a velocidade da queda dos blocos: Tecla 'B'",
+    "- Aumentar a velocidade da animacao: Tecla 'V'",
+    "- Diminuir a velocidade da animacao: Tecla 'B'",
     "- Esconder/Mostrar Labels: Tecla 'L'",
-    "- Voltar à posição inicial: Tecla 'R'",
-    "- Ver 'menu': Botão direito do rato",
+    "- Voltar a posicao inicial: Tecla 'R'",
+    "- Ver 'menu': Botao direito do rato",
 };
 
 const char *helpViews[10] = {
     "Vistas:",
-    "- Zoom In: Tecla '+' (Numpad)",
+    "- Zoom In:  Tecla '+' (Numpad)",
     "- Zoom Out: Tecla '-' (Numpad)",
     "- Camera 1: Tecla 'F1'",
     "- Camera 2: Tecla 'F2'",
@@ -915,7 +915,7 @@ const char *helpGeneral[10] = {
     "- Mover a Peca para a Esquerda: Tecla 'Seta para a Esquerda'",
     "- Mover a Peca para a Direita: Tecla 'Seta para a Direita'",
     "- Mover a Peca para a Baixo: Tecla 'Seta para Baixo'",
-    "- Mover a Peca instaneamente para Baixo: Tecla 'Espaco'",
+    "- Mover a Peca instantaneamente para Baixo: Tecla 'Espaco'",
 };
 
 class SkyBox
@@ -2070,7 +2070,7 @@ void display(void)
         glColor3f(0.96, 0.86, 0.58);
         for (int i = 0; i < 10; ++i)
             draw_text(helpGeneral[i], -1.85, 1.80+i*(-0.08), -3.0);
-        for (int i = 4; i < 10; ++i)
+        for (int i = 4; i < 16; ++i)
             draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
