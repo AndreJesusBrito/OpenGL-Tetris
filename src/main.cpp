@@ -985,16 +985,16 @@ class SkyBox
     0.0, -1.0, 0.0,
 
     // Right
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
 
     // Left
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
     };
 
     double textureCoordinates [48] = {
@@ -2141,7 +2141,7 @@ void display(void)
     // // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // // glColor3f(1.0, 0, 0);
     GLfloat lightColor1[] = {0.7, 0.7, 0.7, 1.0}; //Color (0.5, 0.2, 0.2)
-    GLfloat lightPos1[] = {-90.0, 90.0, 90.0, 0.0};
+    GLfloat lightPos1[] = {0.0, 90.0, 90.0, 0.0};
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
     //GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
