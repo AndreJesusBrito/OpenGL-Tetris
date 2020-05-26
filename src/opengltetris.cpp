@@ -74,8 +74,8 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
             if(currentPlayfield().view(i, j))
             {
                 Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], 
-                    pos_x + m_side*j, 
-                    pos_y - m_side*i, 
+                    pos_x + m_side*j,
+                    pos_y - m_side*i,
                     pos_z, 
                     m_side);
 
@@ -132,8 +132,8 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
                     (*m_tetrominoTextureMap)[line->second.at(i)],
 
                     // pos
-                    -0.02 + 0.01 * (i),
-                    0.085 - 0.005 * linePos,
+                    -0.025 + m_side * (0.5 + i),
+                    0.085 - 0.005 * linePos + m_side / 2,
                     0.0125,
 
                     // velocity

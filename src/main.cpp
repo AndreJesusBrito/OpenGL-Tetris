@@ -55,6 +55,7 @@ OpenGLTetris oglt{SIDE, &tetromino_texture_map};
 //  FALLING PIECES
 
 double lastTime = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+double animationSpeed = 1;
 
 extern std::vector<DynamicPiece> fallingPieces;
 
@@ -2118,7 +2119,7 @@ void display(void)
 
     // falling pieces
     double currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
-    double deltaTime = currentTime - lastTime;
+    double deltaTime = (currentTime - lastTime) * animationSpeed;
     lastTime = currentTime;
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
@@ -2252,7 +2253,19 @@ void keyboardHandler(unsigned char key, int x, int y) {
             STATE = STATE == 1 ? 0 : 1;
             display();
             break;
-        
+
+        case 'v': {
+            if (animationSpeed < 2)
+                animationSpeed += 0.25;
+
+            break;
+        }
+        case 'b': {
+            if (animationSpeed > 0.25)
+                animationSpeed -= 0.25;
+
+            break;
+        }
 
         case 'u':
             spinningX = -1;
@@ -2276,7 +2289,7 @@ void keyboardHandler(unsigned char key, int x, int y) {
             oglt = new_game;
             display();
             break;
- 
+
     }
 }
 
