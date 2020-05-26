@@ -1077,10 +1077,10 @@ class SkyBox
 class Background_ground
 {
     double positions[12]=  {
-      -6.94, -0.01 -0.5, 7.12,
-      30.47, -0.01 -0.5, 7.12,
-      30.47, -0.01 -0.5, -23,
-      -6.94, -0.01 -0.5, -23,
+      -6.94, -0.5, 7.12,
+      30.47, -0.5, 7.12,
+      30.47, -0.5, -23,
+      -6.94, -0.5, -23,
     };
 
     double vertexNormals [12] = {
@@ -1992,6 +1992,8 @@ void get_next_piece()
 
 void compile_game()
 {
+    glPushMatrix();
+    glTranslatef(0.0, 0.3, 0.0);
     SkyBox sb(texture_map["skybox"]);
     sb.generate();
 
@@ -2009,6 +2011,7 @@ void compile_game()
 
     Background_wood_walls background_wood_walls(texture_map["wood_wall_texture"]);
     background_wood_walls.generate();
+    glPopMatrix();
 
     GameBoi gb(0.0, 0.0, -0.0, -0.028, -0.064, 0.012, 0.046, -0.04, 0.025, -0.06, 0.007, 0.01, 0.005);
     gb.generate();
@@ -2104,7 +2107,6 @@ void display(void)
     glRotatef(spinX, 1.0, 0.0, 0.0);
     glRotatef(spinY, 0.0, 1.0, 0.0);
     glScalef(500.0, 500.0, 500.0);
-    glTranslatef(0.0, 0.0, 0.0);
     // double z = 2.5;
 
     // load class tetris or w/e
@@ -2119,18 +2121,16 @@ void display(void)
     double deltaTime = currentTime - lastTime;
     lastTime = currentTime;
 
-
-    compile_game();
-
-
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
-        if ((*it).m_lifetime >= 5.0) {
+        if ((*it).m_lifetime >= 5.0)
+        {
             fallingPieces.erase(it);
             continue;
         }
         (*it).updatePhysics(deltaTime);
 
-        if ((*it).m_lifetime >= 3.0 && ((int) round(100*(*it).m_lifetime)) % 10 >= 5) {
+        if ((*it).m_lifetime >= 3.0 && ((int)round(100 * (*it).m_lifetime)) % 10 >= 5)
+        {
             ++it;
             continue;
         }
@@ -2139,6 +2139,8 @@ void display(void)
 
         ++it;
     }
+
+    compile_game();
 
     glutSwapBuffers();
 }

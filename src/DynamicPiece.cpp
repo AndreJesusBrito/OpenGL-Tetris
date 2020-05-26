@@ -5,6 +5,7 @@
 
 #include "DynamicPiece.h"
 
+#define GROUND_LEVEL -0.2
 
 double cubeCoords[] = {
   // front
@@ -42,6 +43,44 @@ double cubeCoords[] = {
   -CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
    CUBE_SIZE/2, -CUBE_SIZE/2, -CUBE_SIZE/2,
    CUBE_SIZE/2, -CUBE_SIZE/2, CUBE_SIZE/2
+};
+
+double cubeNormals[] = {
+  // front
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+  // back
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+  0.0, 0.0, -1.0,
+
+  // left
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+
+  // right
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+
+  // top
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+
+  // bottom
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
 };
 
 double cubeTextureCoords[12] = {
@@ -95,7 +134,7 @@ DynamicPiece::~DynamicPiece() {}
 void DynamicPiece::updatePhysics(double deltaTime) {
   deltaTime /= 4;
   m_lifetime += deltaTime;
-  if (m_pos[1] > -0.49) {
+  if (m_pos[1] > GROUND_LEVEL) {
     m_vel[0] += m_accel[0] * deltaTime;
     m_vel[1] += m_accel[1] * deltaTime;
     m_vel[2] += m_accel[2] * deltaTime;
@@ -114,14 +153,14 @@ void DynamicPiece::updatePhysics(double deltaTime) {
   }
   else {
     m_vel[0] = m_vel[0] / 2;
-    m_vel[1] = -m_vel[1] / 2;
+    m_vel[1] = -m_vel[1] / 8;
     m_vel[2] = m_vel[2] / 2;
 
     m_rotVel[0] = m_rotVel[0] * m_vel[0]*2;
     m_rotVel[1] = m_rotVel[1] * m_vel[1]*2;
     m_rotVel[2] = m_rotVel[2] * m_vel[2]*2;
 
-    m_pos[1] = -0.49 + EPSILON;
+    m_pos[1] = GROUND_LEVEL + EPSILON;
   }
 }
 
@@ -155,6 +194,7 @@ void DynamicPiece::generate() {
       for(int j = i; j < i + 12; j += 3)
       {
           glTexCoord2f(cubeTextureCoords[check], cubeTextureCoords[check+1]);
+          glNormal3f(cubeNormals[j], cubeNormals[j + 1], cubeNormals[j + 2]);
           glVertex3f(cubeCoords[j], cubeCoords[j + 1], cubeCoords[j + 2]);
           check += 2;
       }
