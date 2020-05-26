@@ -37,6 +37,7 @@ GLint QUADS  = 2;
 GLint LIGHT = 1;
 GLint ANTI_ALIASING = 1;
 GLint LABEL = 1;
+GLint LANTERN = 1;
 
 int STATE = 1;
 
@@ -2312,13 +2313,22 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningY = 1;
             break;
         
+        case 'f':
+            if (LANTERN) {
+              LANTERN = 0;
+              glDisable(GL_LIGHT0);
+            }
+            else {
+              LANTERN = 1;
+              glEnable(GL_LIGHT0);
+            }
+            break;
         
         case 'n':
             OpenGLTetris new_game{SIDE, &tetromino_texture_map};
             oglt = new_game;
             display();
             break;
-
     }
 }
 
