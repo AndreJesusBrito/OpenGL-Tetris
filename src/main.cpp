@@ -1614,16 +1614,17 @@ class GameBoi
             glTexCoord2d(1.0, 0.0);
             glVertex3d(0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 1.0);
-            glTexCoord2d(1.0, 1.0);
             glVertex3d(0.045, 0.11, 0.009);
             glTexCoord2d(0.0, 1.0);
             glVertex3d(-0.045, 0.11, 0.009);
-        glEnd();  
+        glEnd();
+        glColor3f(1.0, 1.0, 1.0);
     }
 
 
    void game_pause_screen()
     {
+        glEnable(GL_LIGHT1);
         glTranslatef(_x, _y, _z);
 
         glColor3f(0.5, 0.5, 0.5);
@@ -1634,11 +1635,11 @@ class GameBoi
             glTexCoord2d(1.0, 0.0);
             glVertex3d(0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 1.0);
-            glTexCoord2d(1.0, 1.0);
             glVertex3d(0.045, 0.11, 0.009);
             glTexCoord2d(0.0, 1.0);
             glVertex3d(-0.045, 0.11, 0.009);
-        glEnd();  
+        glEnd();
+        glColor3f(1.0, 1.0, 1.0);
     }
 
     private:
