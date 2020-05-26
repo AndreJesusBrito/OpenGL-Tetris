@@ -61,6 +61,7 @@ namespace tetris {
 
         Playfield currentPlayfield() const;
         int level();
+        int getNumLinesCleared();
         void updateStepTime();
 
         virtual bool keystrokes() = 0;

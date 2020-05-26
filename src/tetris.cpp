@@ -184,6 +184,10 @@ namespace tetris {
         return m_linesCleared / 10 + 1 > 20 ? 20 : m_linesCleared / 10 + 1;
     }
 
+    int Tetris::getNumLinesCleared() {
+        return m_linesCleared;
+    }
+
     void Tetris::updateStepTime() {
         m_stepTimeRef = pow(0.8 - ((level() - 1)*0.007), level() - 1);
     }
