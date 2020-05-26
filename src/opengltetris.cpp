@@ -63,8 +63,10 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
     double pos_z = 0.00085;
 
     
-    WordDisplay cd("LINES " + std::to_string(m_linesCleared), 0.0012, {-0.020, 0.095, 0.0085}, {1, 1, 1});
+    WordDisplay cd("LINES " + std::to_string(m_linesCleared), 0.001, {0.005, 0.095, 0.0085}, {1, 1, 1});
+    WordDisplay lv("LEVEL " + std::to_string(level()), 0.001, {-0.035, 0.095, 0.0085}, {1, 1, 1});
     cd.generate();
+    lv.generate();
 
     std::vector<Cube> gl;
     for(std::size_t i = 0; i < currentPlayfield().getHeight(); i++)
