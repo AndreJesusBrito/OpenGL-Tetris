@@ -1062,8 +1062,8 @@ class SkyBox
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
                     glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); 
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
                     glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
@@ -2140,15 +2140,15 @@ void display(void)
   
     // // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // // glColor3f(1.0, 0, 0);
-    GLfloat lightColor1[] = {0.5, 0.2, 0.2, 1.0}; //Color (0.5, 0.2, 0.2)
+    GLfloat lightColor1[] = {0.7, 0.7, 0.7, 1.0}; //Color (0.5, 0.2, 0.2)
     GLfloat lightPos1[] = {-90.0, 90.0, 90.0, 0.0};
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-    // GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
-    // glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+    //GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+    //glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
 
-    // glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
-    // glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
+    //glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    //glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
 
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
@@ -2449,32 +2449,31 @@ void init(void)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
 
     // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
-    // GLfloat posicaoLuz[4]={-90.0, 90.0, 90.0 , 1.0};
+    // GLfloat posicaoLuz[4]={0.0, 1.0, 5.0 , 1.0};
     // glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
-    // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    // // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
     
-    // GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+    // GLfloat luzEspecular[4]={1.0, 0.0, 0.0, 0.0};// "brilho"
     // glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
     // Capacidade de brilho do material
-    //GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
-    //GLint especMaterial = 120;
+    // GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
+    // GLint especMaterial = 120;
 
-    //glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
-    //glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
+    // glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
+    // glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
     
     // glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
     
 
     // // Set attenuation
-    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
+    // glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    // glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     glEnable(GL_LIGHTING);
     //glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
