@@ -122,6 +122,7 @@ namespace tetris {
             placePieceInField(m_currentPiece, m_piecePosition);
             result = clearLines();
             nextPiece();
+            updateStepTime();
         }
         return result;
     }
@@ -146,6 +147,7 @@ namespace tetris {
         placePieceInField(m_currentPiece, m_piecePosition);
         std::vector<ClearedLine> result = clearLines();
         nextPiece();
+        updateStepTime();
         return result;
     }
 
@@ -190,6 +192,7 @@ namespace tetris {
 
     void Tetris::updateStepTime() {
         m_stepTimeRef = pow(0.8 - ((level() - 1)*0.007), level() - 1);
+        m_stepTime = m_stepTimeRef;
     }
 
     // void Tetris::keystrokes() {}
@@ -205,8 +208,6 @@ namespace tetris {
                 startTime = std::chrono::steady_clock::now();
             }
             keyHit = keystrokes();
-
-            updateStepTime();
         }
         else {
             return false;
