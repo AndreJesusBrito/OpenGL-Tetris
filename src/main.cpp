@@ -1830,6 +1830,7 @@ class GameBoi
                 y = (float)ysin * _r;
 
                 glTexCoord2f(tx, ty);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3f(x, y, _h);
             }
             glEnd();
