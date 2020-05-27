@@ -977,8 +977,8 @@ void resetAllSpins(void) {
     resetSpinLongPiece();
 }
 
-const char *helpObjects[12] = {
-    "Objeto:",
+const char *helpObjects[13] = {
+    "Gameboy:",
     "- Inclinar para baixo: Tecla 'J'",
     "- Inclinar para cima: Tecla 'U'",
     "- Rodar para a esquerda: Tecla 'H'",
@@ -989,6 +989,7 @@ const char *helpObjects[12] = {
     "- Diminuir a velocidade da animacao: Tecla 'B'",
     "- Esconder/Mostrar Labels: Tecla 'L'",
     "- Voltar a posicao inicial: Tecla 'R'",
+    "- Ligar lanterna: Tecla 'F'",
     "- Ver 'menu': Botao direito do rato",
 };
 
@@ -1006,8 +1007,8 @@ const char *helpViews[10] = {
 };
 
 const char *helpGeneral[10] = {
-    "Geral:",
-    "- Sair do Programa: Tecla 'ESC'",
+    "Jogo:",
+    "- Sair do jogo: Tecla 'ESC'",
     "- Novo jogo: Tecla 'N'",
     "- Pausar jogo: Tecla 'P'",
     "- Rodar Peca para a Esquerda: Tecla 'Z'",
@@ -2264,7 +2265,7 @@ void display(void)
         glColor3f(0.96, 0.86, 0.58);
         for (int i = 0; i < 10; ++i)
             draw_text(helpGeneral[i], -1.85, 1.80+i*(-0.08), -3.0);
-        for (int i = 4; i < 16; ++i)
+        for (int i = 4; i < 17; ++i)
             draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
