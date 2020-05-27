@@ -2050,7 +2050,7 @@ void get_next_piece()
     int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
     double pos_x = 0.035;
     double pos_y = 0.085;
-    double pos_z = 0.0085;
+    double pos_z = 0.0;
 
     switch (next_p)
     {
@@ -2147,8 +2147,8 @@ void compile_game()
         }
         else
         {
-            WordDisplay cd("LINES " + std::to_string(oglt.getNumLinesCleared()), 0.001, {0.0, 0.045, 0.0095}, {1, 1, 1});
-            WordDisplay lv("LEVEL " + std::to_string(oglt.level()), 0.001, {-0.035, 0.045, 0.0095}, {1, 1, 1});
+            WordDisplay cd("LINES " + std::to_string(oglt.getNumLinesCleared()), 0.001, {0.003, 0.045, 0.0095}, {1, 1, 1});
+            WordDisplay lv("LEVEL " + std::to_string(oglt.level()), 0.001, {-0.032, 0.045, 0.0095}, {1, 1, 1});
             cd.generate();
             lv.generate();
             gb.game_end_screen();
