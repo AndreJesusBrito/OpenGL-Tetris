@@ -2450,6 +2450,7 @@ void keyboardHandler(unsigned char key, int x, int y) {
             break;
 
         case 'r':
+            animationSpeed = 1;
             resetAllSpins();
             break;
 
