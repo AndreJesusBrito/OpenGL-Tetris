@@ -2200,6 +2200,7 @@ void display(void)
             draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
+        glColor3f(1.0, 1.0, 1.0);
 
         if (QUADS != 2)
             glEnable(GL_TEXTURE_2D);
@@ -2254,7 +2255,9 @@ void display(void)
   
     // // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
     // // glColor3f(1.0, 0, 0);
-    GLfloat lightColor1[] = {0.7, 0.7, 0.7, 1.0}; //Color (0.5, 0.2, 0.2)
+    // GLfloat lightColor1[] = {0.7, 0.7, 0.7, 1.0}; //Color (0.5, 0.2, 0.2)
+    GLfloat lightColor1[] = {0.96, 0.86, 0.58, 1.0};
+
     GLfloat lightPos1[] = {0.0, 90.0, 90.0, 0.0};
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
