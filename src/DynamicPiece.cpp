@@ -183,9 +183,13 @@ void DynamicPiece::generate() {
   glMultMatrixd(piece_tranformations);
 
 
-
-  glBindTexture(GL_TEXTURE_2D, m_texture_name);
-  glEnable(GL_TEXTURE_2D);
+  if (m_texture_name) {
+    glBindTexture(GL_TEXTURE_2D, m_texture_name);
+    glEnable(GL_TEXTURE_2D);
+  }
+  else {
+    glDisable(GL_TEXTURE_2D);
+  }
   for(int i = 0; i < 72; i += 12)
   {
     int check = 0;

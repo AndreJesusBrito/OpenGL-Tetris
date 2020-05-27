@@ -37,6 +37,7 @@ GLint QUADS  = 2;
 GLint LIGHT = 1;
 GLint ANTI_ALIASING = 1;
 GLint LABEL = 1;
+GLint LANTERN = 1;
 
 int STATE = 1;
 
@@ -165,6 +166,104 @@ double btn_arrow_point_map [] = {
   0.005, 0.005, -0.005,
   0.005, 0.005, 0,
   0.005, 0.015, 0,
+};
+
+double btn_arrow_normals [] = {
+  // front middle
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+
+  // up arrow
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+
+  // right arrow
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+  // down arrow
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+  // left arrow
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+  0.0, 0.0, 1.0,
+
+  // top sides
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+  0.0, 1.0, 0.0,
+
+  // bottom sides
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+  0.0, -1.0, 0.0,
+
+  // left sides
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+  -1.0, 0.0, 0.0,
+
+  // right sides
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
+  1.0, 0.0, 0.0,
 };
 
 
@@ -967,34 +1066,34 @@ class SkyBox
     0.0, 0.0, -1.0,
 
     // Back
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
 
     // Top
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
 
     // Bottom
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
 
     // Right
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
 
     // Left
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
     };
 
     double textureCoordinates [48] = {
@@ -1062,9 +1161,9 @@ class SkyBox
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
                     glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); 
-                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1126,8 +1225,9 @@ class Background_ground
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]);glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]);
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1236,8 +1336,9 @@ class Background_house_walls
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]);     
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1392,8 +1493,9 @@ class Background_roof
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check+1], textureCoordinates[check]);   
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1528,8 +1630,9 @@ class Background_wood_walls
                 for(int j = i; j < i + 12; j += 3)
                 {
                     // cout << positions[j] << " "<< positions[j + i] << "\n";
-
-                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
+                    glNormal3f(vertexNormals[j], vertexNormals[j + 1], vertexNormals[j + 2]); 
+                    glTexCoord2f(textureCoordinates[check], textureCoordinates[check+1]); 
+                    glVertex3f(positions[j], positions[j + 1], positions[j + 2]);
                     check += 2;
                 }
             glEnd();
@@ -1605,35 +1708,44 @@ class GameBoi
         change_texture(texture_map["game_over"]);
         glBegin(GL_QUADS);
             glTexCoord2d(0.0, 0.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(-0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 0.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 1.0);
-            glTexCoord2d(1.0, 1.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(0.045, 0.11, 0.009);
             glTexCoord2d(0.0, 1.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(-0.045, 0.11, 0.009);
-        glEnd();  
+        glEnd();
+        glColor3f(1.0, 1.0, 1.0);
     }
 
 
    void game_pause_screen()
     {
+        glEnable(GL_LIGHT1);
         glTranslatef(_x, _y, _z);
 
         glColor3f(0.5, 0.5, 0.5);
         change_texture(texture_map["pause_screen"]);
         glBegin(GL_QUADS);
             glTexCoord2d(0.0, 0.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(-0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 0.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(0.045, -0.01, 0.009);
             glTexCoord2d(1.0, 1.0);
-            glTexCoord2d(1.0, 1.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(0.045, 0.11, 0.009);
             glTexCoord2d(0.0, 1.0);
+            glNormal3f(0.0, 0.0, 1.0);
             glVertex3d(-0.045, 0.11, 0.009);
-        glEnd();  
+        glEnd();
+        glColor3f(1.0, 1.0, 1.0);
     }
 
     private:
@@ -1662,9 +1774,13 @@ class GameBoi
             }
             glColor3f(0.5, 0.5, 0.5);
             glBegin(GL_QUADS);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(-0.025, -0.01, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(0.025, -0.01, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(0.025, 0.095, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(-0.025, 0.095, -0.0010);
             glEnd();  
         }
@@ -1686,6 +1802,7 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
+                        glNormal3f(btn_arrow_normals[j], btn_arrow_normals[j+1], btn_arrow_normals[j+2]);
                         glTexCoord2f(texture_position[check+1],texture_position[check]);
                         glVertex3f(btn_arrow_point_map[j], btn_arrow_point_map[j + 1], btn_arrow_point_map[j + 2]);
                         check += 2;
@@ -1721,6 +1838,7 @@ class GameBoi
                 y = (float)ysin * _r;
 
                 glTexCoord2f(tx, ty);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3f(x, y, _h);
             }
             glEnd();
@@ -1784,11 +1902,20 @@ class Square
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0 - SIDE, 0.0, 0.0, SIDE);
+              Cube o3(0.0, 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1808,11 +1935,20 @@ class LongBoi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1831,11 +1967,20 @@ class L_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1854,11 +1999,20 @@ class J_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1877,11 +2031,20 @@ class Z_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1901,11 +2064,20 @@ class S_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1925,11 +2097,20 @@ class T_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o2(0.0, 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1940,7 +2121,7 @@ void get_next_piece()
     int next_p = static_cast<int>(oglt.viewNextPiece(0).getShapeName());
     double pos_x = 0.035;
     double pos_y = 0.085;
-    double pos_z = 0.0085;
+    double pos_z = 0.0;
 
     switch (next_p)
     {
@@ -2024,6 +2205,11 @@ void compile_game()
 
     if(STATE)
     {
+        if (QUADS == 1)
+          oglt.disableTexture();
+        else
+          oglt.enableTexture();
+
         bool game = oglt.nextState(elapsedTime, startTime);
         if (game) {
             if(!QUADS)
@@ -2037,8 +2223,8 @@ void compile_game()
         }
         else
         {
-            WordDisplay cd("LINES " + std::to_string(oglt.getNumLinesCleared()), 0.001, {0.0, 0.045, 0.0095}, {1, 1, 1});
-            WordDisplay lv("LEVEL " + std::to_string(oglt.level()), 0.001, {-0.035, 0.045, 0.0095}, {1, 1, 1});
+            WordDisplay cd("LINES " + std::to_string(oglt.getNumLinesCleared()), 0.001, {0.003, 0.045, 0.0095}, {1, 1, 1});
+            WordDisplay lv("LEVEL " + std::to_string(oglt.level()), 0.001, {-0.032, 0.045, 0.0095}, {1, 1, 1});
             cd.generate();
             lv.generate();
             gb.game_end_screen();
@@ -2057,10 +2243,7 @@ void display(void)
 {
     if(QUADS == 2)
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glMatrixMode(GL_MODELVIEW);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     if (QUADS) {
         glPolygonMode(GL_FRONT, GL_FILL);
         glPolygonMode(GL_BACK, GL_FILL);
@@ -2070,6 +2253,8 @@ void display(void)
         glPolygonMode(GL_BACK, GL_LINE);
     }
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
     if (LABEL) {
@@ -2083,6 +2268,7 @@ void display(void)
             draw_text(helpObjects[i-4], -1.85, 0.75+i*(-0.08), -3.0);
         for (int i = 0; i < 10; ++i)
             draw_text(helpViews[i], -1.85, -1.0+i*(-0.08), -3.0);
+        glColor3f(1.0, 1.0, 1.0);
 
         if (QUADS != 2)
             glEnable(GL_TEXTURE_2D);
@@ -2117,15 +2303,38 @@ void display(void)
 
     // load class tetris or w/e
 
-
-    // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
-    // glColor3f(1.0, 0, 0);
-
-
     // falling pieces
     double currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
     double deltaTime = (currentTime - lastTime) * animationSpeed;
     lastTime = currentTime;
+
+
+    compile_game();
+
+    // GLfloat luzAmbiente[4]={0.2, 0.2, 0.2, 1.0};  // color (0.2, 0.2, 0.2)
+    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
+
+    // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
+    // GLfloat posicaoLuz[4]={0.0, 90.0, 90.0 , 1.0};
+    // glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+
+    
+  
+    // // cout << sizeof(gameboy_point_map)/sizeof(gameboy_point_map[0]);
+    // // glColor3f(1.0, 0, 0);
+    // GLfloat lightColor1[] = {0.7, 0.7, 0.7, 1.0}; //Color (0.5, 0.2, 0.2)
+    GLfloat lightColor1[] = {0.96, 0.86, 0.58, 1.0};
+
+    GLfloat lightPos1[] = {0.0, 90.0, 90.0, 0.0};
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+    //GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+    //glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+    //glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    //glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
+
 
     for (auto it = fallingPieces.begin(); it != fallingPieces.end();) {
         if ((*it).m_lifetime >= 10.0)
@@ -2288,13 +2497,22 @@ void keyboardHandler(unsigned char key, int x, int y) {
             spinningY = 1;
             break;
         
+        case 'f':
+            if (LANTERN) {
+              LANTERN = 0;
+              glDisable(GL_LIGHT0);
+            }
+            else {
+              LANTERN = 1;
+              glEnable(GL_LIGHT0);
+            }
+            break;
         
         case 'n':
             OpenGLTetris new_game{SIDE, &tetromino_texture_map};
             oglt = new_game;
             display();
             break;
-
     }
 }
 
@@ -2418,35 +2636,55 @@ void keyboardSpecialUpHandler(int key, int x, int y) {
     }
 }
 
-void init(void)
+void init()
 {
     // Light settings
-    GLfloat luzAmbiente[4]={0.25,0.25,0.25,1.0};  // color (0.2, 0.2, 0.2)
-    GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
-    GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
-    GLfloat posicaoLuz[4]={22.5, 30.0, -50.0, 1.0};
+    GLfloat luzAmbiente[4]={0.2, 0.2, 0.2, 1.0};  // color (0.2, 0.2, 0.2)
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
+
+    // GLfloat luzDifusa[4]={1.0,1.0,1.0,1.0};    // "cor"
+    GLfloat posicaoLuz[4]={currentCamera->viewPos[0], 
+                           currentCamera->viewPos[1], 
+                           currentCamera->viewPos[2], 
+                           1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // // glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    
+    // GLfloat cutoffLuz = 30.0;
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 30.0);
+
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.001);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.000001);
+
+
+    GLfloat luzEspecular[4]={0.9, 0.9, 0.9, 1.0};// "brilho"
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+
 
     // Capacidade de brilho do material
-    GLfloat especularidade[4]={1.0,1.0,1.0,1.0};
+    GLfloat especularidade[4]={0.5, 0.5, 0.5,1.0};
     GLint especMaterial = 60;
-
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glShadeModel (GL_SMOOTH);
 
     glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade); // define refletância do material
     glMateriali(GL_FRONT,GL_SHININESS,especMaterial); // define concentração do objeto
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente); // ativa luz ambiente
+    
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+    // // Set attenuation
+    // glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+    // glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, -1.0);
 
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-
-    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_NORMALIZE);
+    glShadeModel(GL_SMOOTH);
 
     //Set blending
     glEnable(GL_BLEND);
@@ -2515,17 +2753,17 @@ int main(int argc, char ** argv)
     glutInitWindowSize(900, 900);
     glutInitWindowPosition(100, 100);
     glutCreateWindow(argv[0]);
-    init();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutIdleFunc(spinAllAxes);
 
+    init();
+
+    glutDisplayFunc(display);
+    glutIdleFunc(spinAllAxes);
     glutMouseFunc(mouseHandler);
     glutKeyboardFunc(keyboardHandler);
     glutKeyboardUpFunc(keyboardUpHandler);
     glutSpecialFunc (keyboardSpecialHandler);
     glutSpecialUpFunc(keyboardSpecialUpHandler);
-
+    glutReshapeFunc(reshape);
     // oglt.nextState(elapsedTime, startTime);
        
     glutMainLoop();

@@ -222,7 +222,13 @@ class Cube
     }
 
     void draw() {
-        enable_texture();
+        if (texture_name) {
+            glEnable(GL_TEXTURE_2D);
+            enable_texture();
+        }
+        else 
+            glDisable(GL_TEXTURE_2D);
+        
         for(int i = 0; i < 72; i += 12)
         {
             int check = 0;
@@ -230,8 +236,8 @@ class Cube
                 for(int j = i; j < i + 12; j += 3)
                 {
                     glTexCoord2f(texture_position[check], texture_position[check+1]);
+                    glNormal3f(this->normals[j], this->normals[j + 1], this->normals[j + 2]);
                     glVertex3f(this->cube[j], this->cube[j + 1], this->cube[j + 2]);
-                    glNormal3f(this->normals[j], this->normals[j + 1], this->normals[j +2]);
                     check += 2;
                 }
             glEnd();
