@@ -75,13 +75,22 @@ void OpenGLTetris::nextStateExtra(double elapsedTime, bool keyHit, std::vector<C
         {
             if(currentPlayfield().view(i, j))
             {
-                Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], 
-                    pos_x + m_side*j,
-                    pos_y - m_side*i,
-                    pos_z, 
-                    m_side);
-
-                gl.push_back(o1);
+                if (m_textureEnabled) {
+                    Cube o1((*m_tetrominoTextureMap)[currentPlayfield().view(i, j)], 
+                        pos_x + m_side*j,
+                        pos_y - m_side*i,
+                        pos_z, 
+                        m_side);
+                    gl.push_back(o1);
+                }
+                else {
+                    Cube o1(0, 
+                        pos_x + m_side*j,
+                        pos_y - m_side*i,
+                        pos_z, 
+                        m_side);
+                    gl.push_back(o1);
+                }
             }
         }
     }
@@ -128,41 +137,82 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
 
         for (int i = 0; i < 10; i++)
         {
-            fallingPieces.push_back(
-                DynamicPiece(
-                    // texture
-                    (*m_tetrominoTextureMap)[line->second.at(i)],
+            if (m_textureEnabled)
+                fallingPieces.push_back(
+                    DynamicPiece(
+                        // texture
+                        (*m_tetrominoTextureMap)[line->second.at(i)],
 
-                    // pos
-                    -0.025 + m_side * (0.5 + i),
-                    0.085 - 0.005 * linePos + m_side / 2,
-                    0.0125,
+                        // pos
+                        -0.025 + m_side * (0.5 + i),
+                        0.085 - 0.005 * linePos + m_side / 2,
+                        0.0125,
 
-                    // velocity
-                    0.05 * (randomMagnitude(mersenne) - .5),
-                    0.05 * randomMagnitude(mersenne),
-                    0.05 * randomMagnitude(mersenne),
-                    // 0.0,
-                    // 0.0,
-                    // 0.0,
+                        // velocity
+                        0.05 * (randomMagnitude(mersenne) - .5),
+                        0.05 * randomMagnitude(mersenne),
+                        0.05 * randomMagnitude(mersenne),
+                        // 0.0,
+                        // 0.0,
+                        // 0.0,
 
-                    // acceleration
-                    // 0.0, -0.0, 0.0,
-                    0.0, -0.5, 0.0,
+                        // acceleration
+                        // 0.0, -0.0, 0.0,
+                        0.0, -0.5, 0.0,
 
-                    // rotation
-                    0.0, 0.0, 0.0,
+                        // rotation
+                        0.0, 0.0, 0.0,
 
-                    // rotation speed
-                    (randomMagnitude(mersenne) - .5) * 573,
-                    randomMagnitude(mersenne) * 573,
-                    randomMagnitude(mersenne) * 573,
-                    // 0.0,
-                    // 0.0,
-                    // 0.0,
+                        // rotation speed
+                        (randomMagnitude(mersenne) - .5) * 573,
+                        randomMagnitude(mersenne) * 573,
+                        randomMagnitude(mersenne) * 573,
+                        // 0.0,
+                        // 0.0,
+                        // 0.0,
 
-                    // rotation acceleration
-                    0.0, 0.0, 0.0));
+                        // rotation acceleration
+                        0.0, 0.0, 0.0
+                    )
+                );
+            else
+                fallingPieces.push_back(
+                    DynamicPiece(
+                        // texture
+                        0,
+
+                        // pos
+                        -0.025 + m_side * (0.5 + i),
+                        0.085 - 0.005 * linePos + m_side / 2,
+                        0.0125,
+
+                        // velocity
+                        0.05 * (randomMagnitude(mersenne) - .5),
+                        0.05 * randomMagnitude(mersenne),
+                        0.05 * randomMagnitude(mersenne),
+                        // 0.0,
+                        // 0.0,
+                        // 0.0,
+
+                        // acceleration
+                        // 0.0, -0.0, 0.0,
+                        0.0, -0.5, 0.0,
+
+                        // rotation
+                        0.0, 0.0, 0.0,
+
+                        // rotation speed
+                        (randomMagnitude(mersenne) - .5) * 573,
+                        randomMagnitude(mersenne) * 573,
+                        randomMagnitude(mersenne) * 573,
+                        // 0.0,
+                        // 0.0,
+                        // 0.0,
+
+                        // rotation acceleration
+                        0.0, 0.0, 0.0
+                    )
+                );
         }
     }
 
@@ -170,4 +220,12 @@ void OpenGLTetris::addFallingPieces(std::vector<tetris::Tetris::ClearedLine> cle
 
 void OpenGLTetris::allowMovement() {
     m_movementAllowed = true;
+}
+
+void OpenGLTetris::enableTexture() {
+    m_textureEnabled = true;
+}
+
+void OpenGLTetris::disableTexture() {
+    m_textureEnabled = false;
 }

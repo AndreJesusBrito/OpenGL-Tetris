@@ -222,7 +222,13 @@ class Cube
     }
 
     void draw() {
-        enable_texture();
+        if (texture_name) {
+            glEnable(GL_TEXTURE_2D);
+            enable_texture();
+        }
+        else 
+            glDisable(GL_TEXTURE_2D);
+        
         for(int i = 0; i < 72; i += 12)
         {
             int check = 0;

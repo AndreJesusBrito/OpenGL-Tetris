@@ -1902,11 +1902,20 @@ class Square
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0 - SIDE, 0.0, 0.0, SIDE);
+              Cube o3(0.0, 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[2], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[2], 0.0 - SIDE, 0.0, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[2], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[2], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1926,11 +1935,20 @@ class LongBoi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[1], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[1], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[1], 0.0, 0.0 - SIDE * 3, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1949,11 +1967,20 @@ class L_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[7], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[7], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[7], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[7], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1972,11 +1999,20 @@ class J_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(0.0, 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[6], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[6], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[6], 0.0, 0.0 - SIDE * 2, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[6], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -1995,11 +2031,20 @@ class Z_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[5], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[5], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[5], 0.0 - SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[5], 0.0 - SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -2019,11 +2064,20 @@ class S_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0, 0.0, 0.0, SIDE);
+              Cube o2(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[4], 0.0, 0.0, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[4], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[4], 0.0 + SIDE , 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[4], 0.0 + SIDE, 0.0 - SIDE * 2, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -2043,11 +2097,20 @@ class T_Boi
     {
         glPushMatrix();
         glTranslatef(_x, _y, _z);
-            Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
-            Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
-            Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
-            o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            if (QUADS == 1) {
+              Cube o1(0.0, 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o2(0.0, 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(0.0, 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(0.0, 0.0, 0.0, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
+            else {
+              Cube o1(tetromino_texture_map[3], 0.0 - SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o2(tetromino_texture_map[3], 0.0 + SIDE, 0.0 - SIDE, 0.0, SIDE);
+              Cube o3(tetromino_texture_map[3], 0.0, 0.0 - SIDE, 0.0, SIDE);
+              Cube o4(tetromino_texture_map[3], 0.0, 0.0, 0.0, SIDE);
+              o1.generate(); o2.generate(); o3.generate(); o4.generate();
+            }
         glPopMatrix();
     } 
 };
@@ -2142,6 +2205,11 @@ void compile_game()
 
     if(STATE)
     {
+        if (QUADS == 1)
+          oglt.disableTexture();
+        else
+          oglt.enableTexture();
+
         bool game = oglt.nextState(elapsedTime, startTime);
         if (game) {
             if(!QUADS)
