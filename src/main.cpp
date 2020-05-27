@@ -1766,9 +1766,13 @@ class GameBoi
             }
             glColor3f(0.5, 0.5, 0.5);
             glBegin(GL_QUADS);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(-0.025, -0.01, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(0.025, -0.01, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(0.025, 0.095, -0.0010);
+                glNormal3f(0.0, 0.0, 1.0);
                 glVertex3d(-0.025, 0.095, -0.0010);
             glEnd();  
         }
@@ -1790,6 +1794,7 @@ class GameBoi
                 glBegin(GL_QUADS);
                     for(int j = i; j < i + 12; j += 3)
                     {
+                        glNormal3f(btn_arrow_normals[j], btn_arrow_normals[j+1], btn_arrow_normals[j+2]);
                         glTexCoord2f(texture_position[check+1],texture_position[check]);
                         glVertex3f(btn_arrow_point_map[j], btn_arrow_point_map[j + 1], btn_arrow_point_map[j + 2]);
                         check += 2;
